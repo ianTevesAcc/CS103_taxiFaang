@@ -53,7 +53,6 @@ termsR: // loop if wrong input
             goto termsR;
         }
     }
-    cout << "just testing the water" << endl;
 
     return 0;
 }
