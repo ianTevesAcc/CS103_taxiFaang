@@ -1,47 +1,51 @@
 #include <iostream>
+#include <fstream>
 #include <string>
+
 using namespace std;
 
-void printLine();              // decor func
-void titlePrinter(string tit); // line centerer
+void PrintLine();              // function to output a line for decoration
+void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
 
 int main()
 {
     string title;
 
-    // Title Output
-    printLine();
+    // title output
+    PrintLine();
     title = ("TAXI FAANG PROJECT");
-    titlePrinter(title);
-    printLine();
+    TitlePrinter(title);
+    PrintLine();
     cout << endl;
 
-    // terms agreement var cont
-    string termsAgreementY[5] = {"Yes", "yes", "Y", "y", "YES"}, termsAgreementN[5] = {"No", "no", "N", "n", "NO"}, userAgreement;
+    // terms agreement var container
+    string terms_agreement_agree[5] = {"Yes", "yes", "Y", "y", "YES"};
+    string terms_agreement_disagreed[5] = {"No", "no", "N", "n", "NO"};
+    string user_agreement;
 
     // display terms and ask if user agrees or not
     title = ("Terms and Conditions");
-    titlePrinter(title);
+    TitlePrinter(title);
     cout << R"(***enter terms and cond here***)" << endl;
-    printLine();
+    PrintLine();
     cout << endl;
 termsR: // loop if wrong input
     title = ("Do you agree with the Terms and Conditions?");
-    titlePrinter(title);
+    TitlePrinter(title);
     title = ("Yes / No");
-    titlePrinter(title);
-    cin >> userAgreement;
+    TitlePrinter(title);
+    cin >> user_agreement;
     cin.ignore();
 
     // loop and filter on if user agreed or not or entered a wrong input
     for (int i = 0; i < 6; i++)
     {
-        if (userAgreement == termsAgreementY[i])
+        if (user_agreement == terms_agreement_agree[i])
         {
             cout << "Were looking forward to our happy Journey with you ( ^ 0 ^)/" << endl;
             break;
         }
-        else if (userAgreement == termsAgreementN[i])
+        else if (user_agreement == terms_agreement_disagreed[i])
         {
             cout << "Were sad to see you go, we wish you a safe journey ( ^ 3 ^)/";
             return 0;
@@ -57,7 +61,7 @@ termsR: // loop if wrong input
     return 0;
 }
 
-void printLine()
+void PrintLine()
 {
     for (int i = 0; i < 60; i++)
     {
@@ -66,15 +70,15 @@ void printLine()
     cout << endl;
 }
 
-void titlePrinter(string tit)
+void TitlePrinter(string title)
 {
-    int tot, spa, s;
-    tot = tit.length();
-    spa = 60 - tot;
-    s = spa / 2;
-    for (int i = 0; i != s; i++)
+    int total_spaces, space, space_print;
+    total_spaces = title.length();
+    space = 60 - total_spaces;
+    space_print = space / 2;
+    for (int i = 0; i != space_print; i++)
     {
         cout << " ";
     }
-    cout << tit << endl;
+    cout << title << endl;
 }
