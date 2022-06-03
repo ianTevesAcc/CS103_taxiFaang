@@ -6,6 +6,13 @@ using namespace std;
 
 void PrintLine();              // function to output a line for decoration
 void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
+void login();                  // function declaration
+void registerinfo();
+void forgot();
+int count; // create variables
+string username, password, userid, pass;
+string rusername, rpassword, ruserid, rpass, remail, raddress, rmobile, rpayment;
+string susername, suserid, spass;
 
 int main()
 {
@@ -58,6 +65,45 @@ termsR: // loop if wrong input
         }
     }
 
+    // debug ---
+    int a;
+    cout << "***************************************************\n";
+    cout << "___________TaxiFANNG NZ Booking Service____________\n";
+    cout << "***************************************************\n";
+    cout << "*********************** MENU **********************\n";
+    cout << "\t| Press 1 to Log in to your Booking Account|" << endl;
+    cout << "\t| Press 2 to Register with us! |" << endl;
+    cout << "\t| Press 3 if you forgot your password |" << endl;
+    cout << "\t| Press 4 to EXIT application |" << endl;
+    cout << "\t ^^^^^ Select your choice from above ^^^^^ : ";
+
+    cin >> a;
+    cout << endl;
+
+    switch (a)
+    {
+    case 1:
+        login();
+        break;
+
+    case 2:
+        registerinfo();
+        break;
+    case 3:
+        forgot();
+        break;
+
+    case 4:
+        cout << " \t\t\t Kia ora !!! \n\n";
+        break;
+    default:
+        system("cls"); // everytime the code is processed the screen will clear
+        cout << " Please select a given option from above. \n"
+             << endl;
+        main();
+    }
+    //---debug
+
     return 0;
 }
 
@@ -82,3 +128,115 @@ void TitlePrinter(string title)
     }
     cout << title << endl;
 }
+
+// debug---
+void login()
+{
+    int count;
+    string username, password, userid, pass;
+    system("cls");
+    cout << " Please Enter your Username and Password : " << endl;
+    cout << " USERNAME : ";
+    cin >> username;
+    cout << " PASSWORD : ";
+    cin >> password;
+
+    ifstream input("businessinfo.txt"); // check if this username and password exists by reading data
+    while (input >> userid >> pass)
+    {
+        if (userid == username && pass == password)
+        {
+            count = 1;
+            system("cls");
+        }
+    }
+    input.close();
+
+    if (count == 1)
+    {
+        cout << "\n Your login is successful! Welcome " << username << "!\n";
+        main();
+    }
+    else
+    {
+        cout << "\n WOOPS, double-check your details! ";
+        main();
+    }
+}
+
+void registerinfo()
+{
+    string rusername, rpassword, ruserid, rpass, remail, raddress, rmobile, rpayment;
+    system("cls");
+    cout << "\t\t\t Enter a username : ";
+    cin >> rusername;
+    cout << "\t\t\t Enter a password : ";
+    cin >> rpassword;
+    cout << "\t\t\t Enter an email address : ";
+    cin >> remail;
+    // add something to say if it doesn't have @***.com it is not a valid email address
+    cout << "\t\t\t Enter your home address : ";
+    cin >> raddress;
+    cout << "\t\t\t Enter your mobile number : ";
+    cin >> rmobile;
+    cout << "\t\t\t Enter your payment method :";
+    cin >> rpayment;
+    ofstream f1("businessinfo.txt", ios::app);   // used to write inside the file with app mode
+    f1 << rusername << ' ' << rpassword << endl; // f1 is objectname for the file
+    system("cls");
+    cout << "\n\t\t\t Thank you for registering! \n";
+    main();
+}
+
+void forgot()
+{
+    int count = 0;
+    int option;
+    system("cls");
+    cout << "\t\t\t You forgot your password? \n";
+    cout << " Press 1 to search via entering your username" << endl;
+    cout << " Press 2 to go back " << endl;
+    cout << "\t\t\t Choose : ";
+    cin >> option;
+
+    switch (option)
+    {
+    case 1:
+    {
+        string susername, suserid, spass;
+        cout << "\n\t\t\t Enter your username : ";
+        cin >> suserid;
+
+        ifstream f2("businessinfo.txt");
+        while (f2 >> suserid >> spass)
+        {
+            if (suserid == susername)
+            {
+                count = 1;
+            }
+        }
+        f2.close();
+        if (count == 1)
+        {
+            cout << "\n\n Your account is in our database! \n";
+            cout << "\n\n Your password is : " << spass << endl;
+            main();
+        }
+        else
+        {
+            cout << "\n\t Sorry, You don't have an account with us. \n";
+            main();
+        }
+    }
+    break;
+
+    case 2:
+        main();
+        break;
+
+    default:
+        cout << "\t\t\t Invalid choice, please try again " << endl;
+        forgot();
+    }
+}
+//---debug
