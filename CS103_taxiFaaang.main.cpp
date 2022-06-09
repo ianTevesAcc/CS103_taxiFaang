@@ -6,16 +6,23 @@ using namespace std;
 
 void PrintLine();              // function to output a line for decoration
 void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
+bool yesno();
 void login();                  // function declaration
 void registerinfo();
 void forgot();
+void drivertest();
 int count; // create variables
 string username, password, userid, pass;
 string rusername, rpassword, ruserid, rpass, remail, raddress, rmobile, rpayment;
 string susername, suserid, spass;
+string gp = "|", endin = "\n************************************************************\n";
+
+
 
 int main()
 {
+    drivertest();
+
     string title;
 
     // title output
@@ -129,6 +136,37 @@ void TitlePrinter(string title)
     cout << title << endl;
 }
 
+bool yesno(){
+    string agree[5] = {"Yes", "yes", "Y", "y", "YES"};
+    string disagreed[5] = {"No", "no", "N", "n", "NO"};
+    string in;
+
+    yntp:
+
+    cin >> in;
+
+
+    for (int i = 0; i < 6; i++)
+    {
+        if (in == agree[i])
+        {
+            return 1;
+            break;
+        }
+        else if (in == disagreed[i])
+        {
+            return 0;
+            break;
+        }
+        else if (i > 4)
+        {
+            cout << "Wrong Input, please enter either (Yes / No)" << endl
+                 << endl;
+            goto yntp;
+        }
+    }
+}
+
 // debug---
 void login()
 {
@@ -140,6 +178,9 @@ void login()
     cin >> username;
     cout << " PASSWORD : ";
     cin >> password;
+
+
+    
 
     ifstream input("businessinfo.txt"); // check if this username and password exists by reading data
     while (input >> userid >> pass)
@@ -214,16 +255,48 @@ bool emailcheck(string email){
     
 }
 
+void drivertest(){
+    
+    string q[5] = {"Have held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", "Question", "Question", "Question", "Question"};
+    
+    TitlePrinter("Driver Eligibility Questions");
+
+
+    for (int i = 0; i < 4; i++)
+    {
+        bool yn = NULL;
+        cout << q[i];
+        yn = yesno();
+        if (yn == 1)
+        {
+            continue;
+        } else if (yn == 0)
+        {
+            cout << "Sorry you are ineligible...\t";
+            main();
+        }
+        
+        
+    }
+
+    
+    
+}
+
 void registerinfo()
 {
     string rusername, rpassword, ruserid, rpass, remail, raddress, rmobile, rpayment;
     system("cls");
     cout << "\t\t\t Enter a username : ";
+    cin.ignore();
     cin >> rusername;
+    
     cout << "\t\t\t Enter a password : ";
+    cin.ignore();
     cin >> rpassword;
     email:
     cout << "\t\t\t Enter an email address : ";
+    cin.ignore();
     cin >> remail;
     //cout << emailcheck(remail);
     if (emailcheck(remail) == 0)
@@ -233,14 +306,21 @@ void registerinfo()
     }
     
     // add something to say if it doesn't have @***.com it is not a valid email address
-    cout << "\t\t\t Enter your home address : ";
-    cin >> raddress;
+    
+    
+    
+    /*cout << "\t\t\t Enter your home address : "; // Isuue here when input with spaces // skips next inputs depending on spaces
+    getline(cin, raddress);
+    /*cin.ignore();
+    cin >> raddress;*/
     cout << "\t\t\t Enter your mobile number : ";
+    cin.ignore();
     cin >> rmobile;
     cout << "\t\t\t Enter your payment method :";
+    cin.ignore();
     cin >> rpayment;
     ofstream f1("businessinfo.txt", ios::app);   // used to write inside the file with app mode
-    f1 << rusername << ' ' << rpassword << endl; // f1 is objectname for the file
+    f1 << rusername << gp << rpassword << gp << remail << gp <<  rmobile << gp << rpayment << endin; // f1 is objectname for the file
     system("cls");
     cout << "\n\t\t\t Thank you for registering! \n";
     main();
@@ -248,7 +328,7 @@ void registerinfo()
 
 void forgot()
 {
-    int count = 0;
+    bool count = 0;
     int option;
     system("cls");
     cout << "\t\t\t You forgot your password? \n";
