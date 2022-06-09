@@ -1,64 +1,82 @@
 #include <iostream>
+#include <fstream>
 #include <string>
+
 using namespace std;
 
-void printLine();              // decor func
-void titlePrinter(string tit); // line centerer
+void PrintLine();              // function to output a line for decoration
+void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
+bool yesno();
+void login();                  // function declaration
+void registerinfo();
+void forgot();
+void drivertest();
+int count; // create variables
+string username, password, userid, pass;
+string rusername, rpassword, ruserid, rpass, remail, raddress, rmobile, rpayment;
+string susername, suserid, spass;
+string gp = "|", endin = "\n************************************************************\n";
+
+
 
 int main()
 {
+    
+
     string title;
 
-    // Title Output
-    printLine();
+    // title output
+    PrintLine();
     title = ("TAXI FAANG PROJECT");
-    titlePrinter(title);
-    printLine();
+    TitlePrinter(title);
+    PrintLine();
     cout << endl;
 
-    // terms agreement var cont
-    string termsAgreementY[5] = {"Yes", "yes", "Y", "y", "YES"}, termsAgreementN[5] = {"No", "no", "N", "n", "NO"}, userAgreement;
 
-    // display terms and ask if user agrees or not
-    title = ("Terms and Conditions");
-    titlePrinter(title);
-    cout << R"(***enter terms and cond here***)" << endl;
-    printLine();
+
+    // debug ---
+    int a;
+    cout << "***************************************************\n";
+    cout << "___________TaxiFANNG NZ Booking Service____________\n";
+    cout << "***************************************************\n";
+    cout << "*********************** MENU **********************\n";
+    cout << "\t| Press 1 to Log in to your Booking Account|" << endl;
+    cout << "\t| Press 2 to Register with us! |" << endl;
+    cout << "\t| Press 3 if you forgot your password |" << endl;
+    cout << "\t| Press 4 to EXIT application |" << endl;
+    cout << "\t ^^^^^ Select your choice from above ^^^^^ : ";
+
+    cin >> a;
     cout << endl;
-termsR: // loop if wrong input
-    title = ("Do you agree with the Terms and Conditions?");
-    titlePrinter(title);
-    title = ("Yes / No");
-    titlePrinter(title);
-    cin >> userAgreement;
-    cin.ignore();
 
-    // loop and filter on if user agreed or not or entered a wrong input
-    for (int i = 0; i < 6; i++)
+    switch (a)
     {
-        if (userAgreement == termsAgreementY[i])
-        {
-            cout << "Were looking forward to our happy Journey with you ( ^ 0 ^)/" << endl;
-            break;
-        }
-        else if (userAgreement == termsAgreementN[i])
-        {
-            cout << "Were sad to see you go, we wish you a safe journey ( ^ 3 ^)/";
-            return 0;
-        }
-        else if (i > 4)
-        {
-            cout << "Wrong Input, please enter either (Yes / No)" << endl
-                 << endl;
-            goto termsR;
-        }
+    case 1:
+        login();
+        break;
+
+    case 2:
+        registerinfo();
+        break;
+    case 3:
+        forgot();
+        break;
+
+    case 4:
+        cout << " \t\t\t Kia ora !!! \n\n";
+        break;
+    default:
+        system("cls"); // everytime the code is processed the screen will clear
+        cout << " Please select a given option from above. \n"
+             << endl;
+        main();
     }
-    cout << "just testing the water" << endl;
+    //---debug
 
     return 0;
 }
 
-void printLine()
+void PrintLine()
 {
     for (int i = 0; i < 60; i++)
     {
@@ -67,15 +85,263 @@ void printLine()
     cout << endl;
 }
 
-void titlePrinter(string tit)
+void TitlePrinter(string title)
 {
-    int tot, spa, s;
-    tot = tit.length();
-    spa = 60 - tot;
-    s = spa / 2;
-    for (int i = 0; i != s; i++)
+    int total_spaces, space, space_print;
+    total_spaces = title.length();
+    space = 60 - total_spaces;
+    space_print = space / 2;
+    for (int i = 0; i != space_print; i++)
     {
         cout << " ";
     }
-    cout << tit << endl;
+    cout << title << endl;
 }
+
+bool yesno(){
+    string agree[5] = {"Yes", "yes", "Y", "y", "YES"};
+    string disagreed[5] = {"No", "no", "N", "n", "NO"};
+    string in;
+
+    yntp:
+
+    cin >> in;
+
+
+    for (int i = 0; i < 6; i++)
+    {
+        if (in == agree[i])
+        {
+            return 1;
+            break;
+        }
+        else if (in == disagreed[i])
+        {
+            return 0;
+            break;
+        }
+        else if (i > 4)
+        {
+            cout << "Wrong Input, please enter either (Yes / No)" << endl
+                 << endl;
+            goto yntp;
+        }
+    }
+}
+
+// debug---
+void login()
+{
+    int count;
+    string username, password, userid, pass;
+    system("cls");
+    cout << " Please Enter your Username and Password : " << endl;
+    cout << " USERNAME : ";
+    cin >> username;
+    cout << " PASSWORD : ";
+    cin >> password;
+
+
+    
+
+    ifstream input("businessinfo.txt"); // check if this username and password exists by reading data
+    while (input >> userid >> pass)
+    {
+        if (userid == username && pass == password)
+        {
+            count = 1;
+            system("cls");
+        }
+    }
+    input.close();
+
+    if (count == 1)
+    {
+        cout << "\n Your login is successful! Welcome " << username << "!\n";
+        main();
+    }
+    else
+    {
+        cout << "\n WOOPS, double-check your details! ";
+        main();
+    }
+}
+
+bool emailcheck(string email){
+    int at = -1, dot = -1;
+
+    if (!isalpha(email[0]))
+    {
+        return 0;
+    }
+
+    for (int i = 0; i <= email.length(); i++)
+    {
+        if (email[i] == '@')
+        {
+            at = i;
+        } else if (email[i] == '.')
+        {
+            dot = i;
+        }
+        
+        
+    }
+
+    
+
+    if (at == -1 || dot == -1)
+    {
+        return 0;
+    }
+
+    if (at > dot)
+    {
+        return 0;
+    }
+    
+
+
+
+
+
+    return 1;
+
+    
+    
+    
+    
+    
+
+
+    
+}
+
+void drivertest(){
+    
+    string q[5] = {"Have held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", "Question", "Question", "Question", "Question"};
+    
+    TitlePrinter("Driver Eligibility Questions");
+
+
+    for (int i = 0; i < 4; i++)
+    {
+        bool yn = NULL;
+        cout << q[i];
+        yn = yesno();
+        if (yn == 1)
+        {
+            continue;
+        } else if (yn == 0)
+        {
+            cout << "Sorry you are ineligible...\t";
+            main();
+        }
+        
+        
+    }
+
+    
+    
+}
+
+void registerinfo()
+{
+    string rusername, rpassword, rpass, remail, raddress, rmobile, rpayment;
+    string ruserid = "userDB/";
+    system("cls");
+    cout << "\t\t\t Enter a username : ";
+    cin >> rusername;
+
+    ruserid.append(rusername);
+    
+    cout << "\t\t\t Enter a password : ";
+    cin.ignore();
+    cin >> rpassword;
+    email:
+    cout << "\t\t\t Enter an email address : ";
+    cin.ignore();
+    cin >> remail;
+    //cout << emailcheck(remail);
+    if (emailcheck(remail) == 0)
+    {
+        cout << "Invalid Input, Please Try Again...\n";
+        goto email;
+    }
+    
+    // add something to say if it doesn't have @***.com it is not a valid email address
+    
+    
+    
+    /*cout << "\t\t\t Enter your home address : "; // Isuue here when input with spaces // skips next inputs depending on spaces
+    getline(cin, raddress);
+    cin.ignore();*/
+    
+    cout << "\t\t\t Enter your mobile number : ";
+    cin.ignore();
+    cin >> rmobile;
+    cout << "\t\t\t Enter your payment method :";
+    cin.ignore();
+    cin >> rpayment;
+
+    
+    ofstream f1(ruserid, ios::app);   // used to write inside the file with app mode
+    f1 << rusername << endl << rpassword << endl << remail << endl <<  rmobile << endl << rpayment << endin; // f1 is objectname for the file
+    f1.close(); 
+    system("cls");
+    cout << "\n\t\t\t Thank you for registering! \n";
+    main();
+}
+
+void forgot()
+{
+    bool count = 0;
+    int option;
+    system("cls");
+    cout << "\t\t\t You forgot your password? \n";
+    cout << " Press 1 to search via entering your username" << endl;
+    cout << " Press 2 to go back " << endl;
+    cout << "\t\t\t Choose : ";
+    cin >> option;
+
+    switch (option)
+    {
+    case 1:
+    {
+        string susername, suserid, spass;
+        cout << "\n\t\t\t Enter your username : ";
+        cin >> suserid;
+
+        ifstream f2("businessinfo.txt");
+        while (f2 >> suserid >> spass)
+        {
+            if (suserid == susername)
+            {
+                count = 1;
+            }
+        }
+        f2.close();
+        if (count == 1)
+        {
+            cout << "\n\n Your account is in our database! \n";
+            cout << "\n\n Your password is : " << spass << endl;
+            main();
+        }
+        else
+        {
+            cout << "\n\t Sorry, You don't have an account with us. \n";
+            main();
+        }
+    }
+    break;
+
+    case 2:
+        main();
+        break;
+
+    default:
+        cout << "\t\t\t Invalid choice, please try again " << endl;
+        forgot();
+    }
+}
+//---debug
