@@ -21,7 +21,7 @@ string gp = "|", endin = "\n****************************************************
 
 int main()
 {
-    drivertest();
+    
 
     string title;
 
@@ -32,45 +32,7 @@ int main()
     PrintLine();
     cout << endl;
 
-    // terms agreement var container
-    string terms_agreement_agree[5] = {"Yes", "yes", "Y", "y", "YES"};
-    string terms_agreement_disagreed[5] = {"No", "no", "N", "n", "NO"};
-    string user_agreement;
 
-    // display terms and ask if user agrees or not
-    title = ("Terms and Conditions");
-    TitlePrinter(title);
-    cout << "(***enter terms and cond here***)" << endl;
-    PrintLine();
-    cout << endl;
-termsR: // loop if wrong input
-    title = ("Do you agree with the Terms and Conditions?");
-    TitlePrinter(title);
-    title = ("Yes / No");
-    TitlePrinter(title);
-    cin >> user_agreement;
-    cin.ignore();
-
-    // loop and filter on if user agreed or not or entered a wrong input
-    for (int i = 0; i < 6; i++)
-    {
-        if (user_agreement == terms_agreement_agree[i])
-        {
-            cout << "Were looking forward to our happy Journey with you ( ^ 0 ^)/" << endl;
-            break;
-        }
-        else if (user_agreement == terms_agreement_disagreed[i])
-        {
-            cout << "Were sad to see you go, we wish you a safe journey ( ^ 3 ^)/";
-            return 0;
-        }
-        else if (i > 4)
-        {
-            cout << "Wrong Input, please enter either (Yes / No)" << endl
-                 << endl;
-            goto termsR;
-        }
-    }
 
     // debug ---
     int a;
@@ -285,11 +247,13 @@ void drivertest(){
 
 void registerinfo()
 {
-    string rusername, rpassword, ruserid, rpass, remail, raddress, rmobile, rpayment;
+    string rusername, rpassword, rpass, remail, raddress, rmobile, rpayment;
+    string ruserid = "userDB/";
     system("cls");
     cout << "\t\t\t Enter a username : ";
-    cin.ignore();
     cin >> rusername;
+
+    ruserid.append(rusername);
     
     cout << "\t\t\t Enter a password : ";
     cin.ignore();
@@ -311,16 +275,19 @@ void registerinfo()
     
     /*cout << "\t\t\t Enter your home address : "; // Isuue here when input with spaces // skips next inputs depending on spaces
     getline(cin, raddress);
-    /*cin.ignore();
-    cin >> raddress;*/
+    cin.ignore();*/
+    
     cout << "\t\t\t Enter your mobile number : ";
     cin.ignore();
     cin >> rmobile;
     cout << "\t\t\t Enter your payment method :";
     cin.ignore();
     cin >> rpayment;
-    ofstream f1("businessinfo.txt", ios::app);   // used to write inside the file with app mode
-    f1 << rusername << gp << rpassword << gp << remail << gp <<  rmobile << gp << rpayment << endin; // f1 is objectname for the file
+
+    
+    ofstream f1(ruserid, ios::app);   // used to write inside the file with app mode
+    f1 << rusername << endl << rpassword << endl << remail << endl <<  rmobile << endl << rpayment << endin; // f1 is objectname for the file
+    f1.close(); 
     system("cls");
     cout << "\n\t\t\t Thank you for registering! \n";
     main();
