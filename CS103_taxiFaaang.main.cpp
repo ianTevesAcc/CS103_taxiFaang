@@ -144,27 +144,7 @@ void login()
 
     
 
-    ifstream input("businessinfo.txt"); // check if this username and password exists by reading data
-    while (input >> userid >> pass)
-    {
-        if (userid == username && pass == password)
-        {
-            count = 1;
-            system("cls");
-        }
-    }
-    input.close();
-
-    if (count == 1)
-    {
-        cout << "\n Your login is successful! Welcome " << username << "!\n";
-        main();
-    }
-    else
-    {
-        cout << "\n WOOPS, double-check your details! ";
-        main();
-    }
+    
 }
 
 bool emailcheck(string email){
@@ -262,20 +242,12 @@ void registerinfo()
     cout << "\t\t\t Enter an email address : ";
     cin.ignore();
     cin >> remail;
-    //cout << emailcheck(remail);
+
     if (emailcheck(remail) == 0)
     {
         cout << "Invalid Input, Please Try Again...\n";
         goto email;
     }
-    
-    // add something to say if it doesn't have @***.com it is not a valid email address
-    
-    
-    
-    /*cout << "\t\t\t Enter your home address : "; // Isuue here when input with spaces // skips next inputs depending on spaces
-    getline(cin, raddress);
-    cin.ignore();*/
     
     cout << "\t\t\t Enter your mobile number : ";
     cin.ignore();
@@ -283,6 +255,19 @@ void registerinfo()
     cout << "\t\t\t Enter your payment method :";
     cin.ignore();
     cin >> rpayment;
+
+
+    cout << "(INSERT T&C'S HERE)\n";
+    bool yn = yesno();
+
+    if (yn == 0)
+    {
+        cout << "Sorry you can not Register...\n";
+        main();
+    }
+    
+
+    
 
     
     ofstream f1(ruserid, ios::app);   // used to write inside the file with app mode
