@@ -1,8 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <filesystem>
 
 using namespace std;
+namespace fs = std::filesystem;
 
 void PrintLine();              // function to output a line for decoration
 void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
@@ -128,20 +130,34 @@ bool yesno(){
         }
     }
 }
-
+void usrexists(const fs::path& p, fs::file_status s = fs::file_status{})
+{
+    cout << p;
+    if(fs::status_known(s) ? fs::exists(s) : fs::exists(p))
+        cout << " exists\n";
+    else
+        cout << " does not exist\n";
+}
 // debug---
 void login()
 {
+    
     int count;
     string username, password, userid, pass;
     system("cls");
     cout << " Please Enter your Username and Password : " << endl;
     cout << " USERNAME : ";
     cin >> username;
+    string ruserid = ".userDB/";
+    ruserid.append(username);
+    fs::path usrdb = ruserid;
+    usrexists(usrdb);
+
+
     cout << " PASSWORD : ";
     cin >> password;
 
-
+    
     
 
     
