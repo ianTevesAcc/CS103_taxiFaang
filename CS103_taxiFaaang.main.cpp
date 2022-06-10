@@ -2,12 +2,11 @@
 #include <fstream>
 #include <string>
 
-
 using namespace std;
 
 void PrintLine();              // function to output a line for decoration
 void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
-bool yesno();
+bool yesno();                  // stores and sorts different ways user can enter yes and no and determining the right output
 void login();                  // function declaration
 void registerinfo();
 void forgot();
@@ -18,11 +17,8 @@ string rusername, rpassword, ruserid, rpass, remail, raddress, rmobile, rpayment
 string susername, suserid, spass;
 string gp = "|", endin = "\n************************************************************\n";
 
-
-
 int main()
 {
-    
 
     string title;
 
@@ -32,8 +28,6 @@ int main()
     TitlePrinter(title);
     PrintLine();
     cout << endl;
-
-
 
     // debug ---
     int a;
@@ -99,15 +93,15 @@ void TitlePrinter(string title)
     cout << title << endl;
 }
 
-bool yesno(){
+bool yesno()
+{
     string agree[5] = {"Yes", "yes", "Y", "y", "YES"};
     string disagreed[5] = {"No", "no", "N", "n", "NO"};
     string in;
 
-    yntp:
+yntp:
 
     cin >> in;
-
 
     for (int i = 0; i < 6; i++)
     {
@@ -133,7 +127,7 @@ bool yesno(){
 // debug---
 void login()
 {
-    
+
     int count;
     string username, password, userid, pass;
     system("cls");
@@ -142,35 +136,36 @@ void login()
     cin >> username;
     string ruserid = "userDB/";
     ruserid.append(username);
-    
-
 
     cout << " PASSWORD : ";
     cin >> password;
 
     fstream user;
     user.open(ruserid, ios::in);
-    if (!user) {
+    if (!user)
+    {
         cout << "USER NOT FOUND";
-    } else {
+    }
+    else
+    {
         string pass;
 
         user >> pass;
 
-        if(password == pass){
+        if (password == pass)
+        {
             cout << "Login Successful";
-        } else {
+        }
+        else
+        {
             cout << "Incorrect Password, Try Again...\n";
             login();
         }
     }
-
-    
-
-    
 }
 
-bool emailcheck(string email){
+bool emailcheck(string email)
+{
     int at = -1, dot = -1;
 
     if (!isalpha(email[0]))
@@ -183,15 +178,12 @@ bool emailcheck(string email){
         if (email[i] == '@')
         {
             at = i;
-        } else if (email[i] == '.')
+        }
+        else if (email[i] == '.')
         {
             dot = i;
         }
-        
-        
     }
-
-    
 
     if (at == -1 || dot == -1)
     {
@@ -202,30 +194,16 @@ bool emailcheck(string email){
     {
         return 0;
     }
-    
-
-
-
-
 
     return 1;
-
-    
-    
-    
-    
-    
-
-
-    
 }
 
-void drivertest(){
-    
-    string q[5] = {"Have held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", "Question", "Question", "Question", "Question"};
-    
-    TitlePrinter("Driver Eligibility Questions");
+void drivertest()
+{
 
+    string q[5] = {"Have held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", "Question", "Question", "Question", "Question"};
+
+    TitlePrinter("Driver Eligibility Questions");
 
     for (int i = 0; i < 4; i++)
     {
@@ -235,17 +213,13 @@ void drivertest(){
         if (yn == 1)
         {
             continue;
-        } else if (yn == 0)
+        }
+        else if (yn == 0)
         {
             cout << "Sorry you are ineligible...\t";
             main();
         }
-        
-        
     }
-
-    
-    
 }
 
 void registerinfo()
@@ -257,11 +231,11 @@ void registerinfo()
     cin >> rusername;
 
     ruserid.append(rusername);
-    
+
     cout << "\t\t\t Enter a password : ";
     cin.ignore();
     cin >> rpassword;
-    email:
+email:
     cout << "\t\t\t Enter an email address : ";
     cin.ignore();
     cin >> remail;
@@ -271,14 +245,13 @@ void registerinfo()
         cout << "Invalid Input, Please Try Again...\n";
         goto email;
     }
-    
+
     cout << "\t\t\t Enter your mobile number : ";
     cin.ignore();
     cin >> rmobile;
     cout << "\t\t\t Enter your payment method :";
     cin.ignore();
     cin >> rpayment;
-
 
     cout << "(INSERT T&C'S HERE)\n";
     bool yn = yesno();
@@ -288,14 +261,13 @@ void registerinfo()
         cout << "Sorry you can not Register...\n";
         main();
     }
-    
 
-    
-
-    
-    ofstream f1(ruserid, ios::app);   // used to write inside the file with app mode
-    f1 << rpassword << endl << remail << endl <<  rmobile << endl << rpayment << endin; // f1 is objectname for the file
-    f1.close(); 
+    ofstream f1(ruserid, ios::app); // used to write inside the file with app mode
+    f1 << rpassword << endl
+       << remail << endl
+       << rmobile << endl
+       << rpayment << endin; // f1 is objectname for the file
+    f1.close();
     system("cls");
     cout << "\n\t\t\t Thank you for registering! \n";
     main();
