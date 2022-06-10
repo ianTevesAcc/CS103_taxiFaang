@@ -4,7 +4,6 @@
 #include <filesystem>
 
 using namespace std;
-namespace fs = std::filesystem;
 
 void PrintLine();              // function to output a line for decoration
 void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
@@ -130,14 +129,7 @@ bool yesno(){
         }
     }
 }
-void usrexists(const fs::path& p, fs::file_status s = fs::file_status{})
-{
-    cout << p;
-    if(fs::status_known(s) ? fs::exists(s) : fs::exists(p))
-        cout << " exists\n";
-    else
-        cout << " does not exist\n";
-}
+
 // debug---
 void login()
 {
@@ -148,16 +140,26 @@ void login()
     cout << " Please Enter your Username and Password : " << endl;
     cout << " USERNAME : ";
     cin >> username;
-    string ruserid = ".userDB/";
+    string ruserid = "userDB/";
     ruserid.append(username);
-    fs::path usrdb = ruserid;
-    usrexists(usrdb);
+    
 
 
     cout << " PASSWORD : ";
     cin >> password;
 
-    
+    fstream user;
+    user.open(ruserid, ios::in);
+    if (!user) {
+        cout << "USER NOT FOUND";
+    } else {
+        string pass;
+
+        user >> pass;
+
+        cout << pass;
+    }
+
     
 
     
@@ -287,7 +289,7 @@ void registerinfo()
 
     
     ofstream f1(ruserid, ios::app);   // used to write inside the file with app mode
-    f1 << rusername << endl << rpassword << endl << remail << endl <<  rmobile << endl << rpayment << endin; // f1 is objectname for the file
+    f1 << rpassword << endl << remail << endl <<  rmobile << endl << rpayment << endin; // f1 is objectname for the file
     f1.close(); 
     system("cls");
     cout << "\n\t\t\t Thank you for registering! \n";
