@@ -253,10 +253,22 @@ void registerinfo()
     string rusername, rpassword, rpass, remail, raddress, rmobile, rpayment;
     string ruserid = "userDB/";
     system("cls");
+    user:
     cout << "\t\t\t Enter a username : ";
     cin >> rusername;
 
     ruserid.append(rusername);
+
+    fstream test;                   //Check if username in use
+    test.open(ruserid, ios::in);
+    if (test)
+    {
+        test.close();
+        cout << "Username in use... Use Another\n";
+        ruserid = "userDB/";
+        goto user;
+    }
+    
     
     cout << "\t\t\t Enter a password : ";
     cin.ignore();
