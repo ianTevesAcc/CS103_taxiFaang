@@ -4,13 +4,13 @@
 
 using namespace std;
 
-void PrintLine();							 // function to output a line for decoration
+void PrintLine();			   // function to output a line for decoration
 void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
-bool yesno();									 // stores and sorts different ways user can enter yes and no and determining the right output
-void login();									 // function declaration
-void registerinfo();
+bool YesNo();				   // stores and sorts different ways user can enter yes and no and determining the right output
+void Login();				   // function declaration
+void RegisterInfo();
 void forgot();
-void drivertest();
+void DriverTest();
 int count; // create variables
 string username, password, userid, pass;
 string rusername, rpassword, ruserid, rpass, remail, raddress, rmobile, rpayment;
@@ -19,7 +19,6 @@ string gp = "|", endin = "\n****************************************************
 
 int main()
 {
-
 	string title;
 
 	// title output
@@ -31,6 +30,7 @@ int main()
 
 	// debug ---
 	int a;
+	PrintLine();
 	cout << "***************************************************\n";
 	cout << "___________TaxiFANNG NZ Booking Service____________\n";
 	cout << "***************************************************\n";
@@ -47,11 +47,11 @@ int main()
 	switch (a)
 	{
 	case 1:
-		login();
+		Login();
 		break;
 
 	case 2:
-		registerinfo();
+		RegisterInfo();
 		break;
 	case 3:
 		forgot();
@@ -63,7 +63,7 @@ int main()
 	default:
 		system("cls"); // everytime the code is processed the screen will clear
 		cout << " Please select a given option from above. \n"
-				 << endl;
+			 << endl;
 		main();
 	}
 	//---debug
@@ -93,7 +93,7 @@ void TitlePrinter(string title)
 	cout << title << endl;
 }
 
-bool yesno()
+bool YesNo()
 {
 	string agree[5] = {"Yes", "yes", "Y", "y", "YES"};
 	string disagreed[5] = {"No", "no", "N", "n", "NO"};
@@ -117,14 +117,14 @@ yntp:
 		else if (i > 4)
 		{
 			cout << "Wrong Input, please enter either (Yes / No)" << endl
-					 << endl;
+				 << endl;
 			goto yntp;
 		}
 	}
 }
 
 // debug---
-void login()
+void Login()
 {
 	int count;
 	string username, password, userid, pass;
@@ -157,7 +157,7 @@ void login()
 		else
 		{
 			cout << "Incorrect Password, Try Again...\n";
-			login();
+			Login();
 		}
 	}
 }
@@ -196,7 +196,7 @@ bool emailcheck(string email)
 	return 1;
 }
 
-void drivertest()
+void DriverTest()
 {
 
 	string q[5] = {"Have held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", "Question", "Question", "Question", "Question"};
@@ -207,7 +207,7 @@ void drivertest()
 	{
 		bool yn = NULL;
 		cout << q[i];
-		yn = yesno();
+		yn = YesNo();
 		if (yn == 1)
 		{
 			continue;
@@ -220,7 +220,7 @@ void drivertest()
 	}
 }
 
-void registerinfo()
+void RegisterInfo()
 {
 	string rusername, rpassword, rpass, remail, raddress, rmobile, rpayment;
 	string ruserid = "userDB/";
@@ -252,7 +252,7 @@ email:
 	cin >> rpayment;
 
 	cout << "(INSERT T&C'S HERE)\n";
-	bool yn = yesno();
+	bool yn = YesNo();
 
 	if (yn == 0)
 	{
@@ -262,9 +262,9 @@ email:
 
 	ofstream f1(ruserid, ios::app); // used to write inside the file with app mode
 	f1 << rpassword << endl
-		 << remail << endl
-		 << rmobile << endl
-		 << rpayment << endin; // f1 is objectname for the file
+	   << remail << endl
+	   << rmobile << endl
+	   << rpayment << endin; // f1 is objectname for the file
 	f1.close();
 	system("cls");
 	cout << "\n\t\t\t Thank you for registering! \n";
