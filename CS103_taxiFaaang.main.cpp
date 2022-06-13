@@ -416,7 +416,7 @@ rideinfo request(string pickup, string dropoff)
 
         system("cls");
 
-        info.driver = "drivername" //GET RANDOM DRIVER FROM DB --
+        info.driver = "drivername"; //GET RANDOM DRIVER FROM DB --
         
     
         srand(time(0));
