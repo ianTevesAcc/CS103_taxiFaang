@@ -23,6 +23,7 @@ class driverfiles {
 void PrintLine();              // function to output a line for decoration
 void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
 bool yesno();
+void cls();
 void login();                  // function declaration
 void registerinfo();
 void forgot();
@@ -40,11 +41,9 @@ string gp = "|", endin = "\n****************************************************
 int main()
 {
     
-    cout<<"The C++ compiler version is: "<<__VERSION__<<endl; //debugging - rem in final
 
-    rideinfo trip = request("string", "string");
 
-    cout << trip.cost << endl << trip.dis << endl << trip.drivdis << endl << trip.driver;
+
 
     string title;
 
@@ -89,7 +88,7 @@ int main()
         cout << " \t\t\t Kia ora !!! \n\n";
         break;
     default:
-        system("cls"); // everytime the code is processed the screen will clear
+        cls(); // everytime the code is processed the screen will clear
         cout << " Please select a given option from above. \n"
              << endl;
         main();
@@ -152,13 +151,27 @@ bool yesno(){
     }
 }
 
+void cls()
+{
+    if (__VERSION__ == "Apple LLVM 13.1.6 (clang-1316.0.21.2.5)")
+    {
+        system("clear");
+    } else
+    {
+        system("cls");
+    }
+    
+}
+
 // debug---
 void login()
 {
     
     int count;
     string username, password, userid, pass;
-    system("cls");
+    cls();
+    
+    
     cout << " Please Enter your Username and Password : " << endl;
     cout << " USERNAME : ";
     cin >> username;
@@ -337,7 +350,7 @@ void registerinfo()
 {
     string rusername, rpassword, rpass, remail, raddress, rmobile, rpayment;
     string ruserid = "userDB/";
-    system("cls");
+    cls();
     user:
     cout << "\t\t\t Enter a username : ";
     cin >> rusername;
@@ -393,8 +406,12 @@ void registerinfo()
     ofstream f1(ruserid, ios::app);   // used to write inside the file with app mode
     f1 << rpassword << endl << remail << endl <<  rmobile << endl << rpayment << endin; // f1 is objectname for the file
     f1.close(); 
-    system("cls");
+    cls();
+    PrintLine();
     cout << "\n\t\t\t Thank you for registering! \n";
+    PrintLine();
+    this_thread::sleep_for(chrono::milliseconds(5000));
+    cls();
     main();
 }
 
@@ -402,7 +419,7 @@ void forgot()
 {
     bool count = 0;
     int option;
-    system("cls");
+    cls();
     cout << "\t\t\t You forgot your password? \n";
     cout << " Press 1 to search via entering your username" << endl;
     cout << " Press 2 to go back " << endl;
@@ -515,7 +532,7 @@ rideinfo request(string pickup, string dropoff)
                 schln++;
             }
         }
-        system("cls");
+        cls();
 
          
 
@@ -543,7 +560,7 @@ rideinfo request(string pickup, string dropoff)
         PrintLine();
         cout <<  "\t\tDISTANCE AWAY: " << i << " KM\n";
         this_thread::sleep_for(chrono::milliseconds(5000));
-        system("cls");
+        cls();
         
 
     }*/
