@@ -1,0 +1,8 @@
+﻿  CS103_taxiFaaang.main.cpp
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(142,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(185,9): error C2065: '__VERSION__': undeclared identifier
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(503,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(511,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(514,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(544,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(571,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
