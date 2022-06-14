@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "istream": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "stop_token": "cpp"
     }
 }
