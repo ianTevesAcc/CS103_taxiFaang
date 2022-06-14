@@ -1,16 +1,25 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstdlib>
+#include <thread>
 
 using namespace std;
 
-void PrintLine();			   // function to output a line for decoration
+struct rideinfo {
+    int dis, drivdis;
+    float cost;
+    string driver, pick, drop;
+};
+
+void PrintLine();              // function to output a line for decoration
 void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
 bool YesNo();				   // stores and sorts different ways user can enter yes and no and determining the right output
 void Login();				   // function declaration
 void RegisterInfo();
 void forgot();
-void DriverTest();
+void drivertest();
+rideinfo request(string pickup, string dropoff);
 int count; // create variables
 string username, password, userid, pass;
 string rusername, rpassword, ruserid, rpass, remail, raddress, rmobile, rpayment;
@@ -19,56 +28,63 @@ string gp = "|", endin = "\n****************************************************
 
 int main()
 {
-	string title;
+    cout<<"The C++ compiler version is: "<<__VERSION__<<endl; //debugging - rem in final
 
-	// title output
-	PrintLine();
-	title = ("TAXI FAANG PROJECT");
-	TitlePrinter(title);
-	PrintLine();
-	cout << endl;
+    rideinfo trip = request("string", "string");
 
-	// debug ---
-	int a;
-	PrintLine();
-	cout << "***************************************************\n";
-	cout << "___________TaxiFANNG NZ Booking Service____________\n";
-	cout << "***************************************************\n";
-	cout << "*********************** MENU **********************\n";
-	cout << "\t| Press 1 to Log in to your Booking Account|" << endl;
-	cout << "\t| Press 2 to Register with us! |" << endl;
-	cout << "\t| Press 3 if you forgot your password |" << endl;
-	cout << "\t| Press 4 to EXIT application |" << endl;
-	cout << "\t ^^^^^ Select your choice from above ^^^^^ : ";
+    cout << trip.cost << endl << trip.dis << endl << trip.drivdis << endl << trip.driver;
 
-	cin >> a;
-	cout << endl;
+    string title;
 
-	switch (a)
-	{
-	case 1:
-		Login();
-		break;
+    // title output
+    PrintLine();
+    title = ("TAXI FAANG PROJECT");
+    TitlePrinter(title);
+    PrintLine();
+    cout << endl;
 
-	case 2:
-		RegisterInfo();
-		break;
-	case 3:
-		forgot();
-		break;
 
-	case 4:
-		cout << " \t\t\t Kia ora !!! \n\n";
-		break;
-	default:
-		system("cls"); // everytime the code is processed the screen will clear
-		cout << " Please select a given option from above. \n"
-			 << endl;
-		main();
-	}
-	//---debug
 
-	return 0;
+    // debug ---
+    int a;
+    cout << "***************************************************\n";
+    cout << "___________TaxiFANNG NZ Booking Service____________\n";
+    cout << "***************************************************\n";
+    cout << "*********************** MENU **********************\n";
+    cout << "\t| Press 1 to Log in to your Booking Account|" << endl;
+    cout << "\t| Press 2 to Register with us! |" << endl;
+    cout << "\t| Press 3 if you forgot your password |" << endl;
+    cout << "\t| Press 4 to EXIT application |" << endl;
+    cout << "\t ^^^^^ Select your choice from above ^^^^^ : ";
+
+    cin >> a;
+    cout << endl;
+
+    switch (a)
+    {
+    case 1:
+        login();
+        break;
+
+    case 2:
+        registerinfo();
+        break;
+    case 3:
+        forgot();
+        break;
+
+    case 4:
+        cout << " \t\t\t Kia ora !!! \n\n";
+        break;
+    default:
+        system("cls"); // everytime the code is processed the screen will clear
+        cout << " Please select a given option from above. \n"
+             << endl;
+        main();
+    }
+    //---debug
+
+    return 0;
 }
 
 void PrintLine()
@@ -196,79 +212,96 @@ bool emailcheck(string email)
 	return 1;
 }
 
-void DriverTest()
-{
 
-	string q[5] = {"Have held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", "Question", "Question", "Question", "Question"};
+void drivertest(){
+    
+    string q[5] = {"Have held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", "Question", "Question", "Question", "Question"};
+    
+    TitlePrinter("Driver Eligibility Questions");
 
-	TitlePrinter("Driver Eligibility Questions");
 
-	for (int i = 0; i < 4; i++)
-	{
-		bool yn = NULL;
-		cout << q[i];
-		yn = YesNo();
-		if (yn == 1)
-		{
-			continue;
-		}
-		else if (yn == 0)
-		{
-			cout << "Sorry you are ineligible...\t";
-			main();
-		}
-	}
+    for (int i = 0; i < 4; i++)
+    {
+        bool yn = NULL;
+        cout << q[i];
+        yn = yesno();
+        if (yn == 1)
+        {
+            continue;
+        } else if (yn == 0)
+        {
+            cout << "Sorry you are ineligible...\t";
+            main();
+        }
+        
+        
+    }
 }
 
 void RegisterInfo()
 {
-	string rusername, rpassword, rpass, remail, raddress, rmobile, rpayment;
-	string ruserid = "userDB/";
-	system("cls");
-	cout << "\t\t\t Enter a username : ";
-	cin >> rusername;
 
-	ruserid.append(rusername);
+    string rusername, rpassword, rpass, remail, raddress, rmobile, rpayment;
+    string ruserid = "userDB/";
+    system("cls");
+    user:
+    cout << "\t\t\t Enter a username : ";
+    cin >> rusername;
 
-	cout << "\t\t\t Enter a password : ";
-	cin.ignore();
-	cin >> rpassword;
-email:
-	cout << "\t\t\t Enter an email address : ";
-	cin.ignore();
-	cin >> remail;
+    ruserid.append(rusername);
 
-	if (emailcheck(remail) == 0)
-	{
-		cout << "Invalid Input, Please Try Again...\n";
-		goto email;
-	}
+    fstream test;                   //Check if username in use
+    test.open(ruserid, ios::in);
+    if (test)
+    {
+        test.close();
+        cout << "Username in use... Use Another\n";
+        ruserid = "userDB/";
+        goto user;
+    }
+    
+    
+    cout << "\t\t\t Enter a password : ";
+    cin.ignore();
+    cin >> rpassword;
+    email:
+    cout << "\t\t\t Enter an email address : ";
+    cin.ignore();
+    cin >> remail;
 
-	cout << "\t\t\t Enter your mobile number : ";
-	cin.ignore();
-	cin >> rmobile;
-	cout << "\t\t\t Enter your payment method :";
-	cin.ignore();
-	cin >> rpayment;
+    if (emailcheck(remail) == 0)
+    {
+        cout << "Invalid Input, Please Try Again...\n";
+        goto email;
+    }
+    
+    cout << "\t\t\t Enter your mobile number : ";
+    cin.ignore();
+    cin >> rmobile;
+    cout << "\t\t\t Enter your payment method :";
+    cin.ignore();
+    cin >> rpayment;
 
-	cout << "(INSERT T&C'S HERE)\n";
-	bool yn = YesNo();
 
-	if (yn == 0)
-	{
-		cout << "Sorry you can not Register...\n";
-		main();
-	}
+    cout << "(INSERT T&C'S HERE)\n";
+    bool yn = yesno();
 
-	ofstream f1(ruserid, ios::app); // used to write inside the file with app mode
-	f1 << rpassword << endl
-	   << remail << endl
-	   << rmobile << endl
-	   << rpayment << endin; // f1 is objectname for the file
-	f1.close();
-	system("cls");
-	cout << "\n\t\t\t Thank you for registering! \n";
-	main();
+    if (yn == 0)
+    {
+        cout << "Sorry you can not Register...\n";
+        main();
+    }
+    
+
+    
+
+    
+    ofstream f1(ruserid, ios::app);   // used to write inside the file with app mode
+    f1 << rpassword << endl << remail << endl <<  rmobile << endl << rpayment << endin; // f1 is objectname for the file
+    f1.close(); 
+    system("cls");
+    cout << "\n\t\t\t Thank you for registering! \n";
+    main();
 }
 
 void forgot()
@@ -322,4 +355,85 @@ void forgot()
 		forgot();
 	}
 }
-//---debug
+
+rideinfo request(string pickup, string dropoff)
+{
+    rideinfo info;
+    info.pick = pickup; info.drop = dropoff;
+    srand(time(0));
+    info.dis = rand() % 25;
+    
+    if (info.dis > 0 && info.dis < 6)
+    {
+        info.cost = 10;
+    } else if (info.dis > 5 && info.dis < 16)
+    {
+        info.cost = info.dis * 1.8;
+    } else if (info.dis > 15 && info.dis < 25)
+    {
+        info.cost = info.dis * 1.5;
+    }
+    
+    TitlePrinter("CONFIRM BOOKING");
+    cout << "\tPickup from: " << pickup << "\n\tDropoff at: " << dropoff << "\n\tDistance to Travel: " << info.dis << "\n\tTotal Cost: $" << info.cost << "\n\tConfirm: (Yes/No) ";
+    bool yn = yesno();
+
+    if (yn == 0)
+    {
+        cout << "\n\tBOOKING CANCELED";
+        main();
+    } else if (yn == 1)
+    {
+        TitlePrinter("SEARCHING AVAILABLE DRIVERS...");
+
+        
+
+        system("cls");
+
+        info.driver = "drivername"; //GET RANDOM DRIVER FROM DB --
+        
+    
+        srand(time(0));
+        info.drivdis = rand() % 5;
+
+        return info;
+    }
+    
+    
+    
+    
+    
+    
+    
+    /*for (int i = info.drivdis; i > 0 ; i--)
+    {
+         // replace with wait 1 min (enter to trigger)
+        
+        
+        cout << endl;
+        TitlePrinter(info.driver);
+        PrintLine();
+        cout <<  "\t\tDISTANCE AWAY: " << i << " KM\n";
+        this_thread::sleep_for(chrono::milliseconds(5000));
+        system("cls");
+        
+
+    }
+    strtd:
+    system("cls");
+    cout << endl;
+    TitlePrinter(info.driver);
+    PrintLine();
+    cout << "Has the trip started?: (Yes/No) ";
+    yn = yesno();
+    system("cls");
+    if (yn == 0)
+    {
+        goto strtd;
+    }*/
+
+
+    
+    
+
+}

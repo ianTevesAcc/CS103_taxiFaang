@@ -4,5 +4,6 @@
         "xstring": "cpp",
         "ostream": "cpp",
         "iostream": "cpp"
+        "chrono": "cpp"
     }
 }
