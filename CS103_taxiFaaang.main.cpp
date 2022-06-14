@@ -13,10 +13,17 @@ struct rideinfo {
     string driver, pick, drop;
 };
 
+class driverfiles {
+    public:
+    string names;
+
+};
+
 
 void PrintLine();              // function to output a line for decoration
 void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
 bool yesno();
+void cls();
 void login();                  // function declaration
 void registerinfo();
 void forgot();
@@ -33,11 +40,10 @@ string gp = "|", endin = "\n****************************************************
 
 int main()
 {
-    cout<<"The C++ compiler version is: "<<__VERSION__<<endl; //debugging - rem in final
+    
 
-    rideinfo trip = request("string", "string");
 
-    cout << trip.cost << endl << trip.dis << endl << trip.drivdis << endl << trip.driver;
+
 
     string title;
 
@@ -82,7 +88,7 @@ int main()
         cout << " \t\t\t Kia ora !!! \n\n";
         break;
     default:
-        system("cls"); // everytime the code is processed the screen will clear
+        cls(); // everytime the code is processed the screen will clear
         cout << " Please select a given option from above. \n"
              << endl;
         main();
@@ -145,13 +151,27 @@ bool yesno(){
     }
 }
 
+void cls()
+{
+    if (__VERSION__ == "Apple LLVM 13.1.6 (clang-1316.0.21.2.5)")
+    {
+        system("clear");
+    } else
+    {
+        system("cls");
+    }
+    
+}
+
 // debug---
 void login()
 {
     
     int count;
     string username, password, userid, pass;
-    system("cls");
+    cls();
+    
+    
     cout << " Please Enter your Username and Password : " << endl;
     cout << " USERNAME : ";
     cin >> username;
@@ -238,6 +258,8 @@ bool emailcheck(string email){
 void drivertest(){
     
     string q[5] = {"Have held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", "Question", "Question", "Question", "Question"};
+    char vehmnm[50], rego[7], disname[20];
+    int rating = 0;
     
     TitlePrinter("Driver Eligibility Questions");
 
@@ -259,6 +281,65 @@ void drivertest(){
         
     }
 
+    cout << "Please enter your vehicle make and model: ";
+    cin.ignore();
+    cin.getline(vehmnm, 50);
+
+    cout << "Please enter your REGO: ";
+    
+    cin.getline(rego, 7);
+
+    dis:
+    for (int f = 0; f < 19; f++)
+    {
+        disname[f] = '\0';       
+    }
+    cout << "Please enter Display Name: (20 Character Limit) ";
+    cin.getline(disname, 20);
+
+    bool spchk = 0;
+    for (int j = 0; j < 19; j++)
+    {
+        if (disname[j] == ' ')
+        {
+            spchk = 1;
+        }
+        
+    }
+    
+    if (spchk == 1)
+    {
+        cout << "ERROR: No spaces allowed, Try again...";
+        goto dis;
+    }
+    
+
+    string drivpath = "driverDB/";
+    drivpath.append(disname);
+    
+    ofstream drivls("driverDB/driverls", ios::app);
+    drivls << endl << disname;
+    
+    ofstream drivinfo(drivpath, ios::app);
+    int a = 0;
+    while (vehmnm[a] != '\0')
+    {
+        drivinfo << vehmnm[a];
+        a++;
+    }
+    drivinfo << endl;
+    a = 0;
+    while (rego[a] != '\0')
+    {
+        drivinfo << rego[a];
+        a++;
+    }
+    drivinfo << endl << '0';
+    drivls.close();
+    drivinfo.close();
+    
+    
+    
     
 
     
@@ -269,7 +350,7 @@ void registerinfo()
 {
     string rusername, rpassword, rpass, remail, raddress, rmobile, rpayment;
     string ruserid = "userDB/";
-    system("cls");
+    cls();
     user:
     cout << "\t\t\t Enter a username : ";
     cin >> rusername;
@@ -325,8 +406,12 @@ void registerinfo()
     ofstream f1(ruserid, ios::app);   // used to write inside the file with app mode
     f1 << rpassword << endl << remail << endl <<  rmobile << endl << rpayment << endin; // f1 is objectname for the file
     f1.close(); 
-    system("cls");
+    cls();
+    PrintLine();
     cout << "\n\t\t\t Thank you for registering! \n";
+    PrintLine();
+    this_thread::sleep_for(chrono::milliseconds(5000));
+    cls();
     main();
 }
 
@@ -334,7 +419,7 @@ void forgot()
 {
     bool count = 0;
     int option;
-    system("cls");
+    cls();
     cout << "\t\t\t You forgot your password? \n";
     cout << " Press 1 to search via entering your username" << endl;
     cout << " Press 2 to go back " << endl;
@@ -410,13 +495,48 @@ rideinfo request(string pickup, string dropoff)
         main();
     } else if (yn == 1)
     {
+        //GET RANDOM DRIVER FROM DB --
         TitlePrinter("SEARCHING AVAILABLE DRIVERS...");
+        PrintLine();
+
+        string line;
+        int lncnt = 0;
+
+        ifstream drivls("driverDB/driverls");
+        if (drivls.is_open())
+        {
+            while(!drivls.eof())
+            {
+                getline(drivls, line);
+                lncnt++;
+            }
+        }
+
+        srand(time(0));
+        int drivln = rand() % lncnt;
+
+        int schln = 0;
+
+        if (drivls.is_open())
+        {
+            while(getline(drivls, line))
+            {
+                
+                if (schln == drivln)
+                {
+                    info.driver = line;
+                    cout << line;
+                    drivls.close();
+                    break;
+                }
+                schln++;
+            }
+        }
+        cls();
+
+         
 
         
-
-        system("cls");
-
-        info.driver = "drivername"; //GET RANDOM DRIVER FROM DB --
         
     
         srand(time(0));
@@ -425,12 +545,11 @@ rideinfo request(string pickup, string dropoff)
         return info;
     }
     
-    
-    
-    
-    
-    
-    
+}
+
+
+
+    // FAKE DISTANCE COUNT
     /*for (int i = info.drivdis; i > 0 ; i--)
     {
          // replace with wait 1 min (enter to trigger)
@@ -441,25 +560,7 @@ rideinfo request(string pickup, string dropoff)
         PrintLine();
         cout <<  "\t\tDISTANCE AWAY: " << i << " KM\n";
         this_thread::sleep_for(chrono::milliseconds(5000));
-        system("cls");
+        cls();
         
 
-    }
-    strtd:
-    system("cls");
-    cout << endl;
-    TitlePrinter(info.driver);
-    PrintLine();
-    cout << "Has the trip started?: (Yes/No) ";
-    yn = yesno();
-    system("cls");
-    if (yn == 0)
-    {
-        goto strtd;
     }*/
-
-
-    
-    
-
-}
