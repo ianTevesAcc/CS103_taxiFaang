@@ -12,11 +12,18 @@ struct rideinfo {
     string driver, pick, drop;
 };
 
+class driverfiles {
+    public:
+    string names;
+};
+
+
 void PrintLine();              // function to output a line for decoration
 void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
-bool YesNo();				   // stores and sorts different ways user can enter yes and no and determining the right output
-void Login();				   // function declaration
-void RegisterInfo();
+bool yesno();
+void cls();
+void login();                  // function declaration
+void registerinfo();
 void forgot();
 void drivertest();
 rideinfo request(string pickup, string dropoff);
@@ -28,12 +35,6 @@ string gp = "|", endin = "\n****************************************************
 
 int main()
 {
-    cout<<"The C++ compiler version is: "<<__VERSION__<<endl; //debugging - rem in final
-
-    rideinfo trip = request("string", "string");
-
-    cout << trip.cost << endl << trip.dis << endl << trip.drivdis << endl << trip.driver;
-
     string title;
 
     // title output
@@ -42,8 +43,6 @@ int main()
     TitlePrinter(title);
     PrintLine();
     cout << endl;
-
-
 
     // debug ---
     int a;
@@ -77,7 +76,7 @@ int main()
         cout << " \t\t\t Kia ora !!! \n\n";
         break;
     default:
-        system("cls"); // everytime the code is processed the screen will clear
+        cls(); // everytime the code is processed the screen will clear
         cout << " Please select a given option from above. \n"
              << endl;
         main();
@@ -139,43 +138,67 @@ yntp:
 	}
 }
 
+void cls()
+{
+    #ifdef _WIN32
+    int OSver = 1;
+  
+    // Checking for mac OS with
+    // __APPLE__ macro
+    #elif __APPLE__
+    int OSver = 2;
+  
+    // Checking for linux OS with
+    // __linux__ macro
+    #elif __linux__
+    int OSver = 3;
+    
+    #endif;
+
+    if (OSver == 1)
+    {
+        system("cls");
+    } else if (OSver == 2 || OSver == 3)
+    {
+        system("clear");
+    }         
+}
+
 // debug---
 void Login()
 {
-	int count;
-	string username, password, userid, pass;
-	system("cls");
-	cout << " Please Enter your Username and Password : " << endl;
-	cout << " USERNAME : ";
-	cin >> username;
-	string ruserid = "userDB/";
-	ruserid.append(username);
+    int count;
+    string username, password, userid, pass;
+    cls();
+    
+    
+    cout << " Please Enter your Username and Password : " << endl;
+    cout << " USERNAME : ";
+    cin >> username;
+    string ruserid = "userDB/";
+    ruserid.append(username);
+    
 
-	cout << " PASSWORD : ";
-	cin >> password;
 
-	fstream user;
-	user.open(ruserid, ios::in);
-	if (!user)
-	{
-		cout << "USER NOT FOUND";
-	}
-	else
-	{
-		string pass;
+    cout << " PASSWORD : ";
+    cin >> password;
 
-		user >> pass;
+    fstream user;
+    user.open(ruserid, ios::in);
+    if (!user) {
+        cout << "USER NOT FOUND";
+    } else {
+        string pass;
 
-		if (password == pass)
-		{
-			cout << "Login Successful";
-		}
-		else
-		{
-			cout << "Incorrect Password, Try Again...\n";
-			Login();
-		}
-	}
+        user >> pass;
+
+        if(password == pass){
+            cout << "Login Successful";
+        } else {
+            cout << "Incorrect Password, Try Again...\n";
+            login();
+        }
+    }
 }
 
 bool emailcheck(string email)
@@ -213,12 +236,13 @@ bool emailcheck(string email)
 }
 
 
-void drivertest(){
-    
+void drivertest()
+{
     string q[5] = {"Have held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", "Question", "Question", "Question", "Question"};
+    char vehmnm[50], rego[7], disname[20];
+    int rating = 0;
     
     TitlePrinter("Driver Eligibility Questions");
-
 
     for (int i = 0; i < 4; i++)
     {
@@ -232,10 +256,65 @@ void drivertest(){
         {
             cout << "Sorry you are ineligible...\t";
             main();
+        }         
+    }
+
+    cout << "Please enter your vehicle make and model: ";
+    cin.ignore();
+    cin.getline(vehmnm, 50);
+
+    cout << "Please enter your REGO: ";
+    
+    cin.getline(rego, 7);
+
+    dis:
+    for (int f = 0; f < 19; f++)
+    {
+        disname[f] = '\0';       
+    }
+    cout << "Please enter Display Name: (20 Character Limit) ";
+    cin.getline(disname, 20);
+
+    bool spchk = 0;
+    for (int j = 0; j < 19; j++)
+    {
+        if (disname[j] == ' ')
+        {
+            spchk = 1;
         }
         
-        
     }
+    
+    if (spchk == 1)
+    {
+        cout << "ERROR: No spaces allowed, Try again...";
+        goto dis;
+    }
+    
+
+    string drivpath = "driverDB/";
+    drivpath.append(disname);
+    
+    ofstream drivls("driverDB/driverls", ios::app);
+    drivls << endl << disname;
+    
+    ofstream drivinfo(drivpath, ios::app);
+    int a = 0;
+    while (vehmnm[a] != '\0')
+    {
+        drivinfo << vehmnm[a];
+        a++;
+    }
+    drivinfo << endl;
+    a = 0;
+    while (rego[a] != '\0')
+    {
+        drivinfo << rego[a];
+        a++;
+    }
+    drivinfo << endl << '0';
+    drivls.close();
+    drivinfo.close();
 }
 
 void RegisterInfo()
@@ -243,7 +322,7 @@ void RegisterInfo()
 
     string rusername, rpassword, rpass, remail, raddress, rmobile, rpayment;
     string ruserid = "userDB/";
-    system("cls");
+    cls();
     user:
     cout << "\t\t\t Enter a username : ";
     cin >> rusername;
@@ -299,61 +378,65 @@ void RegisterInfo()
     ofstream f1(ruserid, ios::app);   // used to write inside the file with app mode
     f1 << rpassword << endl << remail << endl <<  rmobile << endl << rpayment << endin; // f1 is objectname for the file
     f1.close(); 
-    system("cls");
+    cls();
+    PrintLine();
     cout << "\n\t\t\t Thank you for registering! \n";
+    PrintLine();
+    this_thread::sleep_for(chrono::milliseconds(5000));
+    cls();
     main();
 }
 
 void forgot()
 {
-	bool count = 0;
-	int option;
-	system("cls");
-	cout << "\t\t\t You forgot your password? \n";
-	cout << " Press 1 to search via entering your username" << endl;
-	cout << " Press 2 to go back " << endl;
-	cout << "\t\t\t Choose : ";
-	cin >> option;
+    bool count = 0;
+    int option;
+    cls();
+    cout << "\t\t\t You forgot your password? \n";
+    cout << " Press 1 to search via entering your username" << endl;
+    cout << " Press 2 to go back " << endl;
+    cout << "\t\t\t Choose : ";
+    cin >> option;
 
-	switch (option)
-	{
-	case 1:
-	{
-		string susername, suserid, spass;
-		cout << "\n\t\t\t Enter your username : ";
-		cin >> suserid;
+    switch (option)
+    {
+    case 1:
+    {
+        string susername, suserid, spass;
+        cout << "\n\t\t\t Enter your username : ";
+        cin >> suserid;
 
-		ifstream f2("businessinfo.txt");
-		while (f2 >> suserid >> spass)
-		{
-			if (suserid == susername)
-			{
-				count = 1;
-			}
-		}
-		f2.close();
-		if (count == 1)
-		{
-			cout << "\n\n Your account is in our database! \n";
-			cout << "\n\n Your password is : " << spass << endl;
-			main();
-		}
-		else
-		{
-			cout << "\n\t Sorry, You don't have an account with us. \n";
-			main();
-		}
-	}
-	break;
+        ifstream f2("businessinfo.txt");
+        while (f2 >> suserid >> spass)
+        {
+            if (suserid == susername)
+            {
+                count = 1;
+            }
+        }
+        f2.close();
+        if (count == 1)
+        {
+            cout << "\n\n Your account is in our database! \n";
+            cout << "\n\n Your password is : " << spass << endl;
+            main();
+        }
+        else
+        {
+            cout << "\n\t Sorry, You don't have an account with us. \n";
+            main();
+        }
+    }
+    break;
 
-	case 2:
-		main();
-		break;
+    case 2:
+        main();
+        break;
 
-	default:
-		cout << "\t\t\t Invalid choice, please try again " << endl;
-		forgot();
-	}
+    default:
+        cout << "\t\t\t Invalid choice, please try again " << endl;
+        forgot();
+    }
 }
 
 rideinfo request(string pickup, string dropoff)
@@ -384,13 +467,48 @@ rideinfo request(string pickup, string dropoff)
         main();
     } else if (yn == 1)
     {
+        //GET RANDOM DRIVER FROM DB --
         TitlePrinter("SEARCHING AVAILABLE DRIVERS...");
+        PrintLine();
+
+        string line;
+        int lncnt = 0;
+
+        ifstream drivls("driverDB/driverls");
+        if (drivls.is_open())
+        {
+            while(!drivls.eof())
+            {
+                getline(drivls, line);
+                lncnt++;
+            }
+        }
+
+        srand(time(0));
+        int drivln = rand() % lncnt;
+
+        int schln = 0;
+
+        if (drivls.is_open())
+        {
+            while(getline(drivls, line))
+            {
+                
+                if (schln == drivln)
+                {
+                    info.driver = line;
+                    cout << line;
+                    drivls.close();
+                    break;
+                }
+                schln++;
+            }
+        }
+        cls();
+
+         
 
         
-
-        system("cls");
-
-        info.driver = "drivername"; //GET RANDOM DRIVER FROM DB --
         
     
         srand(time(0));
@@ -399,12 +517,11 @@ rideinfo request(string pickup, string dropoff)
         return info;
     }
     
-    
-    
-    
-    
-    
-    
+}
+
+
+
+    // FAKE DISTANCE COUNT
     /*for (int i = info.drivdis; i > 0 ; i--)
     {
          // replace with wait 1 min (enter to trigger)
@@ -415,25 +532,7 @@ rideinfo request(string pickup, string dropoff)
         PrintLine();
         cout <<  "\t\tDISTANCE AWAY: " << i << " KM\n";
         this_thread::sleep_for(chrono::milliseconds(5000));
-        system("cls");
+        cls();
         
 
-    }
-    strtd:
-    system("cls");
-    cout << endl;
-    TitlePrinter(info.driver);
-    PrintLine();
-    cout << "Has the trip started?: (Yes/No) ";
-    yn = yesno();
-    system("cls");
-    if (yn == 0)
-    {
-        goto strtd;
     }*/
-
-
-    
-    
-
-}
