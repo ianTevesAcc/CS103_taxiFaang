@@ -85,7 +85,56 @@ int main()
     }
    
 
+<<<<<<< Updated upstream
   mainMenu:
+=======
+
+
+    cout << "\t\t CS103 GROUP PROJECT - Ian, Thomas, Bree" << endl;
+    cout << "\t\t\t                 ____" << endl;
+    cout << "\t\t\t             __/  |_|_" << endl;
+    cout << "\t\t\t------------|  _     _``-.-------TAXIFANNG----------" << endl;
+    cout << "\t\t\t            '-(_)---(_)--'" << endl;
+    cout << "\t\t\t______________Please read Our T's & C's_____________" << endl << endl << endl;
+
+    // Customer terms and conditions
+    cout << "\t\t\t_________For Our Customers__________" << endl << endl;
+    cout << "\t\t1. Stay safe and wear a mask unless you need to drink water" << endl;
+    cout << "\t\t2. Please sit in the back seat if available to avoid transmission of Covid-19" << endl;
+    cout << "\t\t3.If you have covid or flu symptoms please stay home and take a rapid-antigen test" << endl;
+    cout << "\t\t4. Discrimination towards our drivers will not be tolerated." << endl;
+    cout << "\t\t5. No consumption of food or drinks allowed within the taxi unless it is water." << endl;
+    cout << "\t\t6. If you feel you need to be sick please ask our friendly staff to stop the car as to avoid messes." << endl;
+    cout << "\t\t7. Any spill of food or drink may result in a customer being charged a fee for car cleaning." << endl << endl << endl;
+
+    // Driver terms and conditions
+    cout << "\t\t\t__________For our Drivers___________" << endl << endl;
+    cout << "\t\t1. You must be at least 21 years of age to drive for us." << endl;
+    cout << "\t\t1. In order to drive for us, you will need to have had both Covid-19" << endl;
+    cout << "\t\t   vaccinations." << endl;
+    cout << "\t\t2. Always wear a face mask when driving with a passenger (unless you" << endl;
+    cout << "\t\t   have a medical exemption)." << endl;
+    cout << "\t\t3. Always conduct yourself in a professional manner with" << endl;
+    cout << "\t\t   all customers. Discrimination will not be tolerated." << endl;
+    cout << "\t\t5. All drivers who choose to participate in TaxiFanng NZ booking Service" << endl;
+    cout << "\t\t   must hold a full license and hold an approved license endorsement." << endl << endl << endl << endl;
+
+    cout << "Do you agree to these terms and conditions? (Answer: y/n)" << endl;
+
+    bool yn = yesno();
+    if (yn == 1) {
+        cout << "Welcome to our service";
+        goto mainMenu;
+    }
+    else {
+        // everytime the code is processed the screen will clear
+        cout << " Unless you agree you are not able to use our service. \n"
+            << endl;
+    }
+
+
+mainMenu:
+>>>>>>> Stashed changes
     int a;
     cout << "\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl; // Altered Menu
     cout << "\t\t\t ------------------- MAIN MENU ---------------------" << endl;
@@ -96,7 +145,10 @@ int main()
     cout << "\t\t\t| Press 3 if you forgot your password               |" << endl;
     cout << "\t\t\t| Press 4 to EXIT application                       |" << endl;
     cout << "\t\t\t ^^^^^ Select your choice from above ^^^^^ : ";
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     cin >> a;
     cout << endl;
 

@@ -1,4 +1,5 @@
 ﻿  CS103_taxiFaaang.main.cpp
+<<<<<<< Updated upstream
 D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(142,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(185,9): error C2065: '__VERSION__': undeclared identifier
 D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(503,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
@@ -6,3 +7,15 @@ D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS10
 D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(514,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(544,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(571,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+=======
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(144,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(219,9): warning C4101: 'count': unreferenced local variable
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(523,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(531,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(534,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(564,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(591,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(183): warning C4715: 'yesno': not all control paths return a value
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(597): warning C4715: 'request': not all control paths return a value
+  CS103_taxiFaaang.main.vcxproj -> D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\x64\Debug\CS103_taxiFaaang.main.exe
+>>>>>>> Stashed changes
