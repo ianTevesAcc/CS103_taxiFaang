@@ -3,8 +3,10 @@
 #include <string>
 #include <cstdlib>
 #include <thread>
-
 #include "GFglobal_functions.h"
+#include "CMcustomer_menu.h"
+#include "DMdriver_menu.h"
+#include "AMadmin_menu.h"
 
 using namespace std;
 
@@ -33,6 +35,9 @@ string gp = "|", endin = "\n****************************************************
 
 int main()
 {
+    CustomerMainMenu();
+    DriverMainMenu();
+    AdminMainMenu();
     string title;
 
     // title output

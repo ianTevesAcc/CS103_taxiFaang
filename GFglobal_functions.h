@@ -1,3 +1,6 @@
+#ifndef GFglobal_functions_h
+#define GFglobal_function_h
+
 #include <iostream>
 using namespace std;
 
@@ -6,3 +9,5 @@ void TitlePrinter(string title);
 bool yesno();
 void cls();
 void login(); // function declaration
+
+#endif
