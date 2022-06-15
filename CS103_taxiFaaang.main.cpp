@@ -159,7 +159,7 @@ void cls()
 #elif __linux__
     int OSver = 3;
 
-#endif;
+#endif
 
     if (OSver == 1)
     {
