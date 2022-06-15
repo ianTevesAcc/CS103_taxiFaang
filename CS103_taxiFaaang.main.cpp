@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <thread>
 
-#include "test.h"
+#include "GFglobal_functions.h"
 
 using namespace std;
 
@@ -21,11 +21,6 @@ public:
     string names;
 };
 
-void PrintLine();              // function to output a line for decoration
-void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
-bool yesno();
-void cls();
-void login(); // function declaration
 void registerinfo();
 void forgot();
 void drivertest();
@@ -38,8 +33,6 @@ string gp = "|", endin = "\n****************************************************
 
 int main()
 {
-    printTest();
-
     string title;
 
     // title output
@@ -91,126 +84,7 @@ int main()
     return 0;
 }
 
-void PrintLine()
-{
-    for (int i = 0; i < 60; i++)
-    {
-        cout << "*";
-    }
-    cout << endl;
-}
-
-void TitlePrinter(string title)
-{
-    int total_spaces, space, space_print;
-    total_spaces = title.length();
-    space = 60 - total_spaces;
-    space_print = space / 2;
-    for (int i = 0; i != space_print; i++)
-    {
-        cout << " ";
-    }
-    cout << title << endl;
-}
-
-bool yesno()
-{
-    string agree[5] = {"Yes", "yes", "Y", "y", "YES"};
-    string disagreed[5] = {"No", "no", "N", "n", "NO"};
-    string in;
-
-yntp:
-
-    cin >> in;
-
-    for (int i = 0; i < 6; i++)
-    {
-        if (in == agree[i])
-        {
-            return 1;
-            break;
-        }
-        else if (in == disagreed[i])
-        {
-            return 0;
-            break;
-        }
-        else if (i > 4)
-        {
-            cout << "Wrong Input, please enter either (Yes / No)" << endl
-                 << endl;
-            goto yntp;
-        }
-    }
-}
-
-void cls()
-{
-#ifdef _WIN32
-    int OSver = 1;
-
-// Checking for mac OS with
-// __APPLE__ macro
-#elif __APPLE__
-    int OSver = 2;
-
-// Checking for linux OS with
-// __linux__ macro
-#elif __linux__
-    int OSver = 3;
-
-#endif
-
-    if (OSver == 1)
-    {
-        system("cls");
-    }
-    else if (OSver == 2 || OSver == 3)
-    {
-        system("clear");
-    }
-}
-
 // debug---
-void login()
-{
-
-    int count;
-    string username, password, userid, pass;
-    cls();
-
-    cout << " Please Enter your Username and Password : " << endl;
-    cout << " USERNAME : ";
-    cin >> username;
-    string ruserid = "userDB/";
-    ruserid.append(username);
-
-    cout << " PASSWORD : ";
-    cin >> password;
-
-    fstream user;
-    user.open(ruserid, ios::in);
-    if (!user)
-    {
-        cout << "USER NOT FOUND";
-    }
-    else
-    {
-        string pass;
-
-        user >> pass;
-
-        if (password == pass)
-        {
-            cout << "Login Successful";
-        }
-        else
-        {
-            cout << "Incorrect Password, Try Again...\n";
-            login();
-        }
-    }
-}
 
 bool emailcheck(string email)
 {

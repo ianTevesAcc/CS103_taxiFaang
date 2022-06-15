@@ -1,6 +1,19 @@
 {
     "files.associations": {
         "istream": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "atomic": "cpp",
+        "type_traits": "cpp",
+        "fstream": "cpp",
+        "ostream": "cpp",
+        "semaphore": "cpp",
+        "stdexcept": "cpp",
+        "stop_token": "cpp",
+        "streambuf": "cpp",
+        "system_error": "cpp",
+        "thread": "cpp",
+        "tuple": "cpp",
+        "typeinfo": "cpp",
+        "iostream": "cpp"
     }
 }
