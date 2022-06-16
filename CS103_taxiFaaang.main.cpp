@@ -4,27 +4,29 @@
 #include <cstdlib>
 #include <thread>
 
+#include "test.h"
 
 using namespace std;
 
-struct rideinfo {
+struct rideinfo
+{
     int dis, drivdis;
     float cost;
     string driver, pick, drop;
 };
 
+
 class driverfiles {
+
 public:
     string names;
-
 };
-
 
 void PrintLine();              // function to output a line for decoration
 void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
 bool yesno();
 void cls();
-void login();                  // function declaration
+void login(); // function declaration
 void registerinfo();
 void forgot();
 void drivertest();
@@ -35,11 +37,9 @@ string rusername, rpassword, ruserid, rpass, remail, raddress, rmobile, rpayment
 string susername, suserid, spass;
 string gp = "|", endin = "\n************************************************************\n";
 
-
-
-
 int main()
 {
+
 
 
     cout << "\t\t CS103 GROUP PROJECT - Ian, Thomas, Bree" << endl;
@@ -86,6 +86,7 @@ int main()
 
 
 mainMenu:
+
     int a;
     cout << "\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl; // Altered Menu
     cout << "\t\t\t ------------------- MAIN MENU ---------------------" << endl;
@@ -149,15 +150,16 @@ void TitlePrinter(string title)
     cout << title << endl;
 }
 
+
 bool yesno() {
     string agree[5] = { "Yes", "yes", "Y", "y", "YES" };
     string disagreed[5] = { "No", "no", "N", "n", "NO" };
+
     string in;
 
 yntp:
 
     cin >> in;
-
 
     for (int i = 0; i < 6; i++)
     {
@@ -184,6 +186,7 @@ void cls()
 
 {
 
+
 #ifdef _WIN32
 
     int OSver = 1;
@@ -208,8 +211,8 @@ void cls()
 
 
 
-    if (OSver == 1)
 
+    if (OSver == 1)
     {
 
         system("cls");
@@ -217,11 +220,13 @@ void cls()
     }
     else if (OSver == 2 || OSver == 3)
 
+
     {
 
         system("clear");
 
     }
+
 
 }
 
@@ -241,24 +246,28 @@ void login()
     ruserid.append(username);
 
 
-
     cout << " PASSWORD : ";
     cin >> password;
 
     fstream user;
     user.open(ruserid, ios::in);
-    if (!user) {
+    if (!user)
+    {
         cout << "USER NOT FOUND";
     }
+
     else {
+
         string pass;
 
         user >> pass;
+
 
         if (password == pass) {
             cout << "Login Successful";
         }
         else {
+
             cout << "Incorrect Password, Try Again...\n";
             login();
         }
@@ -267,9 +276,11 @@ void login()
 
 
 
+
 }
 
 bool emailcheck(string email) {
+
     int at = -1, dot = -1;
 
     if (!isalpha(email[0]))
@@ -289,7 +300,9 @@ bool emailcheck(string email) {
         }
 
 
+
     }
+
 
 
 
@@ -344,7 +357,6 @@ void drivertest() {
             main();
         }
 
-
     }
 
     cout << "Please enter your vehicle make and model: ";
@@ -384,7 +396,9 @@ dis:
     drivpath.append(disname);
 
     ofstream drivls("driverDB/driverls", ios::app);
+
     drivls << endl << disname;
+
 
     ofstream drivinfo(drivpath, ios::app);
     int a = 0;
@@ -400,15 +414,10 @@ dis:
         drivinfo << rego[a];
         a++;
     }
-    drivinfo << endl << '0';
+    drivinfo << endl
+             << '0';
     drivls.close();
     drivinfo.close();
-
-
-
-
-
-
 
 }
 
@@ -423,7 +432,7 @@ user:
 
     ruserid.append(rusername);
 
-    fstream test;                   //Check if username in use
+    fstream test; // Check if username in use
     test.open(ruserid, ios::in);
     if (test)
     {
@@ -455,7 +464,6 @@ email:
     cin.ignore();
     cin >> rpayment;
 
-
     cout << "(INSERT T&C'S HERE)\n";
     bool yn = yesno();
 
@@ -469,8 +477,10 @@ email:
 
 
 
+
     ofstream f1(ruserid, ios::app);   // used to write inside the file with app mode
     f1 << rpassword << endl << remail << endl << rmobile << endl << rpayment << endin; // f1 is objectname for the file
+
     f1.close();
     cls();
     PrintLine();
@@ -536,7 +546,8 @@ void forgot()
 rideinfo request(string pickup, string dropoff)
 {
     rideinfo info;
-    info.pick = pickup; info.drop = dropoff;
+    info.pick = pickup;
+    info.drop = dropoff;
     srand(time(0));
     info.dis = rand() % 25;
 
@@ -564,7 +575,7 @@ rideinfo request(string pickup, string dropoff)
     }
     else if (yn == 1)
     {
-        //GET RANDOM DRIVER FROM DB --
+        // GET RANDOM DRIVER FROM DB --
         TitlePrinter("SEARCHING AVAILABLE DRIVERS...");
         PrintLine();
 
@@ -608,28 +619,11 @@ rideinfo request(string pickup, string dropoff)
 
 
 
-        srand(time(0));
-        info.drivdis = rand() % 5;
-
-        return info;
-    }
-
-}
-
-
-
 // FAKE DISTANCE COUNT
 /*for (int i = info.drivdis; i > 0 ; i--)
 {
      // replace with wait 1 min (enter to trigger)
 
 
-    cout << endl;
-    TitlePrinter(info.driver);
-    PrintLine();
-    cout <<  "\t\tDISTANCE AWAY: " << i << " KM\n";
-    this_thread::sleep_for(chrono::milliseconds(5000));
-    cls();
+=======
 
-
-}*/
