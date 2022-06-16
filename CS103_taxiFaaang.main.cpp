@@ -15,8 +15,8 @@ struct rideinfo
     string driver, pick, drop;
 };
 
-
-class driverfiles {
+class driverfiles
+{
 
 public:
     string names;
@@ -40,27 +40,31 @@ string gp = "|", endin = "\n****************************************************
 int main()
 {
 
-
-
     cout << "\t\t CS103 GROUP PROJECT - Ian, Thomas, Bree" << endl;
     cout << "\t\t\t                 ____" << endl;
     cout << "\t\t\t             __/  |_|_" << endl;
     cout << "\t\t\t------------|  _     _``-.-------TAXIFANNG----------" << endl;
     cout << "\t\t\t            '-(_)---(_)--'" << endl;
-    cout << "\t\t\t______________Please read Our T's & C's_____________" << endl << endl << endl;
+    cout << "\t\t\t______________Please read Our T's & C's_____________" << endl
+         << endl
+         << endl;
 
     // Customer terms and conditions
-    cout << "\t\t\t_________For Our Customers__________" << endl << endl;
+    cout << "\t\t\t_________For Our Customers__________" << endl
+         << endl;
     cout << "\t\t1. Stay safe and wear a mask unless you need to drink water" << endl;
     cout << "\t\t2. Please sit in the back seat if available to avoid transmission of Covid-19" << endl;
     cout << "\t\t3.If you have covid or flu symptoms please stay home and take a rapid-antigen test" << endl;
     cout << "\t\t4. Discrimination towards our drivers will not be tolerated." << endl;
     cout << "\t\t5. No consumption of food or drinks allowed within the taxi unless it is water." << endl;
     cout << "\t\t6. If you feel you need to be sick please ask our friendly staff to stop the car as to avoid messes." << endl;
-    cout << "\t\t7. Any spill of food or drink may result in a customer being charged a fee for car cleaning." << endl << endl << endl;
+    cout << "\t\t7. Any spill of food or drink may result in a customer being charged a fee for car cleaning." << endl
+         << endl
+         << endl;
 
     // Driver terms and conditions
-    cout << "\t\t\t__________For our Drivers___________" << endl << endl;
+    cout << "\t\t\t__________For our Drivers___________" << endl
+         << endl;
     cout << "\t\t1. You must be at least 21 years of age to drive for us." << endl;
     cout << "\t\t1. In order to drive for us, you will need to have had both Covid-19" << endl;
     cout << "\t\t   vaccinations." << endl;
@@ -69,21 +73,25 @@ int main()
     cout << "\t\t3. Always conduct yourself in a professional manner with" << endl;
     cout << "\t\t   all customers. Discrimination will not be tolerated." << endl;
     cout << "\t\t5. All drivers who choose to participate in TaxiFanng NZ booking Service" << endl;
-    cout << "\t\t   must hold a full license and hold an approved license endorsement." << endl << endl << endl << endl;
+    cout << "\t\t   must hold a full license and hold an approved license endorsement." << endl
+         << endl
+         << endl
+         << endl;
 
     cout << "Do you agree to these terms and conditions? (Answer: yes/no)" << endl;
 
     bool yn = yesno();
-    if (yn == 1) {
+    if (yn == 1)
+    {
         cout << "Welcome to our service";
         goto mainMenu;
     }
-    else {
+    else
+    {
         // everytime the code is processed the screen will clear
         cout << " Unless you agree you are not able to use our service. \n"
-            << endl;
+             << endl;
     }
-
 
 mainMenu:
 
@@ -120,7 +128,7 @@ mainMenu:
     default:
         cls(); // everytime the code is processed the screen will clear
         cout << " Please select a given option from above. \n"
-            << endl;
+             << endl;
         main();
     }
     //---debug
@@ -150,10 +158,10 @@ void TitlePrinter(string title)
     cout << title << endl;
 }
 
-
-bool yesno() {
-    string agree[5] = { "Yes", "yes", "Y", "y", "YES" };
-    string disagreed[5] = { "No", "no", "N", "n", "NO" };
+bool yesno()
+{
+    string agree[5] = {"Yes", "yes", "Y", "y", "YES"};
+    string disagreed[5] = {"No", "no", "N", "n", "NO"};
 
     string in;
 
@@ -176,7 +184,7 @@ yntp:
         else if (i > 4)
         {
             cout << "Wrong Input, please enter either (Yes / No)" << endl
-                << endl;
+                 << endl;
             goto yntp;
         }
     }
@@ -185,7 +193,6 @@ yntp:
 void cls()
 
 {
-
 
 #ifdef _WIN32
 
@@ -207,27 +214,19 @@ void cls()
 
     int OSver = 3;
 
-#endif;
-
-
-
+#endif
 
     if (OSver == 1)
     {
 
         system("cls");
-
     }
     else if (OSver == 2 || OSver == 3)
-
 
     {
 
         system("clear");
-
     }
-
-
 }
 
 // debug---
@@ -238,13 +237,11 @@ void login()
     string username, password, userid, pass;
     cls();
 
-
     cout << " Please Enter your Username and Password : " << endl;
     cout << " USERNAME : ";
     cin >> username;
     string ruserid = "userDB/";
     ruserid.append(username);
-
 
     cout << " PASSWORD : ";
     cin >> password;
@@ -256,30 +253,28 @@ void login()
         cout << "USER NOT FOUND";
     }
 
-    else {
+    else
+    {
 
         string pass;
 
         user >> pass;
 
-
-        if (password == pass) {
+        if (password == pass)
+        {
             cout << "Login Successful";
         }
-        else {
+        else
+        {
 
             cout << "Incorrect Password, Try Again...\n";
             login();
         }
     }
-
-
-
-
-
 }
 
-bool emailcheck(string email) {
+bool emailcheck(string email)
+{
 
     int at = -1, dot = -1;
 
@@ -298,13 +293,7 @@ bool emailcheck(string email) {
         {
             dot = i;
         }
-
-
-
     }
-
-
-
 
     if (at == -1 || dot == -1)
     {
@@ -316,31 +305,17 @@ bool emailcheck(string email) {
         return 0;
     }
 
-
-
-
-
-
     return 1;
-
-
-
-
-
-
-
-
-
 }
 
-void drivertest() {
+void drivertest()
+{
 
-    string q[5] = { "Have held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", "Question", "Question", "Question", "Question" };
+    string q[5] = {"Have held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", "Question", "Question", "Question", "Question"};
     char vehmnm[50], rego[7], disname[20];
     int rating = 0;
 
     TitlePrinter("Driver Eligibility Questions");
-
 
     for (int i = 0; i < 4; i++)
     {
@@ -356,7 +331,6 @@ void drivertest() {
             cout << "Sorry you are ineligible...\t";
             main();
         }
-
     }
 
     cout << "Please enter your vehicle make and model: ";
@@ -382,7 +356,6 @@ dis:
         {
             spchk = 1;
         }
-
     }
 
     if (spchk == 1)
@@ -391,14 +364,13 @@ dis:
         goto dis;
     }
 
-
     string drivpath = "driverDB/";
     drivpath.append(disname);
 
     ofstream drivls("driverDB/driverls", ios::app);
 
-    drivls << endl << disname;
-
+    drivls << endl
+           << disname;
 
     ofstream drivinfo(drivpath, ios::app);
     int a = 0;
@@ -418,7 +390,6 @@ dis:
              << '0';
     drivls.close();
     drivinfo.close();
-
 }
 
 void registerinfo()
@@ -441,7 +412,6 @@ user:
         ruserid = "userDB/";
         goto user;
     }
-
 
     cout << "\t\t\t Enter a password : ";
     cin.ignore();
@@ -473,13 +443,11 @@ email:
         main();
     }
 
-
-
-
-
-
-    ofstream f1(ruserid, ios::app);   // used to write inside the file with app mode
-    f1 << rpassword << endl << remail << endl << rmobile << endl << rpayment << endin; // f1 is objectname for the file
+    ofstream f1(ruserid, ios::app); // used to write inside the file with app mode
+    f1 << rpassword << endl
+       << remail << endl
+       << rmobile << endl
+       << rpayment << endin; // f1 is objectname for the file
 
     f1.close();
     cls();
@@ -613,17 +581,13 @@ rideinfo request(string pickup, string dropoff)
             }
         }
         cls();
-
-
-
-
-
+    }
+}
 
 // FAKE DISTANCE COUNT
-/*for (int i = info.drivdis; i > 0 ; i--)
+/*
+for (int i = info.drivdis; i > 0 ; i--)
 {
      // replace with wait 1 min (enter to trigger)
-
-
-=======
-
+}
+*/
