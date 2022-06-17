@@ -16,7 +16,6 @@ struct rideinfo
 
 class driverfiles
 {
-
 public:
     string names;
 };
@@ -103,7 +102,7 @@ void cls() // clear console
 void SignIn();
 void SignUp();
 void ForgotPassword();
-void drivertest();
+void DriverTest();
 
 /*UNKNOWN*/
 rideinfo request(string pickup, string dropoff);
@@ -120,11 +119,19 @@ void TitlePage()
 {
 kInvalidInput:
 
-    cout << "\t\t TAXI FAANG" << endl;
-    cout << "\t\t\t                 ____" << endl;
-    cout << "\t\t\t             __/  |_|_" << endl;
-    cout << "\t\t\t------------|  _     _``-.-------TAXIFANNG----------" << endl;
-    cout << "\t\t\t            '-(_)---(_)--'" << endl;
+    cout << "\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl;
+    cout << "\t\t\t ------------------- TAXI SERVE ---------------------" << endl;
+    cout << "\t\t\t|                                                   |" << endl;
+    cout << "\t\t\t|___________________________________________________|" << endl;
+    cout << "\t\t\t| Press 1 to Log-in                                 |" << endl;
+    cout << "\t\t\t| Press 2 to Register with Us                       |" << endl;
+    cout << "\t\t\t| Press 3 if you forgot your password               |" << endl;
+    cout << "\t\t\t| Press 4 to EXIT application                       |" << endl;
+    cout << "\t\t\t ^^^^^ Select your choice from above ^^^^^ : ";
+    cout << "\t\t\t                       ____" << endl;
+    cout << "\t\t\t                   __/  |_|_" << endl;
+    cout << "\t\t\t------------------|  _     _``-.--------------------" << endl;
+    cout << "\t\t\t                  '-(_)---(_)--'" << endl;
     cout << "\t\t\t\tSafety is our middle name" << endl
          << endl
          << endl;
@@ -155,7 +162,6 @@ kInvalidInput:
         system("pause");
         cls();
         goto kInvalidInput;
-        break;
     }
 
     cls();
@@ -164,111 +170,68 @@ kInvalidInput:
 /*MENU JUNCTION*/
 void MenuJunction()
 {
+kInvalidInput:
+
+    cout << "\t\t TAXI FAANG" << endl
+         << endl;
+    cout << "Continue (1)\nBecome a Driver (2)\nSign Out(3)\nExit (4)\n\nEnter Selection: ";
+    cin >> choice;
+
+    switch (choice)
+    {
+    case '1':
+        break;
+
+    case '2':
+        choice = '2';
+        break;
+
+    default:
+        cout << "Invalid Input\nTry Again\n\nPress any key to CONTINUE" << endl;
+        system("pause");
+        cls();
+        goto kInvalidInput;
+    }
 }
 
 /*CUSTOMER MENU*/
+void CustomerMenu()
+{
+    cout << "Customer Menu" << endl;
+}
 
-/*DRIVER */
+/*DRIVER MENU*/
+void DriverMenu()
+{
+    cout << "Driver Menu" << endl;
+}
+
+/*ADMIN MENU*/
 
 int main()
 {
     TitlePage();
     MenuJunction();
-
-    // customer terms and conditions
-    cout << "\t\t\t_________For Our Customers__________" << endl
-         << endl;
-    cout << "\t\t1. Stay safe and wear a mask unless you need to drink water" << endl;
-    cout << "\t\t2. Please sit in the back seat if available to avoid transmission of Covid-19" << endl;
-    cout << "\t\t3.If you have covid or flu symptoms please stay home and take a rapid-antigen test" << endl;
-    cout << "\t\t4. Discrimination towards our drivers will not be tolerated." << endl;
-    cout << "\t\t5. No consumption of food or drinks allowed within the taxi unless it is water." << endl;
-    cout << "\t\t6. If you feel you need to be sick please ask our friendly staff to stop the car as to avoid messes." << endl;
-    cout << "\t\t7. Any spill of food or drink may result in a customer being charged a fee for car cleaning." << endl
-         << endl
-         << endl;
-
-    // driver terms and conditions
-    cout << "\t\t\t__________For our Drivers___________" << endl
-         << endl;
-    cout << "\t\t1. You must be at least 21 years of age to drive for us." << endl;
-    cout << "\t\t1. In order to drive for us, you will need to have had both Covid-19" << endl;
-    cout << "\t\t   vaccinations." << endl;
-    cout << "\t\t2. Always wear a face mask when driving with a passenger (unless you" << endl;
-    cout << "\t\t   have a medical exemption)." << endl;
-    cout << "\t\t3. Always conduct yourself in a professional manner with" << endl;
-    cout << "\t\t   all customers. Discrimination will not be tolerated." << endl;
-    cout << "\t\t5. All drivers who choose to participate in TaxiFanng NZ booking Service" << endl;
-    cout << "\t\t   must hold a full license and hold an approved license endorsement." << endl
-         << endl
-         << endl
-         << endl;
-
-    cout << "Do you agree to these terms and conditions? (Answer: yes/no)" << endl;
-
-    bool yn = yesno();
-    if (yn == 1)
+    if (choice = '1')
     {
-        cout << "Welcome to our service";
-        goto mainMenu;
+        CustomerMenu();
     }
-    else
+    else if (choice = '2')
     {
-        // everytime the code is processed the screen will clear
-        cout << " Unless you agree you are not able to use our service. \n"
-             << endl;
-    }
-
-mainMenu:
-
-    int a;
-    cout << "\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl; // Altered Menu
-    cout << "\t\t\t ------------------- MAIN MENU ---------------------" << endl;
-    cout << "\t\t\t|                                                   |" << endl;
-    cout << "\t\t\t|___________________________________________________|" << endl;
-    cout << "\t\t\t| Press 1 to Log-in                                 |" << endl;
-    cout << "\t\t\t| Press 2 to Register with Us                       |" << endl;
-    cout << "\t\t\t| Press 3 if you forgot your password               |" << endl;
-    cout << "\t\t\t| Press 4 to EXIT application                       |" << endl;
-    cout << "\t\t\t ^^^^^ Select your choice from above ^^^^^ : ";
-
-    cin >> a;
-    cout << endl;
-
-    switch (a)
-    {
-    case 1:
-        SignIn();
-        break;
-
-    case 2:
-        SignUp();
-        break;
-    case 3:
-        ForgotPassword();
-        break;
-
-    case 4:
-        cout << " \t\t\t Kia ora !!! \n\n";
-        break;
-    default:
-        cls(); // everytime the code is processed the screen will clear
-        cout << " Please select a given option from above. \n"
-             << endl;
-        main();
+        DriverTest();
+        DriverMenu();
     }
 
     return 0;
 }
 
 /*SIGN IN*/
-void SignIn()
+void SignIn() // add funcction in which if username and password == admin login admin menu will open up
 {
     int count;
     string username, password, userid, pass;
-    cls();
 
-    cout << " Please Enter your Username and Password : " << endl;
+    cout << "Sign In: " << endl;
     cout << " USERNAME : ";
     cin >> username;
     string ruserid = "userDB/";
@@ -296,6 +259,72 @@ void SignIn()
             SignIn();
         }
     }
+}
+void SignUp() // place customers terms and conditions here
+{
+    string rusername, rpassword, rpass, remail, raddress, rmobile, rpayment;
+    string ruserid = "userDB/";
+    cls();
+user:
+    cout << "\t\t\t Enter a username : ";
+    cin >> rusername;
+
+    ruserid.append(rusername);
+
+    fstream test; // Check if username in use
+    test.open(ruserid, ios::in);
+    if (test)
+    {
+        test.close();
+        cout << "Username in use... Use Another\n";
+        ruserid = "userDB/";
+        goto user;
+    }
+
+    cout << "\t\t\t Enter a password : ";
+    cin.ignore();
+    cin >> rpassword;
+email:
+    cout << "\t\t\t Enter an email address : ";
+    cin.ignore();
+    cin >> remail;
+
+    if (emailcheck(remail) == 0)
+    {
+        cout << "Invalid Input, Please Try Again...\n";
+        goto email;
+    }
+
+    cout << "\t\t\t Enter your mobile number : ";
+    cin.ignore();
+    cin >> rmobile;
+    cout << "\t\t\t Enter your payment method :";
+    cin.ignore();
+    cin >> rpayment;
+
+    cout << "(INSERT T&C'S HERE)\n";
+    bool yn = yesno();
+
+    if (yn == 0)
+    {
+        cout << "Sorry you can not Register...\n";
+        main();
+    }
+
+    ofstream f1(ruserid, ios::app); // used to write inside the file with app mode
+    f1 << rpassword << endl
+       << remail << endl
+       << rmobile << endl
+       << rpayment << endin; // f1 is objectname for the file
+
+    f1.close();
+    cls();
+    PrintLine();
+    cout << "\n\t\t\t Thank you for registering! \n";
+    PrintLine();
+    this_thread::sleep_for(chrono::milliseconds(5000));
+    cls();
+    main();
 }
 bool emailcheck(string email)
 {
@@ -330,7 +359,7 @@ bool emailcheck(string email)
 
     return 1;
 }
-void drivertest()
+void DriverTest() // place drivers terms and conditions here
 {
 
     string q[5] = {"Have held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", "Question", "Question", "Question", "Question"};
@@ -412,72 +441,6 @@ dis:
              << '0';
     drivls.close();
     drivinfo.close();
-}
-void SignUp()
-{
-    string rusername, rpassword, rpass, remail, raddress, rmobile, rpayment;
-    string ruserid = "userDB/";
-    cls();
-user:
-    cout << "\t\t\t Enter a username : ";
-    cin >> rusername;
-
-    ruserid.append(rusername);
-
-    fstream test; // Check if username in use
-    test.open(ruserid, ios::in);
-    if (test)
-    {
-        test.close();
-        cout << "Username in use... Use Another\n";
-        ruserid = "userDB/";
-        goto user;
-    }
-
-    cout << "\t\t\t Enter a password : ";
-    cin.ignore();
-    cin >> rpassword;
-email:
-    cout << "\t\t\t Enter an email address : ";
-    cin.ignore();
-    cin >> remail;
-
-    if (emailcheck(remail) == 0)
-    {
-        cout << "Invalid Input, Please Try Again...\n";
-        goto email;
-    }
-
-    cout << "\t\t\t Enter your mobile number : ";
-    cin.ignore();
-    cin >> rmobile;
-    cout << "\t\t\t Enter your payment method :";
-    cin.ignore();
-    cin >> rpayment;
-
-    cout << "(INSERT T&C'S HERE)\n";
-    bool yn = yesno();
-
-    if (yn == 0)
-    {
-        cout << "Sorry you can not Register...\n";
-        main();
-    }
-
-    ofstream f1(ruserid, ios::app); // used to write inside the file with app mode
-    f1 << rpassword << endl
-       << remail << endl
-       << rmobile << endl
-       << rpayment << endin; // f1 is objectname for the file
-
-    f1.close();
-    cls();
-    PrintLine();
-    cout << "\n\t\t\t Thank you for registering! \n";
-    PrintLine();
-    this_thread::sleep_for(chrono::milliseconds(5000));
-    cls();
-    main();
 }
 void ForgotPassword()
 {
@@ -611,4 +574,51 @@ for (int i = info.drivdis; i > 0 ; i--)
 {
      // replace with wait 1 min (enter to trigger)
 }
+*/
+
+// Terms and service
+/*
+    // customer terms and conditions
+    cout << "\t\t\t_________For Our Customers__________" << endl
+         << endl;
+    cout << "\t\t1. Stay safe and wear a mask unless you need to drink water" << endl;
+    cout << "\t\t2. Please sit in the back seat if available to avoid transmission of Covid-19" << endl;
+    cout << "\t\t3.If you have covid or flu symptoms please stay home and take a rapid-antigen test" << endl;
+    cout << "\t\t4. Discrimination towards our drivers will not be tolerated." << endl;
+    cout << "\t\t5. No consumption of food or drinks allowed within the taxi unless it is water." << endl;
+    cout << "\t\t6. If you feel you need to be sick please ask our friendly staff to stop the car as to avoid messes." << endl;
+    cout << "\t\t7. Any spill of food or drink may result in a customer being charged a fee for car cleaning." << endl
+         << endl
+         << endl;
+
+    // driver terms and conditions
+    cout << "\t\t\t__________For our Drivers___________" << endl
+         << endl;
+    cout << "\t\t1. You must be at least 21 years of age to drive for us." << endl;
+    cout << "\t\t1. In order to drive for us, you will need to have had both Covid-19" << endl;
+    cout << "\t\t   vaccinations." << endl;
+    cout << "\t\t2. Always wear a face mask when driving with a passenger (unless you" << endl;
+    cout << "\t\t   have a medical exemption)." << endl;
+    cout << "\t\t3. Always conduct yourself in a professional manner with" << endl;
+    cout << "\t\t   all customers. Discrimination will not be tolerated." << endl;
+    cout << "\t\t5. All drivers who choose to participate in TaxiFanng NZ booking Service" << endl;
+    cout << "\t\t   must hold a full license and hold an approved license endorsement." << endl
+         << endl
+         << endl
+         << endl;
+
+    cout << "Do you agree to these terms and conditions? (Answer: yes/no)" << endl;
+
+    bool yn = yesno();
+    if (yn == 1)
+    {
+        cout << "Welcome to our service";
+        goto mainMenu;
+    }
+    else
+    {
+        // everytime the code is processed the screen will clear
+        cout << " Unless you agree you are not able to use our service. \n"
+             << endl;
+    }
 */
