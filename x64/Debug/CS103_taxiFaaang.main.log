@@ -1,12 +1,9 @@
 ﻿  CS103_taxiFaaang.main.cpp
-D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(142,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(232,9): warning C4101: 'count': unreferenced local variable
-D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(540,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(549,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(553,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(584,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(611,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(181): warning C4715: 'yesno': not all control paths return a value
-D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(617): warning C4715: 'request': not all control paths return a value
-  LINK : D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\x64\Debug\CS103_taxiFaaang.main.exe not found or not built by the last incremental link; performing full link
-  CS103_taxiFaaang.main.vcxproj -> D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\x64\Debug\CS103_taxiFaaang.main.exe
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(35,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(234,9): warning C4101: 'count': unreferenced local variable
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(506,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(515,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(519,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(550,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(74): warning C4715: 'yesno': not all control paths return a value
+D:\Users\270147104\OneDrive - UP Education\Documents\GitHub\CS103_taxiFaang\CS103_taxiFaaang.main.cpp(572): error C4716: 'request': must return a value
