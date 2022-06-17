@@ -6,6 +6,7 @@
 
 using namespace std;
 
+/*DATA BASE*/
 struct rideinfo
 {
     int dis, drivdis;
@@ -20,14 +21,91 @@ public:
     string names;
 };
 
-void PrintLine();              // function to output a line for decoration
-void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
-bool yesno();
-void cls();
-void login(); // function declaration
-void registerinfo();
-void forgot();
+/*GLOBAL FUNCTIONS*/
+void PrintLine() // function to output a line for decoration
+{
+    for (int i = 0; i < 60; i++)
+    {
+        cout << "*";
+    }
+    cout << endl;
+}
+void TitlePrinter(string title) // prints title into center
+{
+    int total_spaces, space, space_print;
+    total_spaces = title.length();
+    space = 60 - total_spaces;
+    space_print = space / 2;
+    for (int i = 0; i != space_print; i++)
+    {
+        cout << " ";
+    }
+    cout << title << endl;
+}
+bool yesno() // iterate if user has selected yes or no
+{
+    string agree[5] = {"Yes", "yes", "Y", "y", "YES"};
+    string disagreed[5] = {"No", "no", "N", "n", "NO"};
+
+    string in;
+
+yntp:
+
+    cin >> in;
+
+    for (int i = 0; i < 6; i++)
+    {
+        if (in == agree[i])
+        {
+            return 1;
+            break;
+        }
+        else if (in == disagreed[i])
+        {
+            return 0;
+            break;
+        }
+        else if (i > 4)
+        {
+            cout << "Wrong Input, please enter either (Yes / No)" << endl
+                 << endl;
+            goto yntp;
+        }
+    }
+}
+void cls() // clear console
+{
+#ifdef _WIN32
+    int OSver = 1;
+    // Checking for mac OS with
+    // __APPLE__ macro
+
+#elif __APPLE__
+    int OSver = 2;
+    // Checking for linux OS with
+    // __linux__ macro
+
+#elif __linux__
+    int OSver = 3;
+
+#endif
+    if (OSver == 1)
+    {
+        system("cls");
+    }
+    else if (OSver == 2 || OSver == 3)
+    {
+        system("clear");
+    }
+}
+
+/*SIGN IN*/
+void SignIn();
+void SignUp();
+void ForgotPassword();
 void drivertest();
+
+/*UNKNOWN*/
 rideinfo request(string pickup, string dropoff);
 int count; // create variables
 string username, password, userid, pass;
@@ -35,19 +113,69 @@ string rusername, rpassword, ruserid, rpass, remail, raddress, rmobile, rpayment
 string susername, suserid, spass;
 string gp = "|", endin = "\n************************************************************\n";
 
-int main()
-{
+char choice;
 
-    cout << "\t\t CS103 GROUP PROJECT - Ian, Thomas, Bree" << endl;
+/*TITLE*/
+void TitlePage()
+{
+kInvalidInput:
+
+    cout << "\t\t TAXI FAANG" << endl;
     cout << "\t\t\t                 ____" << endl;
     cout << "\t\t\t             __/  |_|_" << endl;
     cout << "\t\t\t------------|  _     _``-.-------TAXIFANNG----------" << endl;
     cout << "\t\t\t            '-(_)---(_)--'" << endl;
-    cout << "\t\t\t______________Please read Our T's & C's_____________" << endl
+    cout << "\t\t\t\tSafety is our middle name" << endl
          << endl
          << endl;
 
-    // Customer terms and conditions
+    cout << R"(
+        *   login (1)
+        *   sign up (2)
+        *   forgot password (3)
+        *   exit (4)
+        
+        Enter Selection: 
+    )";
+
+    cin >> choice;
+
+    switch (choice)
+    {
+    case '1':
+        SignIn();
+        break;
+
+    case '2':
+        SignUp();
+        break;
+
+    default:
+        cout << "Invalid Input\nTry Again\n\nPress any key to CONTINUE" << endl;
+        system("pause");
+        cls();
+        goto kInvalidInput;
+        break;
+    }
+
+    cls();
+}
+
+/*MENU JUNCTION*/
+void MenuJunction()
+{
+}
+
+/*CUSTOMER MENU*/
+
+/*DRIVER */
+
+int main()
+{
+    TitlePage();
+    MenuJunction();
+
+    // customer terms and conditions
     cout << "\t\t\t_________For Our Customers__________" << endl
          << endl;
     cout << "\t\t1. Stay safe and wear a mask unless you need to drink water" << endl;
@@ -60,7 +188,7 @@ int main()
          << endl
          << endl;
 
-    // Driver terms and conditions
+    // driver terms and conditions
     cout << "\t\t\t__________For our Drivers___________" << endl
          << endl;
     cout << "\t\t1. You must be at least 21 years of age to drive for us." << endl;
@@ -110,14 +238,14 @@ mainMenu:
     switch (a)
     {
     case 1:
-        login();
+        SignIn();
         break;
 
     case 2:
-        registerinfo();
+        SignUp();
         break;
     case 3:
-        forgot();
+        ForgotPassword();
         break;
 
     case 4:
@@ -129,108 +257,13 @@ mainMenu:
              << endl;
         main();
     }
-    //---debug
 
     return 0;
 }
 
-void PrintLine()
+/*SIGN IN*/
+void SignIn()
 {
-    for (int i = 0; i < 60; i++)
-    {
-        cout << "*";
-    }
-    cout << endl;
-}
-
-void TitlePrinter(string title)
-{
-    int total_spaces, space, space_print;
-    total_spaces = title.length();
-    space = 60 - total_spaces;
-    space_print = space / 2;
-    for (int i = 0; i != space_print; i++)
-    {
-        cout << " ";
-    }
-    cout << title << endl;
-}
-
-bool yesno()
-{
-    string agree[5] = {"Yes", "yes", "Y", "y", "YES"};
-    string disagreed[5] = {"No", "no", "N", "n", "NO"};
-
-    string in;
-
-yntp:
-
-    cin >> in;
-
-    for (int i = 0; i < 6; i++)
-    {
-        if (in == agree[i])
-        {
-            return 1;
-            break;
-        }
-        else if (in == disagreed[i])
-        {
-            return 0;
-            break;
-        }
-        else if (i > 4)
-        {
-            cout << "Wrong Input, please enter either (Yes / No)" << endl
-                 << endl;
-            goto yntp;
-        }
-    }
-}
-
-void cls()
-
-{
-
-#ifdef _WIN32
-
-    int OSver = 1;
-
-    // Checking for mac OS with
-
-    // __APPLE__ macro
-
-#elif __APPLE__
-
-    int OSver = 2;
-
-    // Checking for linux OS with
-
-    // __linux__ macro
-
-#elif __linux__
-
-    int OSver = 3;
-
-#endif
-
-    if (OSver == 1)
-    {
-
-        system("cls");
-    }
-    else if (OSver == 2 || OSver == 3)
-
-    {
-
-        system("clear");
-    }
-}
-
-// debug---
-void login()
-{
-
     int count;
     string username, password, userid, pass;
     cls();
@@ -240,7 +273,6 @@ void login()
     cin >> username;
     string ruserid = "userDB/";
     ruserid.append(username);
-
     cout << " PASSWORD : ";
     cin >> password;
 
@@ -250,30 +282,23 @@ void login()
     {
         cout << "USER NOT FOUND";
     }
-
     else
     {
-
         string pass;
-
         user >> pass;
-
         if (password == pass)
         {
             cout << "Login Successful";
         }
         else
         {
-
             cout << "Incorrect Password, Try Again...\n";
-            login();
+            SignIn();
         }
     }
 }
-
 bool emailcheck(string email)
 {
-
     int at = -1, dot = -1;
 
     if (!isalpha(email[0]))
@@ -305,7 +330,6 @@ bool emailcheck(string email)
 
     return 1;
 }
-
 void drivertest()
 {
 
@@ -389,8 +413,7 @@ dis:
     drivls.close();
     drivinfo.close();
 }
-
-void registerinfo()
+void SignUp()
 {
     string rusername, rpassword, rpass, remail, raddress, rmobile, rpayment;
     string ruserid = "userDB/";
@@ -456,8 +479,7 @@ email:
     cls();
     main();
 }
-
-void forgot()
+void ForgotPassword()
 {
     bool count = 0;
     int option;
@@ -505,10 +527,11 @@ void forgot()
 
     default:
         cout << "\t\t\t Invalid choice, please try again " << endl;
-        forgot();
+        ForgotPassword();
     }
 }
 
+/*UNKNOWN*/
 rideinfo request(string pickup, string dropoff)
 {
     rideinfo info;
