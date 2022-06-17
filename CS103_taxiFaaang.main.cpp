@@ -181,9 +181,11 @@ kInvalidInput:
     switch (choice)
     {
     case '1':
+        cls();
         break;
 
     case '2':
+        cls();
         choice = '2';
         break;
 
