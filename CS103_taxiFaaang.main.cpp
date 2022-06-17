@@ -101,6 +101,7 @@ void cls() // clear console
 /*SIGN IN*/
 void SignIn();
 void SignUp();
+bool emailcheck(string email);
 void ForgotPassword();
 void DriverTest();
 
@@ -194,19 +195,19 @@ kInvalidInput:
     }
 }
 
-/*CUSTOMER MENU*/
+/*CUSTOMER SUB-MENUS*/
 void CustomerMenu()
 {
     cout << "Customer Menu" << endl;
 }
 
-/*DRIVER MENU*/
+/*DRIVER SUB-MENUS*/
 void DriverMenu()
 {
     cout << "Driver Menu" << endl;
 }
 
-/*ADMIN MENU*/
+/*ADMIN SUB-MENUS*/
 
 int main()
 {
