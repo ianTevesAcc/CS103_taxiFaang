@@ -4,10 +4,9 @@
 #include <cstdlib>
 #include <thread>
 
-#include "test.h"
-
 using namespace std;
 
+/*DATA BASE*/
 struct rideinfo
 {
     int dis, drivdis;
@@ -15,120 +14,14 @@ struct rideinfo
     string driver, pick, drop;
 };
 
-
-class driverfiles {
-
+class driverfiles
+{
 public:
     string names;
 };
 
-void PrintLine();              // function to output a line for decoration
-void TitlePrinter(string tit); // prints title into center by printing spaces equal to the available spaces of width of console before printing title
-bool yesno();
-void cls();
-void login(); // function declaration
-void registerinfo();
-void forgot();
-void drivertest();
-rideinfo request(string pickup, string dropoff);
-int count; // create variables
-string username, password, userid, pass;
-string rusername, rpassword, ruserid, rpass, remail, raddress, rmobile, rpayment;
-string susername, suserid, spass;
-string gp = "|", endin = "\n************************************************************\n";
-
-int main()
-{
-
-
-
-    cout << "\t\t CS103 GROUP PROJECT - Ian, Thomas, Bree" << endl;
-    cout << "\t\t\t                 ____" << endl;
-    cout << "\t\t\t             __/  |_|_" << endl;
-    cout << "\t\t\t------------|  _     _``-.-------TAXIFANNG----------" << endl;
-    cout << "\t\t\t            '-(_)---(_)--'" << endl;
-    cout << "\t\t\t______________Please read Our T's & C's_____________" << endl << endl << endl;
-
-    // Customer terms and conditions
-    cout << "\t\t\t_________For Our Customers__________" << endl << endl;
-    cout << "\t\t1. Stay safe and wear a mask unless you need to drink water" << endl;
-    cout << "\t\t2. Please sit in the back seat if available to avoid transmission of Covid-19" << endl;
-    cout << "\t\t3.If you have covid or flu symptoms please stay home and take a rapid-antigen test" << endl;
-    cout << "\t\t4. Discrimination towards our drivers will not be tolerated." << endl;
-    cout << "\t\t5. No consumption of food or drinks allowed within the taxi unless it is water." << endl;
-    cout << "\t\t6. If you feel you need to be sick please ask our friendly staff to stop the car as to avoid messes." << endl;
-    cout << "\t\t7. Any spill of food or drink may result in a customer being charged a fee for car cleaning." << endl << endl << endl;
-
-    // Driver terms and conditions
-    cout << "\t\t\t__________For our Drivers___________" << endl << endl;
-    cout << "\t\t1. You must be at least 21 years of age to drive for us." << endl;
-    cout << "\t\t1. In order to drive for us, you will need to have had both Covid-19" << endl;
-    cout << "\t\t   vaccinations." << endl;
-    cout << "\t\t2. Always wear a face mask when driving with a passenger (unless you" << endl;
-    cout << "\t\t   have a medical exemption)." << endl;
-    cout << "\t\t3. Always conduct yourself in a professional manner with" << endl;
-    cout << "\t\t   all customers. Discrimination will not be tolerated." << endl;
-    cout << "\t\t5. All drivers who choose to participate in TaxiFanng NZ booking Service" << endl;
-    cout << "\t\t   must hold a full license and hold an approved license endorsement." << endl << endl << endl << endl;
-
-    cout << "Do you agree to these terms and conditions? (Answer: yes/no)" << endl;
-
-    bool yn = yesno();
-    if (yn == 1) {
-        cout << "Welcome to our service";
-        goto mainMenu;
-    }
-    else {
-        // everytime the code is processed the screen will clear
-        cout << " Unless you agree you are not able to use our service. \n"
-            << endl;
-    }
-
-
-mainMenu:
-
-    int a;
-    cout << "\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl; // Altered Menu
-    cout << "\t\t\t ------------------- MAIN MENU ---------------------" << endl;
-    cout << "\t\t\t|                                                   |" << endl;
-    cout << "\t\t\t|___________________________________________________|" << endl;
-    cout << "\t\t\t| Press 1 to Log-in                                 |" << endl;
-    cout << "\t\t\t| Press 2 to Register with Us                       |" << endl;
-    cout << "\t\t\t| Press 3 if you forgot your password               |" << endl;
-    cout << "\t\t\t| Press 4 to EXIT application                       |" << endl;
-    cout << "\t\t\t ^^^^^ Select your choice from above ^^^^^ : ";
-
-    cin >> a;
-    cout << endl;
-
-    switch (a)
-    {
-    case 1:
-        login();
-        break;
-
-    case 2:
-        registerinfo();
-        break;
-    case 3:
-        forgot();
-        break;
-
-    case 4:
-        cout << " \t\t\t Kia ora !!! \n\n";
-        break;
-    default:
-        cls(); // everytime the code is processed the screen will clear
-        cout << " Please select a given option from above. \n"
-            << endl;
-        main();
-    }
-    //---debug
-
-    return 0;
-}
-
-void PrintLine()
+/*GLOBAL FUNCTIONS*/
+void PrintLine() // function to output a line for decoration
 {
     for (int i = 0; i < 60; i++)
     {
@@ -136,8 +29,7 @@ void PrintLine()
     }
     cout << endl;
 }
-
-void TitlePrinter(string title)
+void TitlePrinter(string title) // prints title into center
 {
     int total_spaces, space, space_print;
     total_spaces = title.length();
@@ -149,11 +41,10 @@ void TitlePrinter(string title)
     }
     cout << title << endl;
 }
-
-
-bool yesno() {
-    string agree[5] = { "Yes", "yes", "Y", "y", "YES" };
-    string disagreed[5] = { "No", "no", "N", "n", "NO" };
+bool yesno() // iterate if user has selected yes or no
+{
+    string agree[5] = {"Yes", "yes", "Y", "y", "YES"};
+    string disagreed[5] = {"No", "no", "N", "n", "NO"};
 
     string in;
 
@@ -176,76 +67,178 @@ yntp:
         else if (i > 4)
         {
             cout << "Wrong Input, please enter either (Yes / No)" << endl
-                << endl;
+                 << endl;
             goto yntp;
         }
     }
 }
-
-void cls()
-
+void cls() // clear console
 {
-
-
 #ifdef _WIN32
-
     int OSver = 1;
-
     // Checking for mac OS with
-
     // __APPLE__ macro
 
 #elif __APPLE__
-
     int OSver = 2;
-
     // Checking for linux OS with
-
     // __linux__ macro
 
 #elif __linux__
-
     int OSver = 3;
 
-#endif;
-
-
-
-
+#endif
     if (OSver == 1)
     {
-
         system("cls");
-
     }
     else if (OSver == 2 || OSver == 3)
-
-
     {
-
         system("clear");
-
     }
-
-
 }
 
-// debug---
-void login()
-{
+/*SIGN IN*/
+void SignIn();
+void SignUp();
+bool emailcheck(string email);
+void ForgotPassword();
+void DriverTest();
 
+/*UNKNOWN*/
+rideinfo request(string pickup, string dropoff);
+int count; // create variables
+string username, password, userid, pass;
+string rusername, rpassword, ruserid, rpass, remail, raddress, rmobile, rpayment;
+string susername, suserid, spass;
+string gp = "|", endin = "\n************************************************************\n";
+
+char choice;
+
+/*TITLE*/
+void TitlePage()
+{
+kInvalidInput:
+
+    cout << "\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl;
+    cout << "\t\t\t ------------------- TAXI SERVE ---------------------" << endl;
+    cout << "\t\t\t|                                                   |" << endl;
+    cout << "\t\t\t|___________________________________________________|" << endl;
+    cout << "\t\t\t| Press 1 to Log-in                                 |" << endl;
+    cout << "\t\t\t| Press 2 to Register with Us                       |" << endl;
+    cout << "\t\t\t| Press 3 if you forgot your password               |" << endl;
+    cout << "\t\t\t| Press 4 to EXIT application                       |" << endl;
+    cout << "\t\t\t ^^^^^ Select your choice from above ^^^^^ : ";
+    cout << "\t\t\t                       ____" << endl;
+    cout << "\t\t\t                   __/  |_|_" << endl;
+    cout << "\t\t\t------------------|  _     _``-.--------------------" << endl;
+    cout << "\t\t\t                  '-(_)---(_)--'" << endl;
+    cout << "\t\t\t\tSafety is our middle name" << endl
+         << endl
+         << endl;
+
+    cout << R"(
+        *   login (1)
+        *   sign up (2)
+        *   forgot password (3)
+        *   exit (4)
+        
+        Enter Selection: 
+    )";
+
+    cin >> choice;
+
+    switch (choice)
+    {
+    case '1':
+        SignIn();
+        break;
+
+    case '2':
+        SignUp();
+        break;
+
+    default:
+        cout << "Invalid Input\nTry Again\n\nPress any key to CONTINUE" << endl;
+        system("pause");
+        cls();
+        goto kInvalidInput;
+    }
+
+    cls();
+}
+
+/*MENU JUNCTION*/
+void MenuJunction()
+{
+kInvalidInput:
+
+    cout << "\t\t TAXI FAANG" << endl
+         << endl;
+    cout << "Continue (1)\nBecome a Driver (2)\nSign Out(3)\nExit (4)\n\nEnter Selection: ";
+    cin >> choice;
+
+    switch (choice)
+    {
+    case '1':
+        cls();
+        break;
+
+    case '2':
+        cls();
+        choice = '2';
+        break;
+
+    default:
+        cout << "Invalid Input\nTry Again\n\nPress any key to CONTINUE" << endl;
+        system("pause");
+        cls();
+        goto kInvalidInput;
+    }
+}
+
+/*CUSTOMER SUB-MENUS*/
+void CustomerMenu()
+{
+    cout << "Customer Menu" << endl;
+}
+
+/*DRIVER SUB-MENUS*/
+void DriverMenu()
+{
+    cout << "Driver Menu" << endl;
+}
+
+/*ADMIN SUB-MENUS*/
+
+int main()
+{
+    TitlePage();
+    MenuJunction();
+    if (choice = '1')
+    {
+        CustomerMenu();
+    }
+    else if (choice = '2')
+    {
+        DriverTest();
+        DriverMenu();
+    }
+
+    return 0;
+}
+
+/*SIGN IN*/
+void SignIn() // add funcction in which if username and password == admin login admin menu will open up
+{
     int count;
     string username, password, userid, pass;
-    cls();
 
-
-    cout << " Please Enter your Username and Password : " << endl;
+    cout << "Sign In: " << endl;
     cout << " USERNAME : ";
     cin >> username;
     string ruserid = "userDB/";
     ruserid.append(username);
-
-
     cout << " PASSWORD : ";
     cin >> password;
 
@@ -255,173 +248,22 @@ void login()
     {
         cout << "USER NOT FOUND";
     }
-
-    else {
-
+    else
+    {
         string pass;
-
         user >> pass;
-
-
-        if (password == pass) {
+        if (password == pass)
+        {
             cout << "Login Successful";
         }
-        else {
-
+        else
+        {
             cout << "Incorrect Password, Try Again...\n";
-            login();
+            SignIn();
         }
     }
-
-
-
-
-
 }
-
-bool emailcheck(string email) {
-
-    int at = -1, dot = -1;
-
-    if (!isalpha(email[0]))
-    {
-        return 0;
-    }
-
-    for (int i = 0; i <= email.length(); i++)
-    {
-        if (email[i] == '@')
-        {
-            at = i;
-        }
-        else if (email[i] == '.')
-        {
-            dot = i;
-        }
-
-
-
-    }
-
-
-
-
-    if (at == -1 || dot == -1)
-    {
-        return 0;
-    }
-
-    if (at > dot)
-    {
-        return 0;
-    }
-
-
-
-
-
-
-    return 1;
-
-
-
-
-
-
-
-
-
-}
-
-void drivertest() {
-
-    string q[5] = { "Have held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", "Question", "Question", "Question", "Question" };
-    char vehmnm[50], rego[7], disname[20];
-    int rating = 0;
-
-    TitlePrinter("Driver Eligibility Questions");
-
-
-    for (int i = 0; i < 4; i++)
-    {
-        bool yn = NULL;
-        cout << q[i];
-        yn = yesno();
-        if (yn == 1)
-        {
-            continue;
-        }
-        else if (yn == 0)
-        {
-            cout << "Sorry you are ineligible...\t";
-            main();
-        }
-
-    }
-
-    cout << "Please enter your vehicle make and model: ";
-    cin.ignore();
-    cin.getline(vehmnm, 50);
-
-    cout << "Please enter your REGO: ";
-
-    cin.getline(rego, 7);
-
-dis:
-    for (int f = 0; f < 19; f++)
-    {
-        disname[f] = '\0';
-    }
-    cout << "Please enter Display Name: (20 Character Limit) ";
-    cin.getline(disname, 20);
-
-    bool spchk = 0;
-    for (int j = 0; j < 19; j++)
-    {
-        if (disname[j] == ' ')
-        {
-            spchk = 1;
-        }
-
-    }
-
-    if (spchk == 1)
-    {
-        cout << "ERROR: No spaces allowed, Try again...";
-        goto dis;
-    }
-
-
-    string drivpath = "driverDB/";
-    drivpath.append(disname);
-
-    ofstream drivls("driverDB/driverls", ios::app);
-
-    drivls << endl << disname;
-
-
-    ofstream drivinfo(drivpath, ios::app);
-    int a = 0;
-    while (vehmnm[a] != '\0')
-    {
-        drivinfo << vehmnm[a];
-        a++;
-    }
-    drivinfo << endl;
-    a = 0;
-    while (rego[a] != '\0')
-    {
-        drivinfo << rego[a];
-        a++;
-    }
-    drivinfo << endl
-             << '0';
-    drivls.close();
-    drivinfo.close();
-
-}
-
-void registerinfo()
+void SignUp() // place customers terms and conditions here
 {
     string rusername, rpassword, rpass, remail, raddress, rmobile, rpayment;
     string ruserid = "userDB/";
@@ -441,7 +283,6 @@ user:
         ruserid = "userDB/";
         goto user;
     }
-
 
     cout << "\t\t\t Enter a password : ";
     cin.ignore();
@@ -473,13 +314,11 @@ email:
         main();
     }
 
-
-
-
-
-
-    ofstream f1(ruserid, ios::app);   // used to write inside the file with app mode
-    f1 << rpassword << endl << remail << endl << rmobile << endl << rpayment << endin; // f1 is objectname for the file
+    ofstream f1(ruserid, ios::app); // used to write inside the file with app mode
+    f1 << rpassword << endl
+       << remail << endl
+       << rmobile << endl
+       << rpayment << endin; // f1 is objectname for the file
 
     f1.close();
     cls();
@@ -490,8 +329,123 @@ email:
     cls();
     main();
 }
+bool emailcheck(string email)
+{
+    int at = -1, dot = -1;
 
-void forgot()
+    if (!isalpha(email[0]))
+    {
+        return 0;
+    }
+
+    for (int i = 0; i <= email.length(); i++)
+    {
+        if (email[i] == '@')
+        {
+            at = i;
+        }
+        else if (email[i] == '.')
+        {
+            dot = i;
+        }
+    }
+
+    if (at == -1 || dot == -1)
+    {
+        return 0;
+    }
+
+    if (at > dot)
+    {
+        return 0;
+    }
+
+    return 1;
+}
+void DriverTest() // place drivers terms and conditions here
+{
+
+    string q[5] = {"Have held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", "Question", "Question", "Question", "Question"};
+    char vehmnm[50], rego[7], disname[20];
+    int rating = 0;
+
+    TitlePrinter("Driver Eligibility Questions");
+
+    for (int i = 0; i < 4; i++)
+    {
+        bool yn = NULL;
+        cout << q[i];
+        yn = yesno();
+        if (yn == 1)
+        {
+            continue;
+        }
+        else if (yn == 0)
+        {
+            cout << "Sorry you are ineligible...\t";
+            main();
+        }
+    }
+
+    cout << "Please enter your vehicle make and model: ";
+    cin.ignore();
+    cin.getline(vehmnm, 50);
+
+    cout << "Please enter your REGO: ";
+
+    cin.getline(rego, 7);
+
+dis:
+    for (int f = 0; f < 19; f++)
+    {
+        disname[f] = '\0';
+    }
+    cout << "Please enter Display Name: (20 Character Limit) ";
+    cin.getline(disname, 20);
+
+    bool spchk = 0;
+    for (int j = 0; j < 19; j++)
+    {
+        if (disname[j] == ' ')
+        {
+            spchk = 1;
+        }
+    }
+
+    if (spchk == 1)
+    {
+        cout << "ERROR: No spaces allowed, Try again...";
+        goto dis;
+    }
+
+    string drivpath = "driverDB/";
+    drivpath.append(disname);
+
+    ofstream drivls("driverDB/driverls", ios::app);
+
+    drivls << endl
+           << disname;
+
+    ofstream drivinfo(drivpath, ios::app);
+    int a = 0;
+    while (vehmnm[a] != '\0')
+    {
+        drivinfo << vehmnm[a];
+        a++;
+    }
+    drivinfo << endl;
+    a = 0;
+    while (rego[a] != '\0')
+    {
+        drivinfo << rego[a];
+        a++;
+    }
+    drivinfo << endl
+             << '0';
+    drivls.close();
+    drivinfo.close();
+}
+void ForgotPassword()
 {
     bool count = 0;
     int option;
@@ -539,10 +493,11 @@ void forgot()
 
     default:
         cout << "\t\t\t Invalid choice, please try again " << endl;
-        forgot();
+        ForgotPassword();
     }
 }
 
+/*UNKNOWN*/
 rideinfo request(string pickup, string dropoff)
 {
     rideinfo info;
@@ -613,17 +568,60 @@ rideinfo request(string pickup, string dropoff)
             }
         }
         cls();
-
-
-
-
-
+    }
+}
 
 // FAKE DISTANCE COUNT
-/*for (int i = info.drivdis; i > 0 ; i--)
+/*
+for (int i = info.drivdis; i > 0 ; i--)
 {
      // replace with wait 1 min (enter to trigger)
+}
+*/
 
+// Terms and service
+/*
+    // customer terms and conditions
+    cout << "\t\t\t_________For Our Customers__________" << endl
+         << endl;
+    cout << "\t\t1. Stay safe and wear a mask unless you need to drink water" << endl;
+    cout << "\t\t2. Please sit in the back seat if available to avoid transmission of Covid-19" << endl;
+    cout << "\t\t3.If you have covid or flu symptoms please stay home and take a rapid-antigen test" << endl;
+    cout << "\t\t4. Discrimination towards our drivers will not be tolerated." << endl;
+    cout << "\t\t5. No consumption of food or drinks allowed within the taxi unless it is water." << endl;
+    cout << "\t\t6. If you feel you need to be sick please ask our friendly staff to stop the car as to avoid messes." << endl;
+    cout << "\t\t7. Any spill of food or drink may result in a customer being charged a fee for car cleaning." << endl
+         << endl
+         << endl;
 
-=======
+    // driver terms and conditions
+    cout << "\t\t\t__________For our Drivers___________" << endl
+         << endl;
+    cout << "\t\t1. You must be at least 21 years of age to drive for us." << endl;
+    cout << "\t\t1. In order to drive for us, you will need to have had both Covid-19" << endl;
+    cout << "\t\t   vaccinations." << endl;
+    cout << "\t\t2. Always wear a face mask when driving with a passenger (unless you" << endl;
+    cout << "\t\t   have a medical exemption)." << endl;
+    cout << "\t\t3. Always conduct yourself in a professional manner with" << endl;
+    cout << "\t\t   all customers. Discrimination will not be tolerated." << endl;
+    cout << "\t\t5. All drivers who choose to participate in TaxiFanng NZ booking Service" << endl;
+    cout << "\t\t   must hold a full license and hold an approved license endorsement." << endl
+         << endl
+         << endl
+         << endl;
 
+    cout << "Do you agree to these terms and conditions? (Answer: yes/no)" << endl;
+
+    bool yn = yesno();
+    if (yn == 1)
+    {
+        cout << "Welcome to our service";
+        goto mainMenu;
+    }
+    else
+    {
+        // everytime the code is processed the screen will clear
+        cout << " Unless you agree you are not able to use our service. \n"
+             << endl;
+    }
+*/
