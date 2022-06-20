@@ -118,6 +118,34 @@ void TitlePage();
 void AdminMenu();
 void TaxiFare();
 
+//CHANGES
+//For customers
+struct customer
+{
+    string fname;//for first name
+    string lname;//for last name
+    string phno;//for Registration No number
+    string cusemail;//for class info
+}customerData;//Variable of type
+
+//For drivers
+struct driver
+{
+    string fst_name;//first name of teacher
+    string lst_name;//last name of teacher
+    string qualification;//Qualification of teacher
+    string exp;//Experience of the person
+    string pay;//Pay
+    string subj;//
+    string lec;//hours per Week
+    string addrs;//Address of home
+    string cel_no;//Phone number
+
+    string serves;//Number of
+
+}driv[50];//Variable of
+
+
 
 
     /*UNKNOWN*/
@@ -192,7 +220,7 @@ void MenuJunction()
 kInvalidInput:
 
     cout << "\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl;
-    cout << "\t\t\t ------------------- TAXI SERVE ---------------------" << endl;
+    cout << "\t\t\t ------------------- TAXI FANNG ---------------------" << endl;
     cout << "\t\t\t|                                                   |" << endl;
     cout << "\t\t\t|___________________________________________________|" << endl;
     cout << "\t\t\t| Press 1 for Customer Menu                         |" << endl;
@@ -545,7 +573,12 @@ void CusLogin()
         cout << "\n\n\n\n\n"; //give it 5 newlines
     }
 }
-   
+// once customer is logged in - this will be the menu : 
+// 1. book trip - need to pull a driver name, need to add GST // thomas task
+// 2. support - lost items , complaints - go to admin also // bree task
+// admin contacts between customer and driver, provide support number (rand number gen)
+// 3. account info
+// 4. exit
 
 
 /*DRIVER SUB-MENUS*/
@@ -653,6 +686,7 @@ void DrivMenu2()
             getline(cin, regquesc);
             /*cout << "Enter Password: ";*/
             cout << "________________________________________________________________________________________" << endl;
+            //move forloop to here so user has to answer yes to eligibility questions in order to move forward in registration
             cout << "Enter Vehicle Registration Number: ";
             getline(cin, drivRego);
             cout << "Enter Car Make and Model: ";
@@ -857,15 +891,32 @@ void DrivLogin()
     cout << "\t\t\t|___________________________________________________|" << endl;
     cout << "\t\t\t| Press 1 to Begin Driving                          |" << endl;
     cout << "\t\t\t| Press 2 to Access Account Information             |" << endl;
-    cout << "\t\t\t| Press 3 for Help/Lost Items/Previous rides        |" << endl;
+    cout << "\t\t\t| Press 3 for Support                               |" << endl;
     cout << "\t\t\t| Press 4 to EXIT application                       |" << endl;
     cout << "\t\t\t ^^^^^ Select your choice from above ^^^^^ : ";
 }
+// additions to driver menu
+// 1. idenitical to request function just needs modifying to suit driver // thomas
+// 2. driver info
+// 3. support - driver support file - (1 for driver 1 for customer)
+// what can we do to help? 
+
 /*ADMIN SUB-MENUS*/
 //void AdminLogin() --to be able to access admin menu
 void AdminMenu()
 {
+    // a function that's triggered by another set of numbers
+    // login to validate admin with secure password
+
+    //int i = 0, j;//for processing usage
+    char choice1;//for getting choice
+    //char choice2;
+    //char choice3;
+    //string find;//for sorting
+    //string srch;
     cls();
+AdminMain:
+    
     cout << "\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl;
     cout << "\t\t\t ----------------- WELCOME ADMIN -------------------" << endl;
     cout << "\t\t\t|                                                   |" << endl;
@@ -876,11 +927,269 @@ void AdminMenu()
     cout << "\t\t\t| Press 4 if Access Feedback/Complaints             |" << endl;
     cout << "\t\t\t| Press 5 to EXIT application                       |" << endl;
     cout << "\t\t\t ^^^^^^^^ Select your choice from above ^^^^^^^^ : ";
+ 
+
+   
+
+    cin >> choice1;
+
+    system("cls");//Clear screen
+
+
+    switch (choice1)//First switch
+    {
+
+        {
+    case '1'://inner loop-1
+    {
+        cusdata();
+    }
+
+    case '2'://drivers data
+    {
+        drivdata();
+
+    case '3':
+    {
+        system("cls");
+        cout << " Here are you're current pending applications";
+        ifstream f("driver.txt");
+    }//case 3
+
+
+    }
+        }
+
+
+
+        return 0;
+        break;//Control pass to 1st loop  
+    }
+}
+// not connecting for some reason to menujunction();
+void cusdata() {
+    int i = 0, j;//for processing usage
+    char choice1;//for getting choice
+    char choice2;
+    char choice3;
+    string find;//for sorting
+    string srch;
+    customer customerData;
+    system("cls");//Clear screen
+    //Level-2 display
+    cout << "\t\t\tCUSTOMER INFORMATION SECTION\n\n\n";
+    cout << "Enter your choice: " << endl;
+    cout << "1.Create new entry\n";
+    cout << "2.Find and display entry\n";
+    cout << "3.Jump to main\n";
+    cin >> choice2;
+
+    switch (choice2)//Second switch
+
+    {
+    case '1'://Insert data
+    {  ofstream f1("customerdata.txt", ios::app);
+
+    for (i = 0; choice2 != 'n'; i++)
+    {
+
+        if ((choice2 == 'y') || (choice2 == 'Y') || (choice2 == '1'))
+        {
+            cout << "Enter First name: ";
+            cin >> customerData.fname;
+            cout << "Enter Last name: ";
+            cin >> customerData.lname;
+            cout << "Enter Phone Number: ";
+            cin >> customerData.phno;
+            cout << "Enter Email Address: ";
+            cin >> customerData.cusemail;
+
+            f1 << customerData.fname << endl << customerData.lname << endl << customerData.phno << endl << customerData.cusemail << endl;
+            cout << "Do you want to enter data: ";
+            cout << "Press Y for Continue and N to Exit Program:  ";
+            cin >> choice2;
+        }
+    }
+    f1.close();
+    }
+    break;//control back to inner loop -1
+
+    case '2'://Display data
+    {  ifstream f2("customerdata.txt");
+
+    cout << "Enter First name to be displayed: ";
+    cin >> find;
+    cout << endl;
+    int notFound = 0;
+    for (j = 0; (j < i) || (!f2.eof()); j++)
+    {
+
+        getline(f2, customerData.fname);
+
+        if (customerData.fname == find)
+        {
+            notFound = 1;
+            cout << "First Name: " << customerData.fname << endl;
+            cout << "Last Name: " << customerData.lname << endl;
+
+            getline(f2, customerData.phno);
+            cout << "Phone Number: " << customerData.phno << endl;
+            getline(f2, customerData.cusemail);
+            cout << "Email: " << customerData.cusemail << endl << endl;
+        }
+
+    }
+
+    if (notFound == 0) {
+
+        cout << "No Record Found" << endl;
+    }
+    f2.close();
+    cout << "Press any key two times to proceed";
+    getch();//To hold data on screen
+    getch();//To hold data on screen
+
+    }
+    break;//control back to inner loop -1
+
+    case 3://Jump to main
+    {
+        break;//inner switch breaking
+    }
+    }
+
+    //break;//inner loop-1 breaking
+}
+void drivdata() {
+    int i = 0, j;//for processing usage
+    char choice1;//for getting choice
+    char choice2;
+    char choice3;
+    string find;//for sorting
+    string srch;
+    system("cls");//Clear screen
+//Level-2 Display process
+    cout << "\t\t\tDriver Information Section\n\n\n";
+    cout << "Enter your choice: " << endl;
+    cout << "1.Create new entry\n";
+    cout << "2.Find and display\n";
+    cout << "3.Jump to main\n";
+
+
+    cin >> choice3;
+
+    switch (choice3)//Third switch
+    {
+    case '1'://Insert data
+    {
+        ofstream t1("driverdata.txt", ios::app);
+
+        for (i = 0; choice3 != 'n' && choice3 != 'N'; i++)
+        {
+
+            if ((choice3 == 'y') || (choice3 == 'Y') || (choice3 == '1'))
+            {
+                cout << "Enter First name: ";
+                cin >> driv[i].fst_name;
+                cout << "Enter Last name: ";
+                cin >> driv[i].lst_name;
+                cout << "Enter License Endorsement: ";
+                cin >> driv[i].qualification;
+                cout << "Enter Experience(year): ";
+                cin >> driv[i].exp;
+                cout << "Enter Age: ";
+                cin >> driv[i].serves;
+                cout << "Enter Prior Work: ";
+                cin >> driv[i].subj;
+                cout << "Enter Hours Worked Per Week : ";
+                cin >> driv[i].lec;
+                cout << "Enter pay: ";
+                cin >> driv[i].pay;
+                cout << "Enter Phone Number: ";
+                cin >> driv[i].cel_no;
+
+                /*cout << endl;
+                t1 << driv[i].fst_name << endl << driv[i].lst_name << endl
+                << driv[i].qualification << endl << driv[i].exp << endl
+                << driv[i].serves << endl << driv[i].subj << endl << driv[i].lec
+                << endl << driv[i].pay << endl << driv[i].cel_no << endl;*/
+                cout << "Do you want to enter more driver data: " << endl;
+                cout << "Type yes to continue or no to FINISH: ";
+                cin >> choice3;
+            }//if
+        }//for loop
+        //for finding through name
+        system("cls");
+
+
+
+        t1.close();
+    }//case 1
+
+    //continue;//Control pass to inner loop-2
+
+    case '2'://Display data
+    {
+        ifstream t2("driverdata.txt");
+
+        cout << "Enter name to be displayed: ";
+        cin >> find;
+
+        cout << endl;
+        int notFound = 0;
+        for (j = 0; ((j < i) || (!t2.eof())); j++)
+        {
+
+            getline(t2, driv[j].fst_name);
+
+            if (driv[j].fst_name == find)
+            {
+                notFound = 1;
+                cout << "First name: " << driv[j].fst_name << endl;
+                getline(t2, driv[j].lst_name);
+                cout << "Last name: " << driv[j].lst_name << endl;
+                getline(t2, driv[j].qualification);
+                cout << "Qualification: " << driv[j].qualification << endl;
+                getline(t2, driv[j].exp);
+                cout << "Experience: " << driv[j].exp << endl;
+
+                getline(t2, driv[j].serves);
+                cout << " Age : " << driv[j].serves << endl;
+
+                getline(t2, driv[j].subj);
+                cout << "Prior Work : " << driv[j].subj << endl;
+
+                getline(t2, driv[j].lec);
+                cout << "Enter hours worked(per Week): " << driv[j].lec << endl;
+                getline(t2, driv[j].pay);
+                cout << "pay: " << driv[j].pay << endl;
+
+                getline(t2, driv[j].addrs);
+                cout << "Address: " << driv[j].addrs << endl;
+
+                getline(t2, driv[j].cel_no);
+                cout << "Phone Number: " << driv[j].cel_no << endl;
+
+            }//if
+
+        }//for loop
+        t2.close();
+        if (notFound == 0) {
+
+            cout << "No Record Found" << endl;
+        }
+        cout << "Press any key two times to proceed";
+        getch();//To hold data on screen
+        getch();//To hold data on screen
+    }//case 2
+    }
+
+    //continue;//Control pass to inner loop-2
 }
 int main()
 {
     TitlePage();
-    MenuJunction();
+   /* MenuJunction();*/
     /*if (choice = '1')
     {
         CustomerMenu();
@@ -1307,3 +1616,5 @@ for (int i = info.drivdis; i > 0 ; i--)
      // replace with wait 1 min (enter to trigger)
 }
 */
+
+
