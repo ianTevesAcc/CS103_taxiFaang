@@ -601,42 +601,36 @@ void DrivMenu2()
         {
             MenuJunction();
         }
+        /*DRIVER REG*/
         if (Danswer == "2")
         {
             cls();
-            string q[5] = { "Have you held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", };
-            for (int i = 0; i < 4; i++)
-            {
-                bool yn = NULL;
-                cout << q[i];
-                yn = yesno();
-                if (yn == 1)
-                {
-                    goto secQuest;
-                }
-                else if (yn == 0)
-                {
-                    cout << "Sorry you are ineligible...\t";
-                    MenuJunction();
-                }
-            }
+            
         secQuest:
             //open a file for registration
-            ofstream g("driverdata.txt"); //'ofstream' is  for getting the stored data from the file,
+            //ofstream g("driverdata.txt"); //'ofstream' is  for getting the stored data from the file,
             //and the file does not need to have to exist or be made beforehand. It is 'ofstream', so, it'll take care of it for you!
             //but please be sure that if there is a file called "registration.txt" in the same folder as the
             //.exe file, the contents will be deleted/ overwritten
 
-            if (!g.is_open()) //if it's not open, then there is no such file with the given name inside this folder (means, in the folder where the .exe file is going to be made )
-            {
-                cout << "could not open file driverdata.txt\n"; //just so we can know why it ain't working if it doesn't
-                
-            }
+            
 
-            cout << "\nDriver Application: ";
-            getline(cin, drivName); //user input from keyboard will go into registerName variable for registration
+            cout << "\nDriver Application: \n";
+            //cin.ignore();//getline(cin, drivName); //user input from keyboard will go into registerName variable for registration
             cout << "\nEnter Username: ";
             getline(cin, drivName);
+            string drivfile = "driverDB/";
+            drivfile.append(drivName);
+            fstream g(drivfile);
+
+            if (g.is_open()) //if it's not open, then there is no such file with the given name inside this folder (means, in the folder where the .exe file is going to be made )
+            {
+                cout << "Username is already taken, please try again...\n"; //just so we can know why it ain't working if it doesn't
+                drivfile = "driverDB/";
+                goto secQuest;
+            }
+
+            g.close();
             cout << "\nEnter Password: ";
             getline(cin, drivPassword); //user input from keyboard will go into registerPassword variable fors registration
             cout << "\nIn case you forget your password/username here are some security questions: " << endl;
@@ -653,6 +647,24 @@ void DrivMenu2()
             getline(cin, regquesc);
             /*cout << "Enter Password: ";*/
             cout << "________________________________________________________________________________________" << endl;
+
+            string q[5] = { "Have you held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t",  };
+            for (int i = 0; i < 4; i++)
+            {
+                bool yn = NULL;
+                cout << q[i];
+                yn = yesno();
+                if (yn == 1)
+                {
+                    continue;
+                }
+                else if (yn == 0)
+                {
+                    cout << "Sorry you are ineligible...\t";
+                    MenuJunction();
+                }
+            }
+            cin.ignore();
             cout << "Enter Vehicle Registration Number: ";
             getline(cin, drivRego);
             cout << "Enter Car Make and Model: ";
@@ -664,38 +676,41 @@ void DrivMenu2()
             cout << "If you do not hold a NZ citizenship please enter Visa status - If you do type 'N/A': ";
             getline(cin, drivVisa);
 
+            ofstream regwrite(drivfile);
 
-            g << drivName; //this put whatever's to the right into g (("driverdata.txt"))
+            regwrite << drivName; //this put whatever's to the right into g (("driverdata.txt"))
 
-            g << '\n'; //and change to anew line in file
-            g << drivPassword; //and now write/store,the password
+            regwrite << '\n'; //and change to anew line in file
+            regwrite << drivPassword; //and now write/store,the password
             //all data placed  safely insidea the file that g opened
-            g << '\n';
-            g << regquesa;
-            g << '\n';
-            g << regquesb;
-            g << '\n';
-            g << regquesc;
-            g << '\n';
-            g << drivRego;
-            g << '\n';
-            g << drivCar;
-            g << '\n';
-            g << drivLic;
-            g << '\n';
-            g << drivEml;
-            g << '\n';
-            g << drivVisa;
-            g << '\n';
+            regwrite << '\n';
+            regwrite << regquesa;
+            regwrite << '\n';
+            regwrite << regquesb;
+            regwrite << '\n';
+            regwrite << regquesc;
+            regwrite << '\n';
+            regwrite << drivRego;
+            regwrite << '\n';
+            regwrite << drivCar;
+            regwrite << '\n';
+            regwrite << drivLic;
+            regwrite << '\n';
+            regwrite << drivEml;
+            regwrite << '\n';
+            regwrite << drivVisa;
+            regwrite << '\n';
 
 
-            g.close(); //always make sure to close the file, or else we might have to deal with some nasty unwanted stuff in the memory
+            regwrite.close(); //always make sure to close the file, or else we might have to deal with some nasty unwanted stuff in the memory
 
             cout << "\nRegistration is ..Successful!\n" << endl;
+            this_thread::sleep_for(chrono::milliseconds(3000));
             DrivMenu2();
         }
         if (Danswer == "1")
         {
+            string drivfillogin = "driverDB/";
             //open the file, and then put the name and password into the strings
             ifstream f("driverdata.txt"); //'ifstream' is   for getting the data from the file, and
             //let us assume we've already created a file
@@ -719,16 +734,19 @@ void DrivMenu2()
                 cout << "\nEnter Password: ";
                 getline(cin, inPassword);
 
+                cout << inName << '\t' << dname << '\t' << inPassword << '\t' << dpassword;
                 if (inName == dname && inPassword == dpassword)
                 {
                     cout << "\nLogin Successful\n" //the '\n' is a character, so that's why I can add it
                     //and it will automatically output a newline in console, alongside the string
                         << "Welcome, "
                         << inName;
+                        this_thread::sleep_for(chrono::milliseconds(3000));
                     DrivLogin();
                     
                 }
                 cout << "incorrect name or password\n"; //if user  entered the wrong account details ,
+                this_thread::sleep_for(chrono::milliseconds(3000));
                 system("CLS");
                 //then the while loop is not done yet. So that's why this output is without condition
             }
