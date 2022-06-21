@@ -1066,13 +1066,16 @@ void StartDrive()
 void AdminMenu() {
     feedback admin;
 
+    string in;
+
     string rq[6] = {"Are you sure? (Yes/No)", "Like 100% Sure? (Yes/No)", "Are you fucking with me? (Yes/No)", "Yeah, you don't look like the usual guy, did you kill him? (Yes/No)", "I'm pretty sure you killed him, you killed him aye? (Yes/Yes)", "I'm calling the cops, you'll pay for what you have done!!!"};
     string no[7] = {"THEN WHY ARE YOU HERE DUMBASS", "WHAT WAS YOUR PLAN HERE", "JUST SIT HERE FOR A SECOND AND THINK", "IF YOU'RE NOT AN ADMIN","WHY WOULD YOU CLICK ADMIN", "IT'S JUST STUPID", "GET OUT OF HERE"};
 
-    cout << "Are you a TaxiFaang system administrator? (Yes/No)"
+    cout << "Are you a TaxiFaang system administrator? (Yes/No)";
+    getline(cin, in);
     
-    if (cin.getline() == "Yes")
-    {
+    
+    if (in == "Yes"){
         for (int i = 0; i < 7; i++)
         {
             cout << "\n\n\n";
@@ -1084,7 +1087,7 @@ void AdminMenu() {
         
         MenuJunction();
         
-    } else if (cin.getline() == "No")
+    } else if (in == "No")
     {
         for (int i = 0; i < 7; i++)
         {
@@ -1096,7 +1099,7 @@ void AdminMenu() {
         
         
         MenuJunction();
-    } else if (cin.getline() == "Don't even ask me that!")
+    } else if (in == "Don't even ask me that!")
     {
         admin.AdminMenu1();
     }
@@ -1107,7 +1110,7 @@ void AdminMenu() {
 
 void feedback::AdminMenu1()
 {
-    
+    feedback admin;
     int menu;
 
     cls();
@@ -1872,7 +1875,7 @@ rideinfo request(string pickup, string dropoff)
         {
             for (int i = 0; i < 15; i++)
             {
-                cin.getline(drivls, drivers[i], '\n');
+                getline(drivls, drivers[i], '\n');
             }
             
         }
@@ -1880,7 +1883,7 @@ rideinfo request(string pickup, string dropoff)
         srand(time(0));
         int drivln = rand() % 14;
 
-        info.driver = driver[drivln];
+        info.driver = drivers[drivln];
         cls();
 
         return info;
