@@ -388,22 +388,26 @@ void CusRegoLogin()
             }
         secQuest2:
             //open a file for registration
-            ofstream g("customerdata.txt"); //'ofstream' is  for getting the stored data from the file,
+            cout << "\nDriver Application: \n";
+            cin.ignore();//getline(cin, drivName); //user input from keyboard will go into registerName variable for registration
+            cout << "\nEnter Username: ";
+            string cusName;
+            getline(cin, cusName);
+            string cusfile = "userDB/";
+            cusfile.append(cusName);
+            fstream g(cusfile);
 
-
-            if (!g.is_open()) //if it's not open, then there is no such file with the given name inside this folder (means, in the folder where the .exe file is going to be made )
+            if (g.is_open()) //if it's not open, then there is no such file with the given name inside this folder (means, in the folder where the .exe file is going to be made )
             {
-                cout << "could not open file customerdata.txt\n"; //just so we can know why it ain't working if it doesn't
-
+                cout << "Username is already taken, please try again...\n"; //just so we can know why it ain't working if it doesn't
+                cusfile = "userDB/";
+                goto secQuest2;
             }
 
-            cout << "\nCustomer Registration: ";
-            getline(cin, CusName); //user input from keyboard will go into registerName variable for registration
-            cout << "\nEnter Username: ";
-            getline(cin, CusName);
+            g.close();
             cout << "\nEnter Password: ";
             getline(cin, CusPassword); //user input from keyboard will go into registerPassword variable fors registration
-            cout << "\nIn case you forget your password/username here are some security questions: " << endl;
+            /*cout << "\nIn case you forget your password/username here are some security questions: " << endl;
             cout << "________________________________________________________________________________________" << endl;
             cout << "\n Q1: What is Your favorite colour? Please enter everything in lowercase: ";
             cout << "\nEnter the security question's answer: ";
@@ -414,8 +418,7 @@ void CusRegoLogin()
             cout << "\n Q3: What was the name of the first street you lived on? Please enter everything in lowercase: ";
             cout << "\nEnter the security question's answer: ";
             getline(cin, regquesf);
-            /*cout << "Enter Password: ";*/
-            cout << "________________________________________________________________________________________" << endl;
+            cout << "________________________________________________________________________________________" << endl;*/
             cout << "Enter Email Address: ";
             getline(cin, CusEml);
             cout << "Enter Home Address: ";
@@ -431,63 +434,65 @@ void CusRegoLogin()
             cout << "Enter Card Expiry Date: ";
             getline(cin, CusEX);
 
-            g << CusName; //this put whatever's to the right (registerName) into , g (("driverdata.txt"))
+            ofstream fw(cusfile);
+            fw << cusName; //this put whatever's to the right (registerName) into , g (("driverdata.txt"))
 
-            g << '\n'; //and change to anew line in file
-            g << CusPassword; //and now write/store,the password
+            fw << '\n'; //and change to anew line in file
+            fw << CusPassword; //and now write/store,the password
             //all data placed  safely insidea the file that g opened
-            g << '\n';
-            g << regquese;
-            g << '\n';
-            g << regquesd;
-            g << '\n';
-            g << regquesf;
-            g << '\n';
-            g << CusEml;
-            g << '\n';
-            g << CusAddr;
-            g << '\n';
-            g << CusPh;
-            g << '\n';
-            g << CusCardno;
-            g << '\n';
-            g << CusCardna;
-            g << '\n';
-            g << CusCVV;
-            g << '\n';
-            g << CusEX;
-            g << '\n';
+            
+            fw << '\n';
+            fw << CusEml;
+            fw << '\n';
+            fw << CusAddr;
+            fw << '\n';
+            fw << CusPh;
+            fw << '\n';
+            fw << CusCardno;
+            fw << '\n';
+            fw << CusCardna;
+            fw << '\n';
+            fw << CusCVV;
+            fw << '\n';
+            fw << CusEX;
+            fw << '\n';
 
 
-            g.close(); //always make sure to close the file, or else we might have to deal with some nasty unwanted stuff in the memory
+            fw.close(); //always make sure to close the file, or else we might have to deal with some nasty unwanted stuff in the memory
 
             cout << "\nRegistration is ..Successful!\n";
+            this_thread::sleep_for(chrono::milliseconds(3000));
             CusRegoLogin();
         }
         if (Canswer == "1")
         {
-            //open the file, and then put the name and password into the strings
-            ifstream f("customerdata.txt"); //'ifstream' is   for getting the data from the file, and
-            //let us assume we've already created a file
-            if (!f.is_open()) //if file is not open, then there is no such file with the given name inside
-            //the folder (that is, in this folder where the .exe file is going to be made)
-            {
-                cout << "could not open file\n"; //just so we know why it won't work if it doesn't at any instance
-
-            }
-            getline(f, cname, '\n'); //reads the user name  from file f 
-            getline(f, cpassword, '\n'); //reads the password from file f 
-            //also, we are here telling the file to get the  text up until '\n', here ishow  we  know it reads the whole line at most, and won't go any further
-            //and that is done by the 3rd parameter '\n'
-            f.close(); //it is not required to open now, since you have the name and password from the file
+            
 
             //login
-            while (1)
-            {
+            //while (1)
+            //{
+                tplogin:
+                string cusfile = "userDB/";
                 //you are going to input the name and password here
                 cout << "\n\n\n"
                     << "Enter Username: ";
                 getline(cin, inName2);
+                //open the file, and then put the name and password into the strings
+                cusfile.append(inName2);
+                ifstream f(cusfile); //'ifstream' is   for getting the data from the file, and
+                //let us assume we've already created a file
+                if (!f.is_open()) //if file is not open, then there is no such file with the given name inside
+                //the folder (that is, in this folder where the .exe file is going to be made)
+                {
+                    cout << "User not found\n"; //just so we know why it won't work if it doesn't at any instance
+                    goto tplogin;
+
+                }
+                getline(f, cname, '\n'); //reads the user name  from file f 
+                getline(f, cpassword, '\n'); //reads the password from file f 
+                //also, we are here telling the file to get the  text up until '\n', here ishow  we  know it reads the whole line at most, and won't go any further
+                //and that is done by the 3rd parameter '\n'
+                f.close(); //it is not required to open now, since you have the name and password from the file
                 cout << "\nEnter Password: ";
                 getline(cin, inPassword2);
 
@@ -498,12 +503,16 @@ void CusRegoLogin()
                         << "Welcome, "
                         << inName2;
                     CusBooking();
-                    break; //just exit the while loop if you've entered the valid account
+                     //just exit the while loop if you've entered the valid account
                 }
-                cout << "incorrect name or password\n"; //if user  entered the wrong account details ,
-                cls();
+                else {
+                    cout << "incorrect name or password\n"; //if user  entered the wrong account details ,
+                    cls();
+                    goto tplogin;
+                }
+                
                 //then the while loop is not done yet. So that's why this output is without condition
-            }
+            //}
             //now do something about the account
         }
 
@@ -1064,6 +1073,7 @@ void StartDrive()
 
 /*ADMIN PROCESS*/
 void AdminMenu() {
+    cout << "am i here?";
     feedback admin;
 
     string in;
@@ -1076,7 +1086,7 @@ void AdminMenu() {
     
     
     if (in == "Yes"){
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 6; i++)
         {
             cout << "\n\n\n";
             TitlePrinter(rq[i]);
