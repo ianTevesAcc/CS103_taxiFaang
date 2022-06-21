@@ -501,7 +501,7 @@ void CusRegoLogin()
                     break; //just exit the while loop if you've entered the valid account
                 }
                 cout << "incorrect name or password\n"; //if user  entered the wrong account details ,
-                system("CLS");
+                cls();
                 //then the while loop is not done yet. So that's why this output is without condition
             }
             //now do something about the account
@@ -688,7 +688,7 @@ void CusSupport() {
 }
 void feedback::customer_storeFeedback()
 {
-    system("cls");
+    cls();
     cout << "\n";
     cout << " ================================================\n";
     cout << "|            Customer Support System            |\n";
@@ -924,7 +924,7 @@ void DriverRegoLogin()
                 }
                 cout << "incorrect name or password\n"; //if user  entered the wrong account details ,
                 this_thread::sleep_for(chrono::milliseconds(3000));
-                system("CLS");
+                cls();
                 //then the while loop is not done yet. So that's why this output is without condition
             }
             //now do something about the account
@@ -1065,47 +1065,52 @@ void StartDrive()
 /*ADMIN PROCESS*/
 void AdminMenu() {
     feedback admin;
-  
-    cout << "Are you an administrator for Taxifanng booking service?" << endl;
-    bool yn = yesno();
-    if (yn == 1)
+
+    string rq[6] = {"Are you sure? (Yes/No)", "Like 100% Sure? (Yes/No)", "Are you fucking with me? (Yes/No)", "Yeah, you don't look like the usual guy, did you kill him? (Yes/No)", "I'm pretty sure you killed him, you killed him aye? (Yes/Yes)", "I'm calling the cops, you'll pay for what you have done!!!"};
+    string no[7] = {"THEN WHY ARE YOU HERE DUMBASS", "WHAT WAS YOUR PLAN HERE", "JUST SIT HERE FOR A SECOND AND THINK", "IF YOU'RE NOT AN ADMIN","WHY WOULD YOU CLICK ADMIN", "IT'S JUST STUPID", "GET OUT OF HERE"};
+
+    cout << "Are you a TaxiFaang system administrator? (Yes/No)"
+    
+    if (cin.getline() == "Yes")
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            cout << "\n\n\n";
+            TitlePrinter(rq[i]);
+            cin.ignore();
+            cls();
+        }
+        
+        
+        MenuJunction();
+        
+    } else if (cin.getline() == "No")
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            cout << "\n\n\n";
+            TitlePrinter(no[i]);
+            this_thread::sleep_for(chrono::milliseconds(5000));
+            cls();
+        }
+        
+        
+        MenuJunction();
+    } else if (cin.getline() == "Don't even ask me that!")
     {
         admin.AdminMenu1();
-       
     }
-    else
-    {
-        // everytime the code is processed the screen will clear
-        cout << " You are being sent back to the Main Menu " << endl;
-       
-        MenuJunction();
-    }
+    
+    
+    
 }
 
 void feedback::AdminMenu1()
 {
     
-    feedback admin;
     int menu;
-    string userName, userPassword;
-    system("cls");
-    cout << "\n";
-    cout << " ===================================================\n";
-    cout << "|               NZ TAXI FANNG SERVICE               |\n";
-    cout << " ===================================================\n\n\n";
-    cout << " ---------------------------------------------------\n";
-    cout << "|            Administrator / Staff Login            |\n";
-    cout << " ---------------------------------------------------\n\n";
-    cout << "\nPlease enter your username: ";
-    cin >> userName;
-    cout << "\nPlease enter your user password: ";
-    cin >> userPassword;
 
-    if (userName == "admin" && userPassword == "admin")
-    {
-        do
-        {
-            system("cls");
+    cls();
 
             cout << "\n";
             cout << " ===================================================\n";
@@ -1154,21 +1159,14 @@ void feedback::AdminMenu1()
                 break;
             }
             }//end Switch
-        } while (menu != 6);//end do
+        
         cout << "thank you" << endl;
-        system("PAUSE");
-    }
-    else
-    {
-        cout << "\n\n\t\tInvalid login attempt. Please try again.\n" << '\n';
-        system("PAUSE");
-        system("cls");
-        admin.AdminMenu1();
-    }
+        this_thread::sleep_for(chrono::milliseconds(3000));
 }
+
 void feedback::SubmitInquiry()
 {
-    system("cls");
+    cls();
     cout << "\n";
     cout << "\t\t ================================================\n";
     cout << "\t\t|           Feedback Management System           |\n";
@@ -1199,13 +1197,13 @@ void feedback::SubmitInquiry()
         temp->next = start_ptr;
     }
     start_ptr = temp;
-    system("cls");
+    cls();
 }
 void feedback::ViewInquiry()
 {
     int num;
     bool found;            //variable to search
-    system("cls");
+    cls();
     node* temp;
     temp = start_ptr;
     found = false;
@@ -1256,7 +1254,7 @@ void feedback::exit()
 }
 void cusdata() {
 
-    system("cls");//Clear screen
+    cls();//Clear screen
     //Level-2 display
     cout << "\t\t\tCUSTOMER INFORMATION SECTION\n\n\n";
     cout << "Enter your choice: " << endl;
@@ -1397,7 +1395,7 @@ void drivdata() {
             }//if
         }//for loop
         //for finding through name
-        system("cls");
+        cls();
 
 
 
@@ -1825,78 +1823,69 @@ void TaxiFare()
 }
 
 /*UNKNOWN*/
-//rideinfo request(string pickup, string dropoff)
-//{
-//    rideinfo info;
-//    info.pick = pickup;
-//    info.drop = dropoff;
-//    srand(time(0));
-//    info.dis = rand() % 25;
-//
-//    if (info.dis > 0 && info.dis < 6)
-//    {
-//        info.cost = 10;
-//    }
-//    else if (info.dis > 5 && info.dis < 16)
-//    {
-//        info.cost = info.dis * 1.8;
-//    }
-//    else if (info.dis > 15 && info.dis < 25)
-//    {
-//        info.cost = info.dis * 1.5;
-//    }
-//
-//    TitlePrinter("CONFIRM BOOKING");
-//    cout << "\tPickup from: " << pickup << "\n\tDropoff at: " << dropoff << "\n\tDistance to Travel: " << info.dis << "\n\tTotal Cost: $" << info.cost << "\n\tConfirm: (Yes/No) ";
-//    bool yn = yesno();
-//
-//    if (yn == 0)
-//    {
-//        cout << "\n\tBOOKING CANCELED";
-//        main();
-//    }
-//    else if (yn == 1)
-//    {
-//        // GET RANDOM DRIVER FROM DB --
-//        TitlePrinter("SEARCHING AVAILABLE DRIVERS...");
-//        PrintLine();
-//
-//        string line;
-//        int lncnt = 0;
-//
-//        ifstream drivls("driverDB/driverls");
-//        if (drivls.is_open())
-//        {
-//            while (!drivls.eof())
-//            {
-//                getline(drivls, line);
-//                lncnt++;
-//            }
-//        }
-//
-//        srand(time(0));
-//        int drivln = rand() % lncnt;
-//
-//        int schln = 0;
-//
-//        if (drivls.is_open())
-//        {
-//            while (getline(drivls, line))
-//            {
-//
-//                if (schln == drivln)
-//                {
-//                    info.driver = line;
-//                    cout << line;
-//                    drivls.close();
-//                    break;
-//                }
-//                schln++;
-//            }
-//        }
-//        cls();
-//    }
-//}
+rideinfo request(string pickup, string dropoff)
+{
+    rideinfo info;
+    info.pick = pickup;
+    info.drop = dropoff;
+    srand(time(0));
+    info.dis = rand() % 25;
+    string drivers[15];
+
+    float cost;
+    
+    if (info.dis > 0 && info.dis < 6)
+    {
+        cost = 10;
+    }
+    else if (info.dis > 5 && info.dis < 16)
+    {
+        cost = info.dis * 1.8;
+    }
+    else if (info.dis > 15 && info.dis < 25)
+    {
+        cost = info.dis * 1.5;
+    }
+
+    info.cost = (cost / 100) * 15 + cost; //GST Add
+
+    TitlePrinter("CONFIRM BOOKING");
+    cout << "\tPickup from: " << pickup << "\n\tDropoff at: " << dropoff << "\n\tDistance to Travel: " << info.dis << "\n\tTotal Cost: $" << info.cost << "\n\tConfirm: (Yes/No) ";
+    bool yn = yesno();
+
+    if (yn == 0)
+    {
+        cout << "\n\tBOOKING CANCELED";
+        main();
+    }
+    else if (yn == 1)
+    {
+        // GET RANDOM DRIVER FROM DB --
+        TitlePrinter("SEARCHING AVAILABLE DRIVERS...");
+        PrintLine();
+
+        string line;
+        int lncnt = 0;
+
+        ifstream drivls("driverDB/driverls");
+        if (drivls.is_open())
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                cin.getline(drivls, drivers[i], '\n');
+            }
+            
+        }
+
+        srand(time(0));
+        int drivln = rand() % 14;
+
+        info.driver = driver[drivln];
+        cls();
+
+        return info;
+    }
+}
 
 // FAKE DISTANCE COUNT
 /*
