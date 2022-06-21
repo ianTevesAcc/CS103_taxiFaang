@@ -443,7 +443,7 @@ void CusRegoLogin()
             getline(cin, CusCardna);
             cout << "Enter Security Code / CVV: ";
             getline(cin, CusCVV);
-            cout << "Enter Card Expiry Date: ";
+            cout << "Enter Card Expiry Date (DD/MM): ";
             getline(cin, CusEX);
 
             cout << "\nIn case you forget your password/username here are some security questions: " << endl;
