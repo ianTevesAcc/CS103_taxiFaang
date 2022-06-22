@@ -4,16 +4,19 @@
 #define ANSI_RED "\x1b[31m" // to turn txt red
 #define ANSI_MAGENTA "\x1b[35m" //to turn txt magenta
 #define  _CRT_NONSTDC_NO_WARNINGS
+
 //^^^^Macros used for colour and error evasion^^^^
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <cstdlib>
 #include <thread>
+#include <cctype>
+
 #include <stdlib.h>
 #include <conio.h>
-#include <cctype>
 // ASCII Art by lgbeard - (https://www.asciiart.eu/vehicles/cars)
+
 using namespace std;
 
 /*DATA BASE*/
@@ -372,7 +375,7 @@ void CustomerMenu()
         CusRegoLogin();
         goto restart;
     case 2:
-        goto restart;
+        DriverMenu();
         break;
     case 3:
         FAQ();
@@ -387,7 +390,7 @@ void CusRegoLogin()
     cls();
     while (1)
     {
-
+        cls();
         cout << ANSI_MAGENTA"\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl;
         cout << "\t\t\t -----------CUSTOMER LOGIN / REGISTRATION------------" << endl;
         cout << "\t\t\t|___________________________________________________|" << endl;
@@ -1570,6 +1573,7 @@ void FAQ()
 
     cout << "________________________________________________________________________________________________" << endl;
 
+    system("pause");
 }
 int main()
 {
