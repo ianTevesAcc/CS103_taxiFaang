@@ -153,8 +153,8 @@ struct customer
 //For drivers
 struct driver
 {
-    string fst_name;//first name 
-    string lst_name;//last name 
+    string fst_name;//first name
+    string lst_name;//last name
     string endorsement;
     string exp;//Experience of the person
     string pay;//Pay
@@ -263,19 +263,30 @@ void TitlePage()
         << endl;
     cout << "\t\t\tDo you Agree with our T's and C's?" << endl;
     cout << "\t\t\t(Type Yes / No): ";
-  
-    bool yn = yesno(); 
+ 
+    bool yn = yesno();
     if (yn == 1)
     {
         cout << "Welcome to our service";
         MenuJunction();
-
+    }
+    else if (yn == 0) {
+        cout << "EXIT APP? (Y / N)" << endl;
+        cout << "Enter Selection: ";
+        bool exit = yesno();
+        if (exit == 1) {
+            cout << "Goodbye" << endl;
+            EXIT_SUCCESS;
+        }
+        else {
+            goto startagain;
+        }
     }
     else
     {
         // everytime the code is processed the screen will clear
-        cout << " Unless you agree to our Terms and Conditions you are not able to use our service. \n"
-            << endl;
+        cout << "***Invalid Input***\nTry Again..." << endl;
+        system("pause");
         goto startagain;
     }
 }
@@ -317,7 +328,7 @@ void MenuJunction()
 
 
 )" << '\n';
-    
+   
     cout << RESET_COLOR"What is your choice?" << endl;
     cout << "(type a valid choice number from above): ";
     cin >> choice;
@@ -341,7 +352,7 @@ void MenuJunction()
         system("pause");
         cls();
         break;
-        
+       
     }
 
     cls();
@@ -474,7 +485,7 @@ void CusRegoLogin()
             cout << "Enter Password: ";
             cout << "________________________________________________________________________________________" << endl;
 
-            g << CusName; //this put whatever's to the right (registerName) into , g 
+            g << CusName; //this put whatever's to the right (registerName) into , g
 
             g << '\n'; //and change to anew line in file
             g << CusPassword; //and now write/store,the password
@@ -509,9 +520,9 @@ void CusRegoLogin()
         }
         if (Canswer == "1")
         {
-            
+           
 
-            
+           
             ifstream f("customerdata.txt"); //'ifstream' is   for getting the data from the file, and
             //let us assume we've already created a file
             if (!f.is_open()) //if file is not open, then there is no such file with the given name inside
@@ -534,7 +545,7 @@ void CusRegoLogin()
                 cout << "\nEnter Password: ";
                 getline(cin, inPassword);
 
-                
+               
                 if (inName == dname && inPassword == dpassword)
                 {
                     cout << "\nLogin Successful\n" //the '\n' is a character, so that's why I can add it
@@ -543,7 +554,7 @@ void CusRegoLogin()
                         << inName;
                     this_thread::sleep_for(chrono::milliseconds(3000));
                     CusBooking();
-                    
+                   
 
                 }
                 cout << "incorrect name or password\n"; //if user  entered the wrong account details ,
@@ -689,7 +700,7 @@ void CusBooking() {
     cout << "\t\t\t| Press 2 for Customer Support                      |" << endl;
     cout << "\t\t\t| Press 3 for Account Information                   |" << endl;
     cout << "\t\t\t| Press 4 to EXIT application                       |" << endl;
-    
+   
     cout << RESET_COLOR"What is your choice?" << endl;
     cout << "(type a valid choice number from above): ";
     //NOTE!!! WHEN BOOKING A RIDE ADD THE GENERATION OF A RANDOM REFERENCE NUMBER SO IT MAY BE USED IN CUSTOMER/ADMIN SUPPORT FUNCTION
@@ -706,7 +717,7 @@ void CusBooking() {
 
         trpinfo = request(pckup, drpoff);
         cusdrivscreen(trpinfo);
-        
+       
     case 2:
         CusSupport();
         goto restart2;
@@ -787,7 +798,7 @@ void DriverMenu()
     cout << "\t\t\t| Press 1 to Register / Login                       |" << endl;
     cout << "\t\t\t| Press 2 to go back to the Main Menu               |" << endl;
     cout << "\t\t\t| Press 3 to EXIT PROGRAM                           |" << endl;
-    
+   
     cout << RESET_COLOR"What is your choice?" << endl;
     cout << "(type a valid choice number from above): ";
     cin >> c;
@@ -824,7 +835,7 @@ void DriverRegoLogin()
         cout << "\t\t\t| Press 2 for Driver Registration                    |" << endl;
         cout << "\t\t\t| Press 3 if you Forgot Password (or) Username      |" << endl;
         cout << "\t\t\t| Press 4 to go back to Main Menu                   |" << endl;
-      
+     
         cout << RESET_COLOR"What is your choice?" << endl;
         cout << "(type a valid choice number from above): ";
 
@@ -854,7 +865,7 @@ void DriverRegoLogin()
             getline(cin, drivName);
             string drivfile = "driverDB/";
             drivfile.append(drivName);
-            
+           
             cout << "\nEnter Password: ";
             getline(cin, drivPassword); //user input from keyboard will go into registerPassword variable fors registration
             cout << "\nIn case you forget your password/username here are some security questions: " << endl;
@@ -931,7 +942,7 @@ void DriverRegoLogin()
 
             regwrite.close(); //always make sure to close the file, or else we might have to deal with some nasty unwanted stuff in the memory
 
-          
+         
             cout << "Thank you for registering, " << drivName << "!" << endl;
             this_thread::sleep_for(chrono::milliseconds(3000));
             DriverRegoLogin();
@@ -1106,7 +1117,7 @@ void StartDrive()
     cout << "\t\t\t| Press 2 to Access Account Information             |" << endl;
     cout << "\t\t\t| Press 3 for Support                               |" << endl;
     cout << "\t\t\t| Press 4 to EXIT application                       |" << endl;
-    
+   
     cout << RESET_COLOR"What is your choice?" << endl;
     cout << "(type a valid choice number from above): ";
 
@@ -1133,7 +1144,7 @@ void StartDrive()
 // 1. idenitical to request function just needs modifying to suit driver // thomas
 // 2. driver info
 // 3. support - driver support file - (1 for driver 1 for customer)
-// what can we do to help? 
+// what can we do to help?
 
 /*ADMIN PROCESS*/
 void AdminMenu() {
@@ -1175,8 +1186,8 @@ void AdminMenu() {
 
     //    MenuJunction();
     //}
-    
-    
+   
+   
 }
 void feedback::AdminMenu1()
 {
@@ -1870,7 +1881,7 @@ rideinfo request(string pickup, string dropoff)
     string drivers[15];
 
     float cost;
-    
+   
     if (info.dis > 0 && info.dis < 6)
     {
         cost = 10;
@@ -1911,7 +1922,7 @@ rideinfo request(string pickup, string dropoff)
             {
                 getline(drivls, drivers[i], '\n');
             }
-            
+           
         }
 
         srand(time(0));
@@ -2019,7 +2030,7 @@ void drivscreen(drivpickup info) {
 
     cout << "Trip Complete, total pay from trip is: $" << info.tripay;
     this_thread::sleep_for(chrono::milliseconds(5000));
-    
+   
 }
 
 // FAKE DISTANCE COUNT
@@ -2121,7 +2132,7 @@ void CaccInfo() {
                 cout << "Enter Password: ";
                 cout << "________________________________________________________________________________________" << endl;
 
-                g << CusName; //this put whatever's to the right (registerName) into , g 
+                g << CusName; //this put whatever's to the right (registerName) into , g
 
                 g << '\n'; //and change to anew line in file
                 g << CusPassword; //and now write/store,the password
