@@ -376,7 +376,7 @@ void CusRegoLogin()
     cls();
     while (1)
     {
-
+        cls();
         cout << ANSI_MAGENTA"\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl;
         cout << "\t\t\t -----------CUSTOMER LOGIN / REGISTRATION------------" << endl;
         cout << "\t\t\t|___________________________________________________|" << endl;
