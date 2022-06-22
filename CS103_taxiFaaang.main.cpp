@@ -710,6 +710,7 @@ void CusBooking() {
     case 1:
         cls();
         cout << "Where would you like to be picked up?:\t";
+        cin.ignore();
         getline(cin, pckup);
 
         cout << "Where would you like to go?:\t";
