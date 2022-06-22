@@ -23,6 +23,11 @@ struct rideinfo
     float cost;
     string driver, pick, drop;
 };
+struct drivpickup {
+    string pick, drop, cus;
+    float tripay;
+    int dis;
+};
 class driverfiles
 {
 public:
@@ -129,6 +134,10 @@ void TitlePage();
 void TaxiFare();
 void AdminMenu();
 
+/*Customer Screen*/
+void cusdrivscreen(rideinfo info);
+rideinfo request(string pickup, string dropoff);
+
 /*ADMIN AND SUPPORT FUNCTIONS AND VARIABLES*/
 struct customer
 {
@@ -156,6 +165,8 @@ struct driver
 }driv[50];
 void cusdata();
 void drivdata();
+drivpickup requestdriv();
+void drivscreen(drivpickup info);
 int i = 0, j;//for processing usage
 char choice1;//for getting choice
 char choice2;
@@ -497,54 +508,7 @@ void CusRegoLogin()
         {
             
 
-            //login
-            //while (1)
-            //{
-                //tplogin:
-                //string cusfile = "userDB/";
-                ////you are going to input the name and password here
-                //cout << "\n\n\n"
-                //    << "Enter Username: ";
-                //getline(cin, inName2);
-                ////open the file, and then put the name and password into the strings
-                //cusfile.append(inName2);
-                //ifstream f(cusfile); //'ifstream' is   for getting the data from the file, and
-                ////let us assume we've already created a file
-                //if (!f.is_open()) //if file is not open, then there is no such file with the given name inside
-                ////the folder (that is, in this folder where the .exe file is going to be made)
-                //{
-                //    cout << "User not found\n"; //just so we know why it won't work if it doesn't at any instance
-                //    goto tplogin;
-
-                //}
-                //getline(f, cname, '\n'); //reads the user name  from file f 
-                //getline(f, cpassword, '\n'); //reads the password from file f 
-                ////also, we are here telling the file to get the  text up until '\n', here ishow  we  know it reads the whole line at most, and won't go any further
-                ////and that is done by the 3rd parameter '\n'
-                //f.close(); //it is not required to open now, since you have the name and password from the file
-                //cout << "\nEnter Password: ";
-                //getline(cin, inPassword2);
-
-                //if (inName2 == cname && inPassword2 == cpassword)
-                //{
-                //    cout << "\nLogin Successful\n" //the '\n' is a character, so that's why I can add it
-                //    //and it will automatically output a newline in console, alongside the string
-                //        << "Welcome, "
-                //        << inName2;
-                //    CusBooking();
-                //     //just exit the while loop if you've entered the valid account
-                //}
-                //else {
-                //    cout << "incorrect name or password\n"; //if user  entered the wrong account details ,
-                //    cls();
-                //    goto tplogin;
-                //}
-
-                
-                //then the while loop is not done yet. So that's why this output is without condition
-            //}
-            //now do something about the account
-               //open the file, and then put the name and password into the strings
+            
             ifstream f("customerdata.txt"); //'ifstream' is   for getting the data from the file, and
             //let us assume we've already created a file
             if (!f.is_open()) //if file is not open, then there is no such file with the given name inside
@@ -553,36 +517,37 @@ void CusRegoLogin()
                 cout << "could not open file\n"; //just so we know why it won't work if it doesn't at any instance
 
             }
-            getline(f, cname, '\n'); //reads the user name  from file f 
-            getline(f, cpassword, '\n'); //reads the password from file f 
-            //also, we are here telling the file to get the  text up until '\n', here ishow  we  know it reads the whole line at most, and won't go any further
-            //and that is done by the 3rd parameter '\n'
-            f.close(); //it is not required to open now, since you have the name and password from the file
+            getline(f, dname, '\n');
+            getline(f, dpassword, '\n');
+            f.close();
 
             //login
             while (1)
             {
-                //you are going to input the name and password here
+                // you are going to input the name and password here
                 cout << "\n\n\n"
                     << "Enter Username: ";
-                getline(cin, inName2);
+                getline(cin, inName);
                 cout << "\nEnter Password: ";
-                getline(cin, inPassword2);
+                getline(cin, inPassword);
 
-                if (inName2 == cname && inPassword2 == cpassword)
+                
+                if (inName == dname && inPassword == dpassword)
                 {
                     cout << "\nLogin Successful\n" //the '\n' is a character, so that's why I can add it
                     //and it will automatically output a newline in console, alongside the string
                         << "Welcome, "
-                        << inName2;
+                        << inName;
+                    this_thread::sleep_for(chrono::milliseconds(3000));
                     CusBooking();
-                    break; //just exit the while loop if you've entered the valid account
+                    
+
                 }
                 cout << "incorrect name or password\n"; //if user  entered the wrong account details ,
+                this_thread::sleep_for(chrono::milliseconds(3000));
                 cls();
                 //then the while loop is not done yet. So that's why this output is without condition
             }
-            //now do something about the account
         }
 
         if (Canswer == "3") //(for C strings) if (!strcmp(usercommand, "forgots password or "))
@@ -704,6 +669,8 @@ void CusRegoLogin()
 }
 void CusBooking() {
 
+    rideinfo trpinfo;
+    string pckup, drpoff;
     // 1. book trip - need to pull a driver name, need to add GST // thomas task
     // 2. support - lost items , complaints - go to admin also // bree task
     // admin contacts between customer and driver, provide support number (rand number gen)
@@ -728,8 +695,15 @@ void CusBooking() {
     switch (h) {
     case 1:
         cls();
-        cout << "Let's go" << endl;
-        goto restart2;
+        cout << "Where would you like to be picked up?:\t";
+        getline(cin, pckup);
+
+        cout << "Where would you like to go?:\t";
+        getline(cin, drpoff);
+
+        trpinfo = request(pckup, drpoff);
+        cusdrivscreen(trpinfo);
+        
     case 2:
         CusSupport();
         goto restart2;
@@ -877,16 +851,7 @@ void DriverRegoLogin()
             getline(cin, drivName);
             string drivfile = "driverDB/";
             drivfile.append(drivName);
-            fstream g(drivfile);
-
-            if (g.is_open()) //if it's not open, then there is no such file with the given name inside this folder (means, in the folder where the .exe file is going to be made )
-            {
-                cout << "Username is already taken, please try again...\n"; //just so we can know why it ain't working if it doesn't
-                drivfile = "driverDB/";
-                goto secQuest;
-            }
-
-            g.close();
+            
             cout << "\nEnter Password: ";
             getline(cin, drivPassword); //user input from keyboard will go into registerPassword variable fors registration
             cout << "\nIn case you forget your password/username here are some security questions: " << endl;
@@ -935,7 +900,7 @@ void DriverRegoLogin()
             cout << "If you do not hold a NZ citizenship please enter Visa status - If you do type 'N/A': ";
             getline(cin, drivVisa);
 
-            ofstream regwrite(drivfile);
+            ofstream regwrite("driverdata.txt");
 
             regwrite << drivName; //this put whatever's to the right into g (("driverdata.txt"))
 
@@ -1129,6 +1094,7 @@ void DriverRegoLogin()
 }
 void StartDrive()
 {
+    int choice;
     cls();
     cout << ANSI_CYAN"\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl;
     cout << "\t\t\t --------------- LET'S START DRIVING ---------------" << endl;
@@ -1140,7 +1106,26 @@ void StartDrive()
     
     cout << RESET_COLOR"What is your choice?" << endl;
     cout << "(type a valid choice number from above): ";
+
+    cin >> choice;
+
+    if (choice == 1) {
+        drivpickup drivinfo = requestdriv();
+
+        drivscreen(drivinfo);
+    }
+    else if (choice == 2) {
+
+    }
+    else if (choice == 3) {
+
+    }
+    else if (choice == 4) {
+        EXIT_SUCCESS;
+    }
 }
+
+
 // additions to driver menu
 // 1. idenitical to request function just needs modifying to suit driver // thomas
 // 2. driver info
@@ -1933,6 +1918,104 @@ rideinfo request(string pickup, string dropoff)
 
         return info;
     }
+}
+
+void cusdrivscreen(rideinfo info) {
+    for (int i = info.drivdis; i > 1; i--) {
+        cls();
+        cout << "Your driver, " << info.driver << ", is " << i << " KM away";
+        this_thread::sleep_for(chrono::milliseconds(3000));
+    }
+    sq:
+    cout << "Your driver, " << info.driver << ", is " << "1 KM away\nStart Trip? (Yes/No)\t";
+    bool start = yesno();
+
+    if (start == 0) {
+        goto sq;
+    }
+
+    for (int j = info.dis; j > 1; j--) {
+        cls();
+        cout << "You are " << j << " KM from " << info.drop;
+        this_thread::sleep_for(chrono::milliseconds(3000));
+    }
+eq:
+    cls();
+    cout << "You are 1 KM from " << info.drop << "\nEnd Trip? (Yes/No)\t";
+
+    bool end = yesno();
+
+    if (end == 0) {
+        goto eq;
+    }
+
+    cout << "Thanks for using Taxi Faang!!";
+    this_thread::sleep_for(chrono::milliseconds(5000));
+}
+
+
+
+
+
+
+
+drivpickup requestdriv() {
+    drivpickup info;
+
+    srand(time(0));
+    info.dis = rand() % 25;
+
+    if (info.dis > 0 && info.dis < 6)
+    {
+        info.tripay = 5;
+    }
+    else if (info.dis > 5 && info.dis < 16)
+    {
+        info.tripay = info.dis * 1;
+    }
+    else if (info.dis > 15 && info.dis < 25)
+    {
+        info.tripay = info.dis * .8;
+    }
+
+    info.pick = "144 Columbo Street";
+
+    info.drop = "22 Madras Street";
+
+    info.cus = "Steve";
+
+    return info;
+
+}
+
+void drivscreen(drivpickup info) {
+    tp:
+    cout << "Have you arrived at " << info.pick << " ? (Yes/No)\t";
+
+    bool gotem = yesno();
+
+    if (gotem == 0) {
+        goto tp;
+    }
+
+    for (int i = info.dis; i > 1; i--) {
+        cls();
+        cout << "You are " << i << " KM from reaching " << info.drop;
+        this_thread::sleep_for(chrono::milliseconds(10000));
+    }
+
+    hasit:
+    cout << "You are 1 KM from reaching " << info.drop << "\nEnd Trip? (Yes/No)\t";
+
+    bool end = yesno();
+
+    if (end == 0) {
+        goto hasit;
+    }
+
+    cout << "Trip Complete, total pay from trip is: $" << info.tripay;
+    this_thread::sleep_for(chrono::milliseconds(5000));
+    
 }
 
 // FAKE DISTANCE COUNT
