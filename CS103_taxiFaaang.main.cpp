@@ -1947,6 +1947,9 @@ for (int i = info.drivdis; i > 0 ; i--)
 void CaccInfo() {
     string find;
     ifstream f2("customerdata.txt");
+    string cusfile = "userDB/";
+    cusfile.append(CusName);
+    fstream g(cusfile);
 
     cout << "Please enter your name to access your data ";
     cin >> find;
