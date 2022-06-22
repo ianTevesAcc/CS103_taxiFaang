@@ -361,7 +361,7 @@ void CustomerMenu()
         CusRegoLogin();
         goto restart;
     case 2:
-        goto restart;
+        DriverMenu();
         break;
     case 3:
         FAQ();
