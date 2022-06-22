@@ -4,16 +4,19 @@
 #define ANSI_RED "\x1b[31m" // to turn txt red
 #define ANSI_MAGENTA "\x1b[35m" //to turn txt magenta
 #define  _CRT_NONSTDC_NO_WARNINGS
+
 //^^^^Macros used for colour and error evasion^^^^
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <cstdlib>
 #include <thread>
+#include <cctype>
+
 #include <stdlib.h>
 #include <conio.h>
-#include <cctype>
 // ASCII Art by lgbeard - (https://www.asciiart.eu/vehicles/cars)
+
 using namespace std;
 
 /*DATA BASE*/
