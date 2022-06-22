@@ -4,6 +4,7 @@
 #define ANSI_RED "\x1b[31m" // to turn txt red
 #define ANSI_MAGENTA "\x1b[35m" //to turn txt magenta
 #define  _CRT_NONSTDC_NO_WARNINGS
+
 //^^^^Macros used for colour and error evasion^^^^
 #include <iostream>
 #include <fstream>
@@ -35,6 +36,15 @@ class driverfiles
 public:
     string names;
 };
+
+/*ADMIN AND SUPPORT FUNCTIONS AND VARIABLES*/
+struct customer
+{
+    string fname;//for first name
+    string lname;//for last name
+    string phno;//for phone number
+    string cusemail;//for email
+}customerData;//Variable of type
 
 /*GLOBAL FUNCTIONS*/
 void PrintLine() // function to output a line for decoration
@@ -141,15 +151,6 @@ void AdminMenu();
 void cusdrivscreen(rideinfo info);
 rideinfo request(string pickup, string dropoff);
 
-/*ADMIN AND SUPPORT FUNCTIONS AND VARIABLES*/
-struct customer
-{
-    string fname;//for first name
-    string lname;//for last name
-    string phno;//for phone number
-    string cusemail;//for email
-}customerData;//Variable of type
-
 //For drivers
 struct driver
 {
@@ -207,7 +208,6 @@ node* last = NULL;
 int count;
 char ch;
 
-
 /*UNKNOWN*/
 string username, password, userid, pass;
 string rusername, rpassword, ruserid, rpass, remail, raddress, rmobile, rpayment;
@@ -224,7 +224,6 @@ Canswer,
 cname, cpassword, quesd, quese, quesf,
 inName2, inPassword2, inquesd, inquese, inquesf,
 regquesd, regquese, regquesf, CusName, CusPassword, CusEml, CusAddr, CusPh, CusCardno, CusCardna, CusCVV, CusEX;
-
 char choice;
 
 /*TITLE*/
@@ -1734,7 +1733,6 @@ void drivdata() {
     }
 }
 
-
 /*ADMIN PROCESS*/
 void AdminMenu() {
     feedback admin;
@@ -1922,10 +1920,6 @@ void feedback::exit()
 {
     cout << "Sad to see you go!" << endl;
 }
-
-
-
-
 void FAQ()
 {
 
@@ -1947,6 +1941,7 @@ void FAQ()
 
     system("pause");
 }
+
 int main()
 {
     TitlePage();
@@ -1963,9 +1958,6 @@ int main()
 
     return 0;
 }
-
-
-
 
 /*UNUSED FUNCTIONS
 /*SIGN IN*/
@@ -2204,7 +2196,6 @@ int main()
 //    drivinfo.close();
 //}
 
-
 void TaxiFare()
 {
     cls();
@@ -2295,7 +2286,6 @@ rideinfo request(string pickup, string dropoff)
         return info;
     }
 }
-
 void cusdrivscreen(rideinfo info) {
     for (int i = info.drivdis; i > 1; i--) {
         cls();
