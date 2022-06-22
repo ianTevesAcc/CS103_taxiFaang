@@ -1,13 +1,13 @@
 user
 pass
-000
-email@email.com
-home
-000
-000
-000
-000
+s
+email
+s
+s
+s
+s
+s
 
-000
-000
-00
+s
+s
+s

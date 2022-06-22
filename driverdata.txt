@@ -1,10 +1,10 @@
 user
 pass
-s
-s
-s
+yeah
+yeah
+yeah
 
-12
-12
-12
-n/a
+b
+b
+b
+b

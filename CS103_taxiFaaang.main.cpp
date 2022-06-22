@@ -4,7 +4,6 @@
 #define ANSI_RED "\x1b[31m" // to turn txt red
 #define ANSI_MAGENTA "\x1b[35m" //to turn txt magenta
 #define  _CRT_NONSTDC_NO_WARNINGS
-
 //^^^^Macros used for colour and error evasion^^^^
 #include <iostream>
 #include <fstream>
@@ -12,9 +11,9 @@
 #include <cstdlib>
 #include <thread>
 #include <cctype>
-
 #include <stdlib.h>
 #include <conio.h>
+#include <ctime>
 // ASCII Art by lgbeard - (https://www.asciiart.eu/vehicles/cars)
 
 using namespace std;
@@ -126,6 +125,7 @@ void FAQ();
 void CusBooking();
 void CusSupport();
 void CaccInfo();
+void DaccInfo();
 
 /*MAIN MENUS*/
 void MenuJunction();
@@ -208,7 +208,7 @@ int count;
 char ch;
 
 
-    /*UNKNOWN*/
+/*UNKNOWN*/
 string username, password, userid, pass;
 string rusername, rpassword, ruserid, rpass, remail, raddress, rmobile, rpayment;
 string susername, suserid, spass;
@@ -219,19 +219,20 @@ string
 Danswer, // input command
 dname, dpassword, quesb, quesa, quesc, // what is found in file
 inName, inPassword, inquesa, inquesb, inquesc, // user gives input from keyboard
-regquesb, regquesa, regquesc, drivName, Uname, drivPassword, drivRego, drivCar, drivLic, drivEml, drivVisa, // which variables the user is giving
+regquesb, regquesa, regquesc, drivName, Uname, drivPh, drivAddr, drivPassword, drivRego, drivCar, drivLic, drivEml, drivVisa, // which variables the user is giving
 Canswer,
 cname, cpassword, quesd, quese, quesf,
 inName2, inPassword2, inquesd, inquese, inquesf,
 regquesd, regquese, regquesf, CusName, CusPassword, CusEml, CusAddr, CusPh, CusCardno, CusCardna, CusCVV, CusEX;
+
 char choice;
 
 /*TITLE*/
 void TitlePage()
 {
-    startagain:
+startagain:
     // customer terms and conditions
-    cout <<  "\t\t __________________________________________________________________________________________" << endl;
+    cout << "\t\t __________________________________________________________________________________________" << endl;
     cout << "\t\t |---------------------------TAXI-FANNG TERMS AND CONDITIONS------------------------------|" << endl;
     cout << "\t\t |________________________________________________________________________________________|" << endl;
     cout << endl;
@@ -263,7 +264,7 @@ void TitlePage()
         << endl;
     cout << "\t\t\tDo you Agree with our T's and C's?" << endl;
     cout << "\t\t\t(Type Yes / No): ";
- 
+
     bool yn = yesno();
     if (yn == 1)
     {
@@ -305,7 +306,7 @@ void MenuJunction()
     cout << ANSI_RED"\t\t\t| Press 3 for Administrator Menu                    |" << endl;
     cout << endl;
     cout << RESET_COLOR"\t\t\t| Press 4 to EXIT application                       |" << endl;
- 
+
     cout << ANSI_YELLOW R"(
 
                               __..-======-------..__
@@ -328,7 +329,7 @@ void MenuJunction()
 
 
 )" << '\n';
-   
+
     cout << RESET_COLOR"What is your choice?" << endl;
     cout << "(type a valid choice number from above): ";
     cin >> choice;
@@ -352,7 +353,7 @@ void MenuJunction()
         system("pause");
         cls();
         break;
-       
+
     }
 
     cls();
@@ -361,7 +362,7 @@ void MenuJunction()
 /*CUSTOMER SUB-MENUS*/
 void CustomerMenu()
 {
-    restart:
+restart:
     cls();
     int b;
     cout << ANSI_MAGENTA"\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl;
@@ -371,7 +372,7 @@ void CustomerMenu()
     cout << "\t\t\t| Press 1 to Register / Login                       |" << endl;
     cout << "\t\t\t| Press 2 to become a driver with us!               |" << endl;
     cout << "\t\t\t| Press 3 for FAQ                                   |" << endl;
-    cout << RESET_COLOR"\t\t\t| Press 4 to EXIT application                       |" << endl;
+    cout << RESET_COLOR"\t\t\t| Press 4 to go back to Main Menu        |" << endl;
 
     cout << endl;
 
@@ -391,9 +392,11 @@ void CustomerMenu()
     case 3:
         FAQ();
         goto restart;
+    case 4:
+        MenuJunction();
     default:
-        cout << " Thank you, Have a nice day! :) " << endl;
-        EXIT_SUCCESS;
+        cout << "Invalid Input, Please Try Agin..." << endl;
+        goto restart;
     }
 }
 void CusRegoLogin()
@@ -475,10 +478,10 @@ void CusRegoLogin()
             cout << "________________________________________________________________________________________" << endl;
             cout << "\n Q1: What is Your favorite colour? Please enter everything in lowercase: ";
             cout << "\nEnter the security question's answer: ";
-            getline(cin, regquese);
+            getline(cin, regquesd);
             cout << "\n Q2: What was your first best friends name? Please enter everything in lowercase: ";
             cout << "\nEnter the security question's answer: ";
-            getline(cin, regquesd);
+            getline(cin, regquese);
             cout << "\n Q3: What was the name of the first street you lived on? Please enter everything in lowercase: ";
             cout << "\nEnter the security question's answer: ";
             getline(cin, regquesf);
@@ -506,86 +509,119 @@ void CusRegoLogin()
             g << CusEX;
             g << '\n';
             g << '\n';
-            g << regquese;
-            g << '\n';
             g << regquesd;
+            g << '\n';
+            g << regquese;
             g << '\n';
             g << regquesf;
 
             g.close(); //always make sure to close the file, or else we might have to deal with some nasty unwanted stuff in the memory
 
-            cout << "\nRegistration is ..Successful!\n";
+            cout << "\nThank you for registering with us!!\n";
             this_thread::sleep_for(chrono::milliseconds(3000));
             CusRegoLogin();
         }
         if (Canswer == "1")
         {
-           
 
-           
-            ifstream f("customerdata.txt"); //'ifstream' is   for getting the data from the file, and
-            //let us assume we've already created a file
-            if (!f.is_open()) //if file is not open, then there is no such file with the given name inside
-            //the folder (that is, in this folder where the .exe file is going to be made)
+
+
+            ifstream g("customerdata.txt");
+            if (!g.is_open())
+
             {
-                cout << "could not open file\n"; //just so we know why it won't work if it doesn't at any instance
+                cout << "could not open file\n";
 
             }
-            getline(f, dname, '\n');
-            getline(f, dpassword, '\n');
-            f.close();
+            getline(g, CusName, '\n');
+            getline(g, CusPassword, '\n');
+            g.close();
 
-            //login
+
             while (1)
             {
-                // you are going to input the name and password here
+
                 cout << "\n\n\n"
                     << "Enter Username: ";
                 getline(cin, inName);
                 cout << "\nEnter Password: ";
+                //char c;
+                //// loop condition: get a character, while it isn't a newline (end of password), then...
+                //while ((c = _getch()) != '\n')
+                //{
+                //    // put it onto the back of the password
+                //    inPassword.push_back(c);
+                //    // output a '*' character
+                //    _putch('*');
+                //}
+
+                //char c = ' ';
+
+                //while (c != 13) //Loop until 'Enter' is pressed
+                //{
+                //    c = _getch();
+                //    if (c == 13)
+                //        break;
+
+                //    if (c == 8)
+                //    {
+                //        if (inPassword.size() != 0)   //delete only if there is input 
+                //        {
+                //            cout << "\b \b";
+                //            inPassword.erase(inPassword.size() - 1);
+                //        }
+                //    }
+
+                //    if ((c > 47 && c < 58) || (c > 64 && c < 91) || (c > 96 && c < 123))  //ASCii code for integer and alphabet
+                //    {
+                //        inPassword += c;
+                //        cout << "*";
+                //    }
+                //}
+
                 getline(cin, inPassword);
 
-               
-                if (inName == dname && inPassword == dpassword)
+
+                if (inName == CusName && inPassword == CusPassword)
                 {
-                    cout << "\nLogin Successful\n" //the '\n' is a character, so that's why I can add it
-                    //and it will automatically output a newline in console, alongside the string
+                    cout << "\nLogin Successful\n"
+
                         << "Welcome, "
                         << inName;
                     this_thread::sleep_for(chrono::milliseconds(3000));
                     CusBooking();
-                   
+
 
                 }
-                cout << "incorrect name or password\n"; //if user  entered the wrong account details ,
+                cout << "Incorrect Name or Password\n";
                 this_thread::sleep_for(chrono::milliseconds(3000));
                 cls();
-                //then the while loop is not done yet. So that's why this output is without condition
+
             }
         }
 
-        if (Canswer == "3") //(for C strings) if (!strcmp(usercommand, "forgots password or "))
+        if (Canswer == "3")
         {
         forgotp:
             string ch;
-            //open file, and then put the name and password into the strings
-            ifstream f("customerdata.txt"); //'ifstream' is the one for getting data from the file, and
-            //let us assume you've already created a file called "registration.txt"
-            if (!f.is_open()) //if it's not open, then there is no such file with the given name inside
-            //the folder (that is, in the folder where the .exe file is going to be)
+
+            ifstream g("customerdata.txt");
+
+            if (!g.is_open())
+
             {
-                cout << "could not open file\n"; //just so that you know why it won't work if it doesn't
+                cout << "could not open customerdata.txt\n";
 
             }
-            getline(f, cname, '\n'); //reads the user name from file f (which is using "registration.txt")
-            getline(f, cpassword, '\n'); //reads the password from file f (which is using "registration.txt")
-            getline(f, quese, '\n');
-            getline(f, quesd, '\n');
-            getline(f, quesf, '\n');
-            //also, if you tell the file to get you that text up until '\n', that's when you know it reads
-            //the whole line at most, and won't go any further
-            //and that is done by the 3rd parameter
-            f.close(); //you don't need it open now, since we now have the name and password from the file
+            getline(g, CusName, '\n');
+            getline(g, CusPassword, '\n');
+            getline(g, quesd, '\n');
+            getline(g, quese, '\n');
+            getline(g, quesf, '\n');
+
+
+
+            g.close(); //you don't need it open now
             cout << "________________________________________________" << endl;
             cout << "Forgotten something? Happens to the best of us.\n";
             cout << "1. Search your ID by the username you remember" << endl;
@@ -615,23 +651,23 @@ void CusRegoLogin()
 
                     cout << "\n Q3: What was the name of the first street you lived on? Please enter everything in lowercase:";
                     cout << "\nEnter the security question's answer: ";
-                    getline(cin, inquesd);
+                    getline(cin, inquesf);
 
-                    if (inName2 == cname && inquese == quesd && inquesd == quesf && inquesd == quese)
+                    if (inName2 == CusName && inquesd == regquesd && inquese == regquese && inquesf == regquesf)
                     {
-                        cout << "\nFinding and Searching  Successful\n" //the '\n' is a character, so we can add it and it will then automatically output a newline in the console, alongside the string
+                        cout << "\nFinding and Searching  Successful\n"
                             << "Welcome, "
                             << inName2;
 
-                        CusBooking(); //changesbybree
-                        cout << "\nYour retrieved password is:" << cpassword;
-                        break; //this will  exit the while loop if user  entered a valid / correct account credentials
+                        CusBooking();
+                        cout << "\nYour retrieved password is:" << CusPassword;
+                        break;
                     }
-                    cout << "incorrect username or security answers\n"; //if the user entered wrong  account details then the while loop is not done yet and should be iterated again till
-                    //the correct details are filled in. So this 'cout' is outside  without any 'if' condition
+                    cout << "Incorrect Username or Security Answers\n";
+
                     goto forgotp;
                 }
-                //now process the account
+
 
             }
             if (ch == "2")
@@ -647,24 +683,23 @@ void CusRegoLogin()
                     cout << "\n Q1: What is Your favorite color? Please enter everything in  lowercase :";
                     cout << "\nPlease Enter the security question's answer:";
                     getline(cin, inquesd);
-
-                    cout << "\n Q2: What is your contact no: ?:";
-                    cout << "\nEnter the security question's answer:";
+                    cout << "\n Q2: What was your first best friends name? Please enter everything in lowercase. ";
+                    cout << "\nEnter the security question's answer: ";
                     getline(cin, inquese);
 
-                    cout << "\n Q3: Where have you completed your high school ,(also specify city  and state)Please enter everything in  lowercase :";
-                    cout << "\nEnter the security question's answer:";
-                    getline(cin, inquesd);
+                    cout << "\n Q3: What was the name of the first street you lived on? Please enter everything in lowercase:";
+                    cout << "\nEnter the security question's answer: ";
+                    getline(cin, inquesf);
 
-                    if (inPassword2 == cpassword && inquese == quesd && inquesd == quesf && inquesd == quese)
+                    if (inPassword2 == CusPassword && inquesd == regquesd && inquese == regquese && inquesf == regquesf)
                     {
-                        cout << "\nFinding and Searching  Successful\n" //the '\n' is a character, so we can  add it and it will then automatically output a newline in the console, alongside the string
+                        cout << "\nFinding and Searching  Successful\n"
                             << "Welcome, "
-                            << cname;
-                        cout << "\nYour Username is:" << cname;
-                        break; //we have to exit the whole while loop if user has entered the valid account
+                            << CusName;
+                        cout << "\nYour Username is:" << CusName;
+                        break;
                     }
-                    cout << "incorrect password or security answers\n"; //if the user entered the wrong account            details, then then the while loop is not done yet. So here we have this output "cout .."  without any 'if' condition
+                    cout << "Incorrect Password or Security Answers\n";
                 }
             }
 
@@ -676,9 +711,9 @@ void CusRegoLogin()
 
         }
 
-        //now process about the account
 
-        cout << "\n\n\n\n\n"; //give it 5 newlines
+
+        cout << "\n\n\n\n\n";
     }
 }
 void CusBooking() {
@@ -690,17 +725,17 @@ void CusBooking() {
     // admin contacts between customer and driver, provide support number (rand number gen)
     // 3. account info
     // 4. exit
-    restart2:
+restart2:
     cls();
     int h;
-    cout << "ANSI_MAGENTA\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl;
+    cout << ANSI_MAGENTA"\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl;
     cout << "\t\t\t ----------------- CUSTOMER MENU -------------------" << endl;
     cout << "\t\t\t|___________________________________________________|" << endl;
     cout << "\t\t\t| Press 1 to Book a Ride                            |" << endl;
     cout << "\t\t\t| Press 2 for Customer Support                      |" << endl;
     cout << "\t\t\t| Press 3 for Account Information                   |" << endl;
     cout << "\t\t\t| Press 4 to EXIT application                       |" << endl;
-   
+
     cout << RESET_COLOR"What is your choice?" << endl;
     cout << "(type a valid choice number from above): ";
     //NOTE!!! WHEN BOOKING A RIDE ADD THE GENERATION OF A RANDOM REFERENCE NUMBER SO IT MAY BE USED IN CUSTOMER/ADMIN SUPPORT FUNCTION
@@ -717,7 +752,7 @@ void CusBooking() {
 
         trpinfo = request(pckup, drpoff);
         cusdrivscreen(trpinfo);
-       
+
     case 2:
         CusSupport();
         goto restart2;
@@ -760,19 +795,19 @@ void feedback::customer_storeFeedback()
     cout << "________________________________\n\n";
     node* temp;
     temp = new node;
-    cout << "Enter your trip reference number: ";
+    cout << "Enter Trip Reference Number: ";
     cin >> temp->feedback_number;
     cout << "Enter Your Username: ";
     cin.ignore();
     getline(cin, temp->customerName);
     cout << "Enter Date Trip Occured: ";
     cin >> temp->date;
-    cout << "Inquiry ( Please include Driver Details ) : ";
+    cout << "Inquiry: ";
 
     cin.ignore();
     getline(cin, temp->t);
     cout << "===========================================================================" << endl;
-    cout << "\t\t\tFeedback added Successfully" << endl;
+    cout << "\t\t\tMessage Submitted Successfully" << endl;
     cout << "===========================================================================" << endl;
     cout << "\t\t\t An Administrator will be in contact with you shortly." << endl;
     system("PAUSE");
@@ -784,573 +819,153 @@ void feedback::customer_storeFeedback()
     start_ptr = temp;
     MenuJunction();
 }
+void CaccInfo() {
+    string find;
+    ifstream f2("customerdata.txt");
+    string cusfile = "userDB/";
+    cusfile.append(CusName);
+    fstream g(cusfile);
 
-/*DRIVER SUB-MENUS*/
-void DriverMenu()
-{
-    restart3:
-    cls();
-    int c;
-    cout << ANSI_CYAN "\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl; // Altered Menu
-    cout << "\t\t\t ----------------- DRIVER MENU ---------------------" << endl;
-    cout << "\t\t\t|                                                   |" << endl;
-    cout << "\t\t\t|___________________________________________________|" << endl;
-    cout << "\t\t\t| Press 1 to Register / Login                       |" << endl;
-    cout << "\t\t\t| Press 2 to go back to the Main Menu               |" << endl;
-    cout << "\t\t\t| Press 3 to EXIT PROGRAM                           |" << endl;
-   
-    cout << RESET_COLOR"What is your choice?" << endl;
-    cout << "(type a valid choice number from above): ";
-    cin >> c;
+    cout << "Please enter your Username to access your details: ";
+    cin >> find;
     cout << endl;
-
-    switch (c)
+    int notFound = 0;
+    for (j = 0; (j < i) || (!f2.eof()); j++)
     {
-    case 1:
-        DriverRegoLogin();
-        goto restart3;
 
-    case 2:
-        MenuJunction();
-    case 3:
-        EXIT_SUCCESS;
+        getline(f2, CusName);
 
-    default:
-
-        cout << " Please select a given option from above. \n"
-            << endl;
-        goto restart3;
-
-    }
-}
-void DriverRegoLogin()
-{
-    cls();
-    while (1)
-    {
-        cout << ANSI_CYAN"\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl;
-        cout << "\t\t\t ----------- DRIVER LOGIN / REGISTRATION------------" << endl;
-        cout << "\t\t\t|___________________________________________________|" << endl;
-        cout << "\t\t\t| Press 1 for Driver Login                          |" << endl;
-        cout << "\t\t\t| Press 2 for Driver Registration                    |" << endl;
-        cout << "\t\t\t| Press 3 if you Forgot Password (or) Username      |" << endl;
-        cout << "\t\t\t| Press 4 to go back to Main Menu                   |" << endl;
-     
-        cout << RESET_COLOR"What is your choice?" << endl;
-        cout << "(type a valid choice number from above): ";
-
-        getline(cin, Danswer);
-
-        if (Danswer == "4")
+        if (CusName == find)
         {
-            MenuJunction();
-        }
-        /*DRIVER REG*/
-        if (Danswer == "2")
-        {
-            cls();
 
-        secQuest:
-            //open a file for registration
-            //ofstream g("driverdata.txt"); //'ofstream' is  for getting the stored data from the file,
-            //and the file does not need to have to exist or be made beforehand. It is 'ofstream', so, it'll take care of it for you!
-            //but please be sure that if there is a file called "registration.txt" in the same folder as the
-            //.exe file, the contents will be deleted/ overwritten
+            notFound = 1;
+            cout << " _____________________________________________________________" << endl;
+            cout << "||                                                           ||" << endl;
+            cout << "||Here are your Details--------------------------------------||" << endl;
+            cout << "||___________________________________________________________||" << endl;
+            cout << "Username: " << CusName << endl;
+            getline(f2, CusPassword);
+            cout << "Password: " << CusPassword << endl;
+            getline(f2, CusPh);
+            cout << "Phone Number: " << CusPh << endl;
+            getline(f2, CusEml);
+            cout << "Email: " << CusEml << endl;
 
+            cout << "Card information: " << CusCardno << endl;
+            cout << "Card Exp Date: " << CusEX << endl;
+            cout << "CVV: " << CusCVV << endl;
+            cout << "||___________________________________________________________||" << endl;
+            cout << "||___________________________________________________________||" << endl;
 
-
-            cout << "\nDriver Application: \n";
-            //cin.ignore();//getline(cin, drivName); //user input from keyboard will go into registerName variable for registration
-            cout << "\nEnter Username: ";
-            getline(cin, drivName);
-            string drivfile = "driverDB/";
-            drivfile.append(drivName);
-           
-            cout << "\nEnter Password: ";
-            getline(cin, drivPassword); //user input from keyboard will go into registerPassword variable fors registration
-            cout << "\nIn case you forget your password/username here are some security questions: " << endl;
-            cout << "________________________________________________________________________________________" << endl;
             cout << endl;
-            cout << "\n Q1: What is Your favorite colour? Please enter everything in lowercase: ";
-            cout << "\nEnter the security question's answer: ";
-            getline(cin, regquesa);
-            cout << "\n Q2: What was your first best friends name? Please enter everything in lowercase: ";
-            cout << "\nEnter the security question's answer: ";
-            getline(cin, regquesb);
-            cout << "\n Q3: What was the name of the first street you lived on? Please enter everything in lowercase: ";
-            cout << "\nEnter the security question's answer: ";
-            getline(cin, regquesc);
-            /*cout << "Enter Password: ";*/
-            cout << "________________________________________________________________________________________" << endl;
+            cout << "Would you like to edit your information " << customerData.fname << "? (Yes / No): " << endl;
 
+            bool edit = yesno();
 
-            string q[5] = { "Have you held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", };
-            for (int i = 0; i < 4; i++)
+            if (edit == 1)
             {
-                bool yn = NULL;
-                cout << q[i];
-                yn = yesno();
-                if (yn == 1)
+                //open a file for registration
+                ofstream g("customerdata.txt"); //'ofstream' is  for getting the stored data from the file,
+
+
+                if (!g.is_open()) //if it's not open, then there is no such file with the given name inside this folder (means, in the folder where the .exe file is going to be made )
                 {
-                    goto elquest;
-                }
-                else if (yn == 0)
-                {
-                    cout << "Sorry you are ineligible...\t";
-                    MenuJunction();
-                }
-            }
-            cin.ignore();
-
-        elquest:
-            cout << "Enter Vehicle Registration Number: ";
-            getline(cin, drivRego);
-            cout << "Enter Car Make and Model: ";
-            getline(cin, drivCar);
-            cout << "Enter NZ Drivers License Number: ";
-            getline(cin, drivLic);
-            cout << "Enter your Email Address: ";
-            getline(cin, drivEml);
-            cout << "If you do not hold a NZ citizenship please enter Visa status - If you do type 'N/A': ";
-            getline(cin, drivVisa);
-
-            ofstream regwrite("driverdata.txt");
-
-            regwrite << drivName; //this put whatever's to the right into g (("driverdata.txt"))
-
-            regwrite << '\n'; //and change to anew line in file
-            regwrite << drivPassword; //and now write/store,the password
-            //all data placed  safely insidea the file that g opened
-            regwrite << '\n';
-            regwrite << regquesa;
-            regwrite << '\n';
-            regwrite << regquesb;
-            regwrite << '\n';
-            regwrite << regquesc;
-            regwrite << '\n';
-            regwrite << drivRego;
-            regwrite << '\n';
-            regwrite << drivCar;
-            regwrite << '\n';
-            regwrite << drivLic;
-            regwrite << '\n';
-            regwrite << drivEml;
-            regwrite << '\n';
-            regwrite << drivVisa;
-            regwrite << '\n';
-
-
-            regwrite.close(); //always make sure to close the file, or else we might have to deal with some nasty unwanted stuff in the memory
-
-         
-            cout << "Thank you for registering, " << drivName << "!" << endl;
-            this_thread::sleep_for(chrono::milliseconds(3000));
-            DriverRegoLogin();
-        }
-        if (Danswer == "1")
-        {
-            string drivfillogin = "driverDB/";
-            //open the file, and then put the name and password into the strings
-            ifstream f("driverdata.txt"); //'ifstream' is   for getting the data from the file, and
-            //let us assume we've already created a file
-            if (!f.is_open()) //if file is not open, then there is no such file with the given name inside
-            //the folder (that is, in this folder where the .exe file is going to be made)
-            {
-                cout << "could not open file\n"; //just so we know why it won't work if it doesn't at any instance
-
-            }
-            getline(f, dname, '\n');
-            getline(f, dpassword, '\n');
-            f.close();
-
-            //login
-            while (1)
-            {
-                // you are going to input the name and password here
-                cout << "\n\n\n"
-                    << "Enter Username: ";
-                getline(cin, inName);
-                cout << "\nEnter Password: ";
-                getline(cin, inPassword);
-
-                cout << inName << '\t' << dname << '\t' << inPassword << '\t' << dpassword;
-                if (inName == dname && inPassword == dpassword)
-                {
-                    cout << "\nLogin Successful\n" //the '\n' is a character, so that's why I can add it
-                    //and it will automatically output a newline in console, alongside the string
-                        << "Welcome, "
-                        << inName;
-                    this_thread::sleep_for(chrono::milliseconds(3000));
-                    StartDrive();
+                    cout << "could not open file customerdata.txt\n"; //just so we can know why it ain't working if it doesn't
 
                 }
-                cout << "incorrect name or password\n"; //if user  entered the wrong account details ,
+
+                cout << "\nCustomer Registration: ";
+                getline(cin, CusName); //user input from keyboard will go into registerName variable for registration
+                cout << "\nEnter New Username: ";
+                getline(cin, CusName);
+                cout << "\nEnter New Password: ";
+                getline(cin, CusPassword); //user input from keyboard will go into registerPassword variable fors registration
+                cout << "Enter New Email Address: ";
+                getline(cin, CusEml);
+                cout << "Enter New Home Address: ";
+                getline(cin, CusAddr);
+                cout << "Enter New Mobile / Landline Number: ";
+                getline(cin, CusPh);
+                cout << "Enter your payment card number: ";
+                getline(cin, CusCardno);
+                cout << "Enter the name present on this card: ";
+                getline(cin, CusCardna);
+                cout << "Enter Security Code / CVV: ";
+                getline(cin, CusCVV);
+                cout << "Enter Card Expiry Date: ";
+                getline(cin, CusEX);
+
+                cout << "\nIn case you forget your password/username here are some security questions for your new password: " << endl;
+                cout << "________________________________________________________________________________________" << endl;
+                cout << "\n Q1: What is Your favorite colour? Please enter everything in lowercase: ";
+                cout << "\nEnter the security question's answer: ";
+                getline(cin, regquese);
+                cout << "\n Q2: What was your first best friends name? Please enter everything in lowercase: ";
+                cout << "\nEnter the security question's answer: ";
+                getline(cin, regquesd);
+                cout << "\n Q3: What was the name of the first street you lived on? Please enter everything in lowercase: ";
+                cout << "\nEnter the security question's answer: ";
+                getline(cin, regquesf);
+                cout << "Enter Password: ";
+                cout << "________________________________________________________________________________________" << endl;
+
+                g << CusName; //this put whatever's to the right (registerName) into , g
+
+                g << '\n'; //and change to anew line in file
+                g << CusPassword; //and now write/store,the password
+                //all data placed  safely insidea the file that g opened
+                g << '\n';
+                g << CusPh;
+                g << '\n';
+                g << CusEml;
+                g << '\n';
+                g << CusAddr;
+                g << '\n';
+                g << CusCardno;
+                g << '\n';
+                g << CusCardna;
+                g << '\n';
+                g << CusCVV;
+                g << '\n';
+                g << CusEX;
+                g << '\n';
+                g << '\n';
+                g << regquese;
+                g << '\n';
+                g << regquesd;
+                g << '\n';
+                g << regquesf;
+
+                g.close(); //always make sure to close the file, or else we might have to deal with some nasty unwanted stuff in the memory
+
+                cout << "\nInformation Change is Successful!\n";
                 this_thread::sleep_for(chrono::milliseconds(3000));
-                cls();
-                //then the while loop is not done yet. So that's why this output is without condition
-            }
-            //now do something about the account
-        }
-
-        if (Danswer == "3") //(for C strings) if (!strcmp(usercommand, "forgots password or "))
-        {
-
-            string ch;
-            //open file, and then put the name and password into the strings
-            ifstream f("driverdata.txt"); //'ifstream' is the one for getting data from the file, and
-            //let us assume you've already created a file called "registration.txt"
-            if (!f.is_open()) //if it's not open, then there is no such file with the given name inside
-            //the folder (that is, in the folder where the .exe file is going to be)
-            {
-                cout << "could not open file\n"; //just so that you know why it won't work if it doesn't
-                /*return 0;*/
-            }
-            getline(f, dname, '\n'); //reads the user name from file f (which is using "registration.txt")
-            getline(f, dpassword, '\n'); //reads the password from file f (which is using "registration.txt")
-            getline(f, quesa, '\n');
-            getline(f, quesb, '\n');
-            getline(f, quesc, '\n');
-            //also, if you tell the file to get you that text up until '\n', that's when you know it reads
-            //the whole line at most, and won't go any further
-            //and that is done by the 3rd parameter
-            f.close(); //you don't need it open now, since we now have the name and password from the file
-            cout << "Forgotten something? Happens to the best of us.\n";
-            cout << "1. Search your ID by username you remember" << endl;
-            cout << "2. Search your ID by password you remember" << endl;
-            cout << "3. Go Back" << endl;
-            cout << "Enter your choice: ";
-            getline(cin, ch);
-            if (ch == "1") {
-
-                //forgot
-                while (1)
-                {
-                    //user has to input the name and  question's answers here
-
-                    cout << "\n\n\n"
-                        << "Enter Username: ";
-                    getline(cin, inName);
-
-
-                    cout << "\n Q1: What is Your favorite colour? Please enter everything in  lowercase.";
-                    cout << "\nPlease Enter the security question's answer: ";
-                    getline(cin, inquesa);
-
-                    cout << "\n Q2: What was your first best friends name? Please enter everything in lowercase. ";
-                    cout << "\nEnter the security question's answer: ";
-                    getline(cin, inquesb);
-
-                    cout << "\n Q3: What was the name of the first street you lived on? Please enter everything in lowercase:";
-                    cout << "\nEnter the security question's answer: ";
-                    getline(cin, inquesc);
-
-                    if (inName == dname && inquesb == quesb && inquesc == quesc && inquesa == quesa)
-                    {
-                        cout << "\nFinding and Searching  Successful\n" //the '\n' is a character, so we can add it and it will then automatically output a newline in the console, alongside the string
-                            << "Welcome, "
-                            << inName;
-                        cout << "\nYour retrieved password is: " << dpassword;
-                        break; //this will  exit the while loop if user  entered a valid / correct account credentials
-                    }
-                    cout << "incorrect username or security answers\n"; //if the user entered wrong  account details then the while loop is not done yet and should be iterated again till
-                    //the correct details are filled in. So this 'cout' is outside  without any 'if' condition
-                }
-                //now process the account
-
-            }
-            if (ch == "2")
-            {
-
-                //forgot
-                while (1)
-                {
-                    //user will input the name and password here
-                    cout << "\n\n\nEnter Password: ";
-                    getline(cin, inPassword);
-
-                    cout << "\n Q1: What is Your favorite color? Please enter everything in  lowercase :";
-                    cout << "\nPlease Enter the security question's answer:";
-                    getline(cin, inquesa);
-
-                    cout << "\n Q2: What is your contact no: ?:";
-                    cout << "\nEnter the security question's answer:";
-                    getline(cin, inquesb);
-
-                    cout << "\n Q3: Where have you completed your high school ,(also specify city  and state)Please enter everything in  lowercase :";
-                    cout << "\nEnter the security question's answer:";
-                    getline(cin, inquesc);
-
-                    if (inPassword == dpassword && inquesb == quesb && inquesc == quesc && inquesa == quesa)
-                    {
-                        cout << "\nFinding and Searching  Successful\n" //the '\n' is a character, so we can  add it and it will then automatically output a newline in the console, alongside the string
-                            << "Welcome, "
-                            << dname;
-                        cout << "\nYour Username is:" << dname;
-                        break; //we have to exit the whole while loop if user has entered the valid account
-                    }
-                    cout << "incorrect password or security answers\n"; //if the user entered the wrong account details, then then the while loop is not done yet. So here we have this output "cout .."  without any 'if' condition
-                }
-            }
-
-            if (ch == "3")
-            {
-
-                DriverRegoLogin();
-            }
-
-        }
-
-        //now process about the account
-
-        cout << "\n\n\n\n\n"; //give it 5 newlines
-    }
-    /*return 1;*/
-}
-void StartDrive()
-{
-    int choice;
-    cls();
-    cout << ANSI_CYAN"\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl;
-    cout << "\t\t\t --------------- LET'S START DRIVING ---------------" << endl;
-    cout << "\t\t\t|___________________________________________________|" << endl;
-    cout << "\t\t\t| Press 1 to Begin Driving                          |" << endl;
-    cout << "\t\t\t| Press 2 to Access Account Information             |" << endl;
-    cout << "\t\t\t| Press 3 for Support                               |" << endl;
-    cout << "\t\t\t| Press 4 to EXIT application                       |" << endl;
-   
-    cout << RESET_COLOR"What is your choice?" << endl;
-    cout << "(type a valid choice number from above): ";
-
-    cin >> choice;
-
-    if (choice == 1) {
-        drivpickup drivinfo = requestdriv();
-
-        drivscreen(drivinfo);
-    }
-    else if (choice == 2) {
-
-    }
-    else if (choice == 3) {
-
-    }
-    else if (choice == 4) {
-        EXIT_SUCCESS;
-    }
-}
-
-
-// additions to driver menu
-// 1. idenitical to request function just needs modifying to suit driver // thomas
-// 2. driver info
-// 3. support - driver support file - (1 for driver 1 for customer)
-// what can we do to help?
-
-/*ADMIN PROCESS*/
-void AdminMenu() {
-    feedback admin;
-    cls();
-    cout << ANSI_RED"\t\t\t_____________________________________________________________________________" << endl;
-    cout << "\t\t\tEnter your code to access our Secure Administrator Server: "; // code is admin
-    string codeYes = "admin";
-    string codeNo;
-        string codeInput;
-    code:
-        cin >> codeInput;
-        for (int i = 0; i < 6; i++)
-        {
-            if (codeInput == codeYes)
-            {
-                admin.AdminMenu1();
-                break;
+                CusRegoLogin();
             }
             else
             {
-                cout << " You are being sent back to the Main Menu " << endl;
-
-                MenuJunction();
+                cout << "Going back to the Customer Menu";
+                this_thread::sleep_for(chrono::milliseconds(2000));
+                cout << "...";
+                this_thread::sleep_for(chrono::milliseconds(2000));
+                cout << "...";
+                this_thread::sleep_for(chrono::milliseconds(2000));
+                cout << "..." << endl;
+                CusBooking();
             }
-                /*cout << "Wrong passcode, Try again or exit program: " << endl;
-                goto code;*/
-            }
-    //}
-    //if (codeInput == 1)
-    //{
-    //    admin.AdminMenu1();
-
-    //}
-    //else
-    //{
-    //    // everytime the code is processed the screen will clear
-    //    cout << " You are being sent back to the Main Menu " << endl;
-
-    //    MenuJunction();
-    //}
-   
-   
-}
-void feedback::AdminMenu1()
-{
-    feedback admin;
-    int menu;
-
-    cls();
-
-    ///* int menu;*/
-    //string userName, userPassword;
-    //system("cls");
-    //cout << "\n";
-    //cout << " ===================================================\n";
-    //cout << "|               NZ TAXI FANNG SERVICE               |\n";
-    //cout << " ===================================================\n\n\n";
-    //cout << " ---------------------------------------------------\n";
-    //cout << "|            Administrator / Staff Login            |\n";
-    //cout << " ---------------------------------------------------\n\n";
-    //cout << "\nPlease enter your username: ";
-    //cin >> userName;
-    //cout << "\nPlease enter your user password: ";
-    //cin >> userPassword;
-
-    //if (userName == "admin" && userPassword == "admin")
-    //{
-    //    do
-
-    cls();
-    cout << "\n";
-    cout << " ===================================================\n";
-    cout << "|                     Admin Menu                    |\n";
-    cout << " ===================================================\n\n\n";
-    cout << "____________________________________________________\n";
-    cout << "||\t1. Contact a User \t\t\t ||\n";
-    cout << "||\t2. View User Inquiry's \t\t\t ||\n";
-    cout << "||\t3. For Driver Info \t\t\t ||\n";
-    cout << "||\t4. For Customer Info \t\t\t ||\n";
-    cout << "||\t5. Logout\t\t\t\t ||\n";
-    cout << "____________________________________________________\n";
-    cout << "Enter choice: ";
-    cin >> menu;
-    switch (menu)
-    {
-    case 1:
-
-        admin.SubmitInquiry();
-        break;
-
-    case 2:
-
-        admin.ViewInquiry();
-        system("PAUSE");
-        break;
-
-    case 3:
-
-        drivdata();
-        system("PAUSE");
-        break;
-
-    case 4:
-
-        cusdata();
-        system("PAUSE");
-        break;
-
-
-    case 5:
-
-        cout << "You are Logged Out...!\n\n\n\n";
-        system("PAUSE");
-        MenuJunction();
-        break;
+        }
 
     }
-}
-void feedback::SubmitInquiry()
-    {
-        cls();
-        cout << "\n";
-        cout << "\t\t ================================================\n";
-        cout << "\t\t|           Feedback Management System           |\n";
-        cout << "\t\t ================================================\n\n\n";
-        cout << "\nInquiry Details: \n";
-        cout << "_____________________________________ \n\n";
-        node* temp;
-        temp = new node;
-        cout << "Reference Number: ";
-        cin >> temp->feedback_number;
-        cout << "Enter Customer Name: ";
-        cin.ignore();
-        getline(cin, temp->customerName);
-        cout << "Enter Date : ";
-        cin >> temp->date;
-        cout << "Complaint Description:";
-        cout << "( 1000 words max ) \n";
-        cin.ignore();
-        getline(cin, temp->t);
-        cout << "===========================================================================" << endl;
-        cout << "\t\tMessage Sent." << endl;
-        cout << "===========================================================================" << endl;
 
-        system("PAUSE");
-        temp->next = NULL;
-        if (start_ptr != NULL)
-        {
-            temp->next = start_ptr;
-        }
-        start_ptr = temp;
-        cls();
+    if (notFound == 0) {
+
+        cout << "No Record Found" << endl;
     }
-void feedback::ViewInquiry()
-{
-    int num;
-    bool found;            //variable to search
-    cls();
-    node* temp;
-    temp = start_ptr;
-    found = false;
-    cout << "\n";
-    cout << " ================================================\n";
-    cout << "|           Feedback Management System          |\n";
-    cout << " ================================================\n\n\n";
-    cout << " Enter the Reference Number To Look into The Inquiry Details\n";
-    cin >> num;
-    cout << "\n";
-    cout << "---------------------------------------------------------------------------" << endl;
-    cout << "\t\tHere are the details based on that reference number.\n";
-    cout << "---------------------------------------------------------------------------" << endl;
-    if (temp == NULL)
-    {
-        cout << "\tThere is no feedback or message to show in our database.";
-    }
-    while (temp != NULL && !found)
-    {
-        if (temp->feedback_number == num)
-        {
-            found = true;
-        }
-        else
-        {
-            temp = temp->next;
-        }
-        if (found)
-        {
-            cout << "Reference Number : " << temp->feedback_number;
-            cout << "\n";
-            cout << "Customer Name: " << temp->customerName << endl;
-            cout << "Date : " << temp->date << endl;
-            cout << "_____________________________________________________________________________" << endl;
-            cout << " _______________________" << endl;
-            cout << endl;
-            cout << "|Complaint description: |" << endl;
-            cout << " _______________________" << endl;
-            cout << temp->t;
-            cout << "\n";
-            cout << "_____________________________________________________________________________" << endl;
-        }
-    }
-}
-void feedback::exit()
-{
-    cout << "Sad to see you go!" << endl;
+    f2.close();
+    cout << "Press any key two times to proceed";
+    getch();//To hold data on screen
+    getch();//To hold data on screen
+
 }
 void cusdata() {
 
@@ -1441,8 +1056,562 @@ void cusdata() {
 
     //break;//inner loop-1 breaking
 }
+
+/*DRIVER SUB-MENUS*/
+void DriverMenu()
+{
+restart3:
+    cls();
+    int c;
+    cout << ANSI_CYAN "\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl; // Altered Menu
+    cout << "\t\t\t ----------------- DRIVER MENU ---------------------" << endl;
+    cout << "\t\t\t|                                                   |" << endl;
+    cout << "\t\t\t|___________________________________________________|" << endl;
+    cout << "\t\t\t| Press 1 to Register / Login                       |" << endl;
+    cout << "\t\t\t| Press 2 to go back to the Main Menu               |" << endl;
+    cout << "\t\t\t| Press 3 to EXIT PROGRAM                           |" << endl;
+
+    cout << RESET_COLOR"What is your choice?" << endl;
+    cout << "(type a valid choice number from above): ";
+    cin >> c;
+    cout << endl;
+
+    switch (c)
+    {
+    case 1:
+        DriverRegoLogin();
+        goto restart3;
+
+    case 2:
+        MenuJunction();
+    case 3:
+        EXIT_SUCCESS;
+
+    default:
+
+        cout << " Please select a given option from above. \n"
+            << endl;
+        goto restart3;
+
+    }
+}
+void DriverRegoLogin()
+{
+    cls();
+    while (1)
+    {
+        cout << ANSI_CYAN"\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl;
+        cout << "\t\t\t ----------- DRIVER LOGIN / REGISTRATION------------" << endl;
+        cout << "\t\t\t|___________________________________________________|" << endl;
+        cout << "\t\t\t| Press 1 for Driver Login                          |" << endl;
+        cout << "\t\t\t| Press 2 for Driver Registration                    |" << endl;
+        cout << "\t\t\t| Press 3 if you Forgot Password (or) Username      |" << endl;
+        cout << "\t\t\t| Press 4 to go back to Main Menu                   |" << endl;
+
+        cout << RESET_COLOR"What is your choice?" << endl;
+        cout << "(type a valid choice number from above): ";
+
+        getline(cin, Danswer);
+
+        if (Danswer == "4")
+        {
+            MenuJunction();
+        }
+        /*DRIVER REG*/
+        if (Danswer == "2")
+        {
+            cls();
+
+        secQuest:
+
+
+
+            ofstream f("driverdata.txt");
+
+
+            if (!f.is_open())
+            {
+                cout << "could not open file driverdata.txt\n";
+
+            }
+
+            cout << "Driver Registration" << endl;
+            cout << "\nEnter Username: ";
+            getline(cin, drivName);
+            cout << "\nEnter Password: ";
+            getline(cin, drivPassword); //user input from keyboard will go into registerPassword variable fors registration
+            cout << "Enter Email Address: ";
+            getline(cin, drivEml);
+            cout << "Enter Home Address: ";
+            getline(cin, drivAddr);
+            cout << "Enter Mobile / Landline Number: ";
+            getline(cin, drivPh);
+
+            cout << "\nIn case you forget your password/username here are some security questions: " << endl;
+            cout << "________________________________________________________________________________________" << endl;
+            cout << "\n Q1: What is Your favorite colour? Please enter everything in lowercase: ";
+            cout << "\nEnter the security question's answer: ";
+            getline(cin, regquesa);
+            cout << "\n Q2: What was your first best friends name? Please enter everything in lowercase: ";
+            cout << "\nEnter the security question's answer: ";
+            getline(cin, regquesb);
+            cout << "\n Q3: What was the name of the first street you lived on? Please enter everything in lowercase: ";
+            cout << "\nEnter the security question's answer: ";
+            getline(cin, regquesc);
+            cout << "Enter Password: ";
+            cout << "________________________________________________________________________________________" << endl;
+
+
+            string q[5] = { "Have you held a valid full New Zealand driver's licence for at least 1 year? (Yes/No):\t", };
+            for (int i = 0; i < 4; i++)
+            {
+                bool yn = NULL;
+                cout << q[i];
+                yn = yesno();
+                if (yn == 1)
+                {
+                    goto elquest;
+                }
+                else if (yn == 0)
+                {
+                    cout << "Sorry you are ineligible...\t";
+                    MenuJunction();
+                }
+            }
+            cin.ignore();
+
+        elquest:
+            cout << "Enter Vehicle Registration Number: ";
+            getline(cin, drivRego);
+            cout << endl;
+            cout << "Enter Car Make and Model: ";
+            getline(cin, drivCar);
+            cout << "Enter NZ Drivers License Number: ";
+            getline(cin, drivLic);
+            cout << "If you do not hold a NZ citizenship please enter Visa status - If you do type 'N/A': ";
+            getline(cin, drivVisa);
+
+            f << drivName; //this put whatever's to the right (registerName)
+            f << '\n'; //and change to anew line in file
+            f << drivPassword; //and now write/store,the password
+            //all data placed  safely insidea the file that g opened
+            f << '\n';
+            f << drivEml;
+            f << '\n';
+            f << drivAddr;
+            f << '\n';
+            f << drivPh;
+            f << '\n';
+
+            f << regquesa;
+            f << '\n';
+            f << regquesb;
+            f << '\n';
+            f << regquesc;
+
+            f.close(); //always make sure to close the file, or else we might have to deal with some nasty unwanted stuff in the memory
+
+            cout << "\nThank you for registering!\n";
+            this_thread::sleep_for(chrono::milliseconds(3000));
+            DriverRegoLogin();
+
+        }
+        if (Danswer == "1")
+        {
+
+            //open the file, and then put the name and password into the strings
+            ifstream f("driverdata.txt"); //'ifstream' is   for getting the data from the file, and
+            //let us assume we've already created a file
+            if (!f.is_open()) //if file is not open, then there is no such file with the given name inside
+            //the folder (that is, in this folder where the .exe file is going to be made)
+            {
+                cout << "could not open file\n"; //just so we know why it won't work if it doesn't at any instance
+
+            }
+            getline(f, drivName, '\n');
+            getline(f, drivPassword, '\n');
+            f.close();
+
+            //login
+            while (1)
+            {
+            loginagain:
+                // you are going to input the name and password here
+                cout << "You get three tries to log in correctly" << endl;
+                cout << "\n\n\n"
+                    << "Enter Username: ";
+                getline(cin, inName);
+                cout << "\nEnter Password: ";
+                getline(cin, inPassword);
+
+                cout << inName << '\t' << drivName << '\t' << inPassword << '\t' << drivPassword;
+                if (inName == drivName && inPassword == drivPassword)
+                {
+                    cout << "\nLogin Successful\n"
+
+                        << "Welcome, "
+                        << inName;
+                    this_thread::sleep_for(chrono::milliseconds(3000));
+                    StartDrive();
+
+                }
+                cout << "Incorrect Name or Password\n";
+                //user can have 3 tries to login and then must wait 
+                //try 1
+                cls();
+                cout << "First Attempt" << endl;
+                cout << "\n\n\n"
+                    << "Enter Username: ";
+                getline(cin, inName);
+                cout << "\nEnter Password: ";
+                getline(cin, inPassword);
+                //try2
+                cout << inName << '\t' << drivName << '\t' << inPassword << '\t' << drivPassword;
+                if (inName == drivName && inPassword == drivPassword)
+                {
+                    cout << "\nLogin Successful\n"
+
+                        << "Welcome, "
+                        << inName;
+                    this_thread::sleep_for(chrono::milliseconds(3000));
+                    StartDrive();
+
+                }
+                this_thread::sleep_for(chrono::milliseconds(3000));
+
+                cout << "Incorrect Name or Password\n";
+                cls();
+                cout << "Second Attempt" << endl;
+                cout << "\n\n\n"
+                    << "Enter Username: ";
+                getline(cin, inName);
+                cout << "\nEnter Password: ";
+                getline(cin, inPassword);
+
+                cout << inName << '\t' << drivName << '\t' << inPassword << '\t' << drivPassword;
+                if (inName == drivName && inPassword == drivPassword)
+                {
+                    cout << "\nLogin Successful\n"
+
+                        << "Welcome, "
+                        << inName;
+                    this_thread::sleep_for(chrono::milliseconds(3000));
+                    StartDrive();
+
+                }
+                this_thread::sleep_for(chrono::milliseconds(3000));
+                cls();
+                cout << "Incorrect Name or Password\n";
+                cls();
+                //try3
+                cout << "Third Attempt" << endl;
+                cout << "\n\n\n"
+                    << "Enter Username: ";
+                getline(cin, inName);
+                cout << "\nEnter Password: ";
+                getline(cin, inPassword);
+
+                cout << inName << '\t' << drivName << '\t' << inPassword << '\t' << drivPassword;
+                if (inName == drivName && inPassword == drivPassword)
+                {
+                    cout << "\nLogin Successful\n"
+
+                        << "Welcome, "
+                        << inName;
+                    this_thread::sleep_for(chrono::milliseconds(3000));
+                    StartDrive();
+
+                }
+                this_thread::sleep_for(chrono::milliseconds(3000));
+                cls();
+                cout << "Incorrect Name or Password\n";
+                cout << "You have been locked from logging in for 5 minutes" << endl;
+                this_thread::sleep_for(chrono::milliseconds(150000)); // 2.5 min counter
+                cout << "You have 2.5 minutes left on your timer" << endl;
+                this_thread::sleep_for(chrono::milliseconds(150000));
+                goto loginagain;
+
+            }
+
+        }
+
+        if (Danswer == "3")
+        {
+
+            string ch;
+
+            ifstream f("driverdata.txt");
+            if (!f.is_open())
+            {
+                cout << "could not open file\n";
+            }
+            getline(f, drivName, '\n');
+            getline(f, drivPassword, '\n');
+            getline(f, regquesa, '\n');
+            getline(f, regquesb, '\n');
+            getline(f, regquesc, '\n');
+
+            f.close();
+            cout << "Forgotten something? Happens to the best of us.\n";
+            cout << "1. Search your ID by username you remember" << endl;
+            cout << "2. Search your ID by password you remember" << endl;
+            cout << "3. Go Back" << endl;
+            cout << "Enter your choice: ";
+            getline(cin, ch);
+            if (ch == "1") {
+
+                //forgot
+                while (1)
+                {
+                    //user has to input the name and  question's answers here
+
+                    cout << "\n\n\n"
+                        << "Enter Username: ";
+                    getline(cin, inName);
+
+
+                    cout << "\n Q1: What is Your favorite colour? Please enter everything in  lowercase.";
+                    cout << "\nPlease Enter the security question's answer: ";
+                    getline(cin, inquesa);
+
+                    cout << "\n Q2: What was your first best friends name? Please enter everything in lowercase. ";
+                    cout << "\nEnter the security question's answer: ";
+                    getline(cin, inquesb);
+
+                    cout << "\n Q3: What was the name of the first street you lived on? Please enter everything in lowercase:";
+                    cout << "\nEnter the security question's answer: ";
+                    getline(cin, inquesc);
+
+                    if (inName == drivName && inquesb == regquesb && inquesc == regquesc && inquesa == regquesa)
+                    {
+                        cout << "\nFinding and Searching  Successful\n"
+                            << "Welcome, "
+                            << inName;
+                        cout << "\nYour retrieved password is: " << drivPassword;
+                        break;
+                    }
+                    cout << "Incorrect Username or Security Answers\n";
+                    CustomerMenu();
+
+                }
+
+
+            }
+            if (ch == "2")
+            {
+
+                //forgot
+                while (1)
+                {
+                    //user will input the name and password here
+                    cout << "\n\n\nEnter Password: ";
+                    getline(cin, inPassword);
+
+                    cout << "\n Q1: What is Your favorite colour? Please enter everything in  lowercase.";
+                    cout << "\nPlease Enter the security question's answer: ";
+                    getline(cin, inquesa);
+
+                    cout << "\n Q2: What was your first best friends name? Please enter everything in lowercase. ";
+                    cout << "\nEnter the security question's answer: ";
+                    getline(cin, inquesb);
+
+                    cout << "\n Q3: What was the name of the first street you lived on? Please enter everything in lowercase:";
+                    cout << "\nEnter the security question's answer: ";
+                    getline(cin, inquesc);
+
+                    if (inPassword == drivPassword && inquesb == regquesb && inquesc == regquesc && inquesa == regquesa)
+                    {
+                        cout << "\nFinding and Searching  Successful\n"
+                            << "Welcome, "
+                            << drivName;
+                        cout << "\nYour Username is:" << drivName;
+                        break;
+                    }
+                    cout << "Incorrect Password or Security Answers\n";
+                    this_thread::sleep_for(chrono::milliseconds(2000));
+                    DriverMenu();
+                }
+            }
+
+            if (ch == "3")
+            {
+
+                DriverRegoLogin();
+            }
+
+        }
+
+        //now process about the account
+
+        cout << "\n\n\n\n\n"; //give it 5 newlines
+    }
+    /*return 1;*/
+}
+void StartDrive()
+{
+    int choice;
+    cls();
+    cout << ANSI_CYAN"\t\t\t ______________.~'~._.~'~._.~'~._.~'~.______________" << endl;
+    cout << "\t\t\t --------------- LET'S START DRIVING ---------------" << endl;
+    cout << "\t\t\t|___________________________________________________|" << endl;
+    cout << "\t\t\t| Press 1 to Begin Driving                          |" << endl;
+    cout << "\t\t\t| Press 2 to Access Account Information             |" << endl;
+    cout << "\t\t\t| Press 3 for Support                               |" << endl;
+    cout << "\t\t\t| Press 4 to EXIT application                       |" << endl;
+
+    cout << RESET_COLOR"What is your choice?" << endl;
+    cout << "(type a valid choice number from above): ";
+
+    cin >> choice;
+
+    if (choice == 1) {
+        drivpickup drivinfo = requestdriv();
+
+        drivscreen(drivinfo);
+    }
+    else if (choice == 2) {
+        DaccInfo();
+    }
+    else if (choice == 3) {
+        CusSupport();
+    }
+    else if (choice == 4) {
+        EXIT_SUCCESS;
+    }
+}
+void DaccInfo() {
+    string find;
+    ifstream f("driverdata.txt");
+    string drivfile = "userDB/";
+    drivfile.append(drivName);
+    /*  fstream f(drivfile);*/
+
+    cout << "Please enter your Username to access your details: ";
+    cin >> find;
+    cout << endl;
+    int notFound = 0;
+    for (j = 0; (j < i) || (!f.eof()); j++)
+    {
+
+        getline(f, drivName);
+
+        if (drivName == find)
+        {
+
+            notFound = 1;
+            cout << " _____________________________________________________________" << endl;
+            cout << "||                                                           ||" << endl;
+            cout << "||Here are your Details--------------------------------------||" << endl;
+            cout << "||___________________________________________________________||" << endl;
+            cout << "Username: " << drivName << endl;
+            getline(f, drivPassword);
+            cout << "Password: " << drivPassword << endl;
+            getline(f, drivEml);
+            cout << "Email: " << drivEml << endl;
+            getline(f, drivAddr);
+            cout << "Address: " << drivAddr << endl;
+            getline(f, drivPh);
+            cout << "Contact Number: " << drivPh << endl;
+            cout << "||___________________________________________________________||" << endl;
+            cout << "||___________________________________________________________||" << endl;
+
+            cout << endl;
+            cout << "Would you like to edit your information " << drivName << "? (Yes / No): " << endl;
+
+            bool edit = yesno();
+
+            if (edit == 1)
+            {
+
+
+                //open a file for registration
+                ofstream f("driverdata.txt"); //'ofstream' is  for getting the stored data from the file,
+
+
+                if (!f.is_open()) //if it's not open, then there is no such file with the given name inside this folder (means, in the folder where the .exe file is going to be made )
+                {
+                    cout << "could not open file driverdata.txt\n"; //just so we can know why it ain't working if it doesn't
+
+                }
+
+                cout << "\nDriver Registration: ";
+                getline(cin, drivName); //user input from keyboard will go into registerName variable for registration
+                cout << "\nEnter Username: ";
+                getline(cin, drivName);
+                cout << "\nEnter Password: ";
+                getline(cin, drivPassword); //user input from keyboard will go into registerPassword variable fors registration
+                cout << "Enter Email Address: ";
+                getline(cin, drivEml);
+                cout << "Enter Home Address: ";
+                getline(cin, drivAddr);
+                cout << "Enter Mobile / Landline Number: ";
+                getline(cin, drivPh);
+
+                cout << "\nIn case you forget your password/username here are some security questions: " << endl;
+                cout << "________________________________________________________________________________________" << endl;
+                cout << "\n Q1: What is Your favorite colour? Please enter everything in lowercase: ";
+                cout << "\nEnter the security question's answer: ";
+                getline(cin, regquese);
+                cout << "\n Q2: What was your first best friends name? Please enter everything in lowercase: ";
+                cout << "\nEnter the security question's answer: ";
+                getline(cin, regquesd);
+                cout << "\n Q3: What was the name of the first street you lived on? Please enter everything in lowercase: ";
+                cout << "\nEnter the security question's answer: ";
+                getline(cin, regquesf);
+                cout << "Enter Password: ";
+                cout << "________________________________________________________________________________________" << endl;
+
+                cout << "Enter Vehicle Registration Number: ";
+                getline(cin, drivRego);
+                cout << endl;
+                cout << "Enter Car Make and Model: ";
+                getline(cin, drivCar);
+                cout << "Enter NZ Drivers License Number: ";
+                getline(cin, drivLic);
+                cout << "If you do not hold a NZ citizenship please enter Visa status - If you do type 'N/A': ";
+                getline(cin, drivVisa);
+
+                f << drivName; //this put whatever's to the right (registerName)
+                f << '\n'; //and change to anew line in file
+                f << drivPassword; //and now write/store,the password
+                //all data placed  safely insidea the file that g opened
+                f << '\n';
+                f << drivEml;
+                f << '\n';
+                f << drivAddr;
+                f << '\n';
+                f << drivPh;
+                f << '\n';
+
+                f << regquese;
+                f << '\n';
+                f << regquesd;
+                f << '\n';
+                f << regquesf;
+
+                f.close(); //always make sure to close the file, or else we might have to deal with some nasty unwanted stuff in the memory
+
+                cout << "\nThank you for updating your information!\n";
+                this_thread::sleep_for(chrono::milliseconds(3000));
+                DriverRegoLogin();
+
+            }
+            else
+            {
+                cout << "Going back to the Driver Menu";
+                this_thread::sleep_for(chrono::milliseconds(2000));
+                cout << "...";
+                this_thread::sleep_for(chrono::milliseconds(2000));
+                cout << "...";
+                this_thread::sleep_for(chrono::milliseconds(2000));
+                cout << "..." << endl;
+                DriverMenu();
+            }
+        }
+    }
+}
 void drivdata() {
- 
+
     cls();
 
     cout << "\t\t\tDriver Information Section\n\n\n";
@@ -1563,6 +1732,197 @@ void drivdata() {
 
     }
 }
+
+
+/*ADMIN PROCESS*/
+void AdminMenu() {
+    feedback admin;
+    cls();
+    cout << ANSI_RED"\t\t\t_____________________________________________________________________________" << endl;
+    cout << "\t\t\tEnter your code to access our Secure Administrator Server: "; // code is admin
+    string codeYes = "admin";
+    string codeNo;
+    string codeInput;
+code:
+    cin >> codeInput;
+    for (int i = 0; i < 6; i++)
+    {
+        if (codeInput == codeYes)
+        {
+            admin.AdminMenu1();
+            break;
+        }
+        else
+        {
+            cout << " You are being sent back to the Main Menu " << endl;
+
+            MenuJunction();
+        }
+        /*cout << "Wrong passcode, Try again or exit program: " << endl;
+        goto code;*/
+    }
+    //}
+    //if (codeInput == 1)
+    //{
+    //    admin.AdminMenu1();
+
+    //}
+    //else
+    //{
+    //    // everytime the code is processed the screen will clear
+    //    cout << " You are being sent back to the Main Menu " << endl;
+
+    //    MenuJunction();
+    //}
+
+
+}
+void feedback::AdminMenu1()
+{
+    feedback admin;
+    int menu;
+
+
+
+    cls();
+    cout << "\n";
+    cout << " ===================================================\n";
+    cout << "|                     Admin Menu                    |\n";
+    cout << " ===================================================\n\n\n";
+    cout << "____________________________________________________\n";
+    cout << "||\t1. Contact a User \t\t\t ||\n";
+    cout << "||\t2. View User Inquiry's \t\t\t ||\n";
+    cout << "||\t3. For Driver Info \t\t\t ||\n";
+    cout << "||\t4. For Customer Info \t\t\t ||\n";
+    cout << "||\t5. Logout\t\t\t\t ||\n";
+    cout << "____________________________________________________\n";
+    cout << "Enter choice: ";
+    cin >> menu;
+    switch (menu)
+    {
+    case 1:
+
+        admin.SubmitInquiry();
+        break;
+
+    case 2:
+
+        admin.ViewInquiry();
+        system("PAUSE");
+        break;
+
+    case 3:
+
+        drivdata();
+        system("PAUSE");
+        break;
+
+    case 4:
+
+        cusdata();
+        system("PAUSE");
+        break;
+
+
+    case 5:
+
+        cout << "You are Logged Out...!\n\n\n\n";
+        system("PAUSE");
+        MenuJunction();
+        break;
+
+    }
+}
+void feedback::SubmitInquiry()
+{
+    cls();
+    cout << "\n";
+    cout << "\t\t ================================================\n";
+    cout << "\t\t|           Feedback Management System           |\n";
+    cout << "\t\t ================================================\n\n\n";
+    cout << "\nInquiry Details: \n";
+    cout << "_____________________________________ \n\n";
+    node* temp;
+    temp = new node;
+    cout << "Reference Number: ";
+    cin >> temp->feedback_number;
+    cout << "Enter Customer Name: ";
+    cin.ignore();
+    getline(cin, temp->customerName);
+    cout << "Enter Date : ";
+    cin >> temp->date;
+    cout << "Complaint Description:";
+    cout << "( 1000 words max ) \n";
+    cin.ignore();
+    getline(cin, temp->t);
+    cout << "===========================================================================" << endl;
+    cout << "\t\tMessage Sent." << endl;
+    cout << "===========================================================================" << endl;
+
+    system("PAUSE");
+    temp->next = NULL;
+    if (start_ptr != NULL)
+    {
+        temp->next = start_ptr;
+    }
+    start_ptr = temp;
+    cls();
+}
+void feedback::ViewInquiry()
+{
+    int num;
+    bool found;            //variable to search
+    cls();
+    node* temp;
+    temp = start_ptr;
+    found = false;
+    cout << "\n";
+    cout << " ================================================\n";
+    cout << "|           Feedback Management System          |\n";
+    cout << " ================================================\n\n\n";
+    cout << " Enter the Reference Number To Look into The Inquiry Details\n";
+    cin >> num;
+    cout << "\n";
+    cout << "---------------------------------------------------------------------------" << endl;
+    cout << "\t\tHere are the details based on that reference number.\n";
+    cout << "---------------------------------------------------------------------------" << endl;
+    if (temp == NULL)
+    {
+        cout << "\tThere is no feedback or message to show in our database.";
+    }
+    while (temp != NULL && !found)
+    {
+        if (temp->feedback_number == num)
+        {
+            found = true;
+        }
+        else
+        {
+            temp = temp->next;
+        }
+        if (found)
+        {
+            cout << "Reference Number : " << temp->feedback_number;
+            cout << "\n";
+            cout << "Customer Name: " << temp->customerName << endl;
+            cout << "Date : " << temp->date << endl;
+            cout << "_____________________________________________________________________________" << endl;
+            cout << " _____________" << endl;
+            cout << endl;
+            cout << "|Description: |" << endl;
+            cout << " _____________" << endl;
+            cout << temp->t;
+            cout << "\n";
+            cout << "_____________________________________________________________________________" << endl;
+        }
+    }
+}
+void feedback::exit()
+{
+    cout << "Sad to see you go!" << endl;
+}
+
+
 
 
 void FAQ()
@@ -1881,7 +2241,7 @@ rideinfo request(string pickup, string dropoff)
     string drivers[15];
 
     float cost;
-   
+
     if (info.dis > 0 && info.dis < 6)
     {
         cost = 10;
@@ -1922,7 +2282,7 @@ rideinfo request(string pickup, string dropoff)
             {
                 getline(drivls, drivers[i], '\n');
             }
-           
+
         }
 
         srand(time(0));
@@ -1941,7 +2301,7 @@ void cusdrivscreen(rideinfo info) {
         cout << "Your driver, " << info.driver << ", is " << i << " KM away";
         this_thread::sleep_for(chrono::milliseconds(3000));
     }
-    sq:
+sq:
     cout << "Your driver, " << info.driver << ", is " << "1 KM away\nStart Trip? (Yes/No)\t";
     bool start = yesno();
 
@@ -1963,7 +2323,10 @@ eq:
     if (end == 0) {
         goto eq;
     }
-
+    srand((unsigned)time(0));
+    int i;
+    i = (rand() % 100) + 1;
+    cout << "Your Trip Reference Number is: " << i << "\n";
     cout << "Thanks for using Taxi Faang!!";
     this_thread::sleep_for(chrono::milliseconds(5000));
 }
@@ -2004,7 +2367,11 @@ drivpickup requestdriv() {
 }
 
 void drivscreen(drivpickup info) {
-    tp:
+tp:
+    srand((unsigned)time(0));
+    int i;
+    i = (rand() % 100) + 1;
+    cout << "Your Trip Reference Number is: " << i << "\n";
     cout << "Have you arrived at " << info.pick << " ? (Yes/No)\t";
 
     bool gotem = yesno();
@@ -2019,7 +2386,7 @@ void drivscreen(drivpickup info) {
         this_thread::sleep_for(chrono::milliseconds(10000));
     }
 
-    hasit:
+hasit:
     cout << "You are 1 KM from reaching " << info.drop << "\nEnd Trip? (Yes/No)\t";
 
     bool end = yesno();
@@ -2030,7 +2397,7 @@ void drivscreen(drivpickup info) {
 
     cout << "Trip Complete, total pay from trip is: $" << info.tripay;
     this_thread::sleep_for(chrono::milliseconds(5000));
-   
+
 }
 
 // FAKE DISTANCE COUNT
@@ -2042,182 +2409,8 @@ for (int i = info.drivdis; i > 0 ; i--)
 */
 
 
-void CaccInfo() {
-    string find;
-    ifstream f2("customerdata.txt");
-    string cusfile = "userDB/";
-    cusfile.append(CusName);
-    fstream g(cusfile);
-
-    cout << "Please enter your name to access your data ";
-    cin >> find;
-    cout << endl;
-    int notFound = 0;
-    for (j = 0; (j < i) || (!f2.eof()); j++)
-    {
-
-        getline(f2, CusName);
-
-        if (CusName == find)
-        {
-
-            notFound = 1;
-            cout << " _____________________________________________________________" << endl;
-            cout << "||                                                           ||" << endl;
-            cout << "||Here are your Details--------------------------------------||" << endl;
-            cout << "||___________________________________________________________||" << endl;
-            cout << "Username: " << CusName << endl;
-            getline(f2, CusPassword);
-            cout << "Password: " << CusPassword << endl;
-            getline(f2, CusPh);
-            cout << "Phone Number: " << CusPh << endl;
-            getline(f2, CusEml);
-            cout << "Email: " << CusEml << endl;
-
-            cout << "Card information: " << CusCardno << endl;
-            cout << "Card Exp Date: " << CusEX << endl;
-            cout << "CVV: " << CusCVV << endl;
-            cout << "||___________________________________________________________||" << endl;
-            cout << "||___________________________________________________________||" << endl;
-
-            cout << endl;
-            cout << "Would you like to edit your information " << customerData.fname << "? (Yes / No): " << endl;
-
-            bool edit = yesno();
-
-            if (edit == 1)
-            {
-                //open a file for registration
-                ofstream g("customerdata.txt"); //'ofstream' is  for getting the stored data from the file,
 
 
-                if (!g.is_open()) //if it's not open, then there is no such file with the given name inside this folder (means, in the folder where the .exe file is going to be made )
-                {
-                    cout << "could not open file customerdata.txt\n"; //just so we can know why it ain't working if it doesn't
 
-                }
 
-                cout << "\nCustomer Registration: ";
-                getline(cin, CusName); //user input from keyboard will go into registerName variable for registration
-                cout << "\nEnter New Username: ";
-                getline(cin, CusName);
-                cout << "\nEnter New Password: ";
-                getline(cin, CusPassword); //user input from keyboard will go into registerPassword variable fors registration
-                cout << "Enter New Email Address: ";
-                getline(cin, CusEml);
-                cout << "Enter New Home Address: ";
-                getline(cin, CusAddr);
-                cout << "Enter New Mobile / Landline Number: ";
-                getline(cin, CusPh);
-                cout << "Enter your payment card number: ";
-                getline(cin, CusCardno);
-                cout << "Enter the name present on this card: ";
-                getline(cin, CusCardna);
-                cout << "Enter Security Code / CVV: ";
-                getline(cin, CusCVV);
-                cout << "Enter Card Expiry Date: ";
-                getline(cin, CusEX);
 
-                cout << "\nIn case you forget your password/username here are some security questions for your new password: " << endl;
-                cout << "________________________________________________________________________________________" << endl;
-                cout << "\n Q1: What is Your favorite colour? Please enter everything in lowercase: ";
-                cout << "\nEnter the security question's answer: ";
-                getline(cin, regquese);
-                cout << "\n Q2: What was your first best friends name? Please enter everything in lowercase: ";
-                cout << "\nEnter the security question's answer: ";
-                getline(cin, regquesd);
-                cout << "\n Q3: What was the name of the first street you lived on? Please enter everything in lowercase: ";
-                cout << "\nEnter the security question's answer: ";
-                getline(cin, regquesf);
-                cout << "Enter Password: ";
-                cout << "________________________________________________________________________________________" << endl;
-
-                g << CusName; //this put whatever's to the right (registerName) into , g
-
-                g << '\n'; //and change to anew line in file
-                g << CusPassword; //and now write/store,the password
-                //all data placed  safely insidea the file that g opened
-                g << '\n';
-                g << CusPh;
-                g << '\n';
-                g << CusEml;
-                g << '\n';
-                g << CusAddr;
-                g << '\n';
-                g << CusCardno;
-                g << '\n';
-                g << CusCardna;
-                g << '\n';
-                g << CusCVV;
-                g << '\n';
-                g << CusEX;
-                g << '\n';
-                g << '\n';
-                g << regquese;
-                g << '\n';
-                g << regquesd;
-                g << '\n';
-                g << regquesf;
-
-                g.close(); //always make sure to close the file, or else we might have to deal with some nasty unwanted stuff in the memory
-
-                cout << "\nInformation Change is Successful!\n";
-                this_thread::sleep_for(chrono::milliseconds(3000));
-                CusRegoLogin();
-            }
-            else
-            {
-                cout << "Going back to the Customer Menu";
-                this_thread::sleep_for(chrono::milliseconds(2000));
-                cout << "...";
-                this_thread::sleep_for(chrono::milliseconds(2000));
-                cout << "...";
-                this_thread::sleep_for(chrono::milliseconds(2000));
-                cout << "..." << endl;
-                CusBooking();
-            }
-        }
-        //getline(cin, CusName); //user input from keyboard will go into registerName variable for registration
-        //cout << "\nEnter Username: ";
-        //getline(cin, CusName);
-        //cout << "\nEnter Password: ";
-        //getline(cin, CusPassword); //user input from keyboard will go into registerPassword variable fors registration
-        //cout << "\nIn case you forget your password/username here are some security questions: " << endl;
-        //cout << "________________________________________________________________________________________" << endl;
-        //cout << "\n Q1: What is Your favorite colour? Please enter everything in lowercase: ";
-        //cout << "\nEnter the security question's answer: ";
-        //getline(cin, regquese);
-        //cout << "\n Q2: What was your first best friends name? Please enter everything in lowercase: ";
-        //cout << "\nEnter the security question's answer: ";
-        //getline(cin, regquesd);
-        //cout << "\n Q3: What was the name of the first street you lived on? Please enter everything in lowercase: ";
-        //cout << "\nEnter the security question's answer: ";
-        //getline(cin, regquesf);
-        ///*cout << "Enter Password: ";*/
-        //cout << "________________________________________________________________________________________" << endl;
-        //cout << "Enter Email Address: ";
-        //getline(cin, CusEml);
-        //cout << "Enter Home Address: ";
-        //getline(cin, CusAddr);
-        //cout << "Enter Mobile / Landline Number: ";
-        //getline(cin, CusPh);
-        //cout << "Enter you payment card number: ";
-        //getline(cin, CusCardno);
-        //cout << "Enter the name present on this card: ";
-        //getline(cin, CusCardna);
-        //cout << "Enter Security Code / CVV: ";
-        //getline(cin, CusCVV);
-        //cout << "Enter Card Expiry Date: ";
-        //getline(cin, CusEX);
-    }
-
-    if (notFound == 0) {
-
-        cout << "No Record Found" << endl;
-    }
-    f2.close();
-    cout << "Press any key two times to proceed";
-    getch();//To hold data on screen
-    getch();//To hold data on screen
-
-}
