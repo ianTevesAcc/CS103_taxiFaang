@@ -1319,37 +1319,37 @@ void DriverRegoLogin()
                     StartDrive();
 
                 }
-                this_thread::sleep_for(chrono::milliseconds(3000));
-                cls();
-                cout << "Incorrect Name or Password\n";
-                cls();
-                //try3
-                cout << "Third Attempt" << endl;
-                cout << "\n\n\n"
-                    << "Enter Username: ";
-                getline(cin, inName);
-                cout << "\nEnter Password: ";
-                getline(cin, inPassword);
+                //this_thread::sleep_for(chrono::milliseconds(3000));
+                //cls();
+                //cout << "Incorrect Name or Password\n";
+                //cls();
+                ////try3
+                //cout << "Third Attempt" << endl;
+                //cout << "\n\n\n"
+                //    << "Enter Username: ";
+                //getline(cin, inName);
+                //cout << "\nEnter Password: ";
+                //getline(cin, inPassword);
 
-                cout << inName << '\t' << drivName << '\t' << inPassword << '\t' << drivPassword;
-                if (inName == drivName && inPassword == drivPassword)
-                {
-                    cout << "\nLogin Successful\n"
+                //cout << inName << '\t' << drivName << '\t' << inPassword << '\t' << drivPassword;
+                //if (inName == drivName && inPassword == drivPassword)
+                //{
+                //    cout << "\nLogin Successful\n"
 
-                        << "Welcome, "
-                        << inName;
-                    this_thread::sleep_for(chrono::milliseconds(3000));
-                    StartDrive();
+                //        << "Welcome, "
+                //        << inName;
+                //    this_thread::sleep_for(chrono::milliseconds(3000));
+                //    StartDrive();
 
-                }
-                this_thread::sleep_for(chrono::milliseconds(3000));
-                cls();
-                cout << "Incorrect Name or Password\n";
-                cout << "You have been locked from logging in for 5 minutes" << endl;
-                this_thread::sleep_for(chrono::milliseconds(150000)); // 2.5 min counter
-                cout << "You have 2.5 minutes left on your timer" << endl;
-                this_thread::sleep_for(chrono::milliseconds(150000));
-                goto loginagain;
+                //}
+                //this_thread::sleep_for(chrono::milliseconds(3000));
+                //cls();
+                //cout << "Incorrect Name or Password\n";
+                //cout << "You have been locked from logging in for 5 minutes" << endl;
+                //this_thread::sleep_for(chrono::milliseconds(150000)); // 2.5 min counter
+                //cout << "You have 2.5 minutes left on your timer" << endl;
+                //this_thread::sleep_for(chrono::milliseconds(150000));
+                //goto loginagain;
 
             }
 
@@ -1578,10 +1578,11 @@ void DaccInfo() {
                 cout << "\n Q3: What was the name of the first street you lived on? Please enter everything in lowercase: ";
                 cout << "\nEnter the security question's answer: ";
                 getline(cin, regquesf);
-                cout << "Enter Password: ";
+           
                 cout << "________________________________________________________________________________________" << endl;
 
-                cout << "Enter Vehicle Registration Number: ";
+                cout << "Vehicle Details: " << endl; // skips input 
+                cout << "Vehicle Registration Number: ";
                 getline(cin, drivRego);
                 cout << endl;
                 cout << "Enter Car Make and Model: ";
@@ -2005,6 +2006,211 @@ int main()
     return 0;
 }
 
+
+
+void TaxiFare()
+{
+    cls();
+    int dist;
+    cout << endl;
+    cout << endl;
+    cout << "________________________________________________________________________________________________" << endl;
+    cout << endl;
+    cout << "\t\t\tWhat distance will you travel? (KM): ";
+    cin >> dist;
+    if (dist <= 5)
+        cout << "Fare is: $ " << 10;
+    else if (dist > 5 && dist < 10)
+        cout << "Fare is: $ " << 20;
+    else if (dist >= 10 && dist < 30)
+        cout << "Fare is: $ " << 50;
+    else if (dist >= 30 && dist < 50)
+        cout << "Fare is: $ " << 100;
+    else if (dist >= 50 && dist < 80)
+        cout << "Fare is: $ " << 150;
+    else if (dist >= 80 && dist <= 100)
+        cout << "Fare is: $ " << 250;
+    else
+        cout << "Your ride is cancelled. ";
+}
+
+/*UNKNOWN*/
+rideinfo request(string pickup, string dropoff)
+{
+    rideinfo info;
+    info.pick = pickup;
+    info.drop = dropoff;
+    srand(time(0));
+    info.dis = rand() % 25;
+    string drivers[15];
+
+    float cost;
+
+    if (info.dis > 0 && info.dis < 6)
+    {
+        cost = 10;
+    }
+    else if (info.dis > 5 && info.dis < 16)
+    {
+        cost = info.dis * 1.8;
+    }
+    else if (info.dis > 15 && info.dis < 25)
+    {
+        cost = info.dis * 1.5;
+    }
+
+    info.cost = (cost / 100) * 15 + cost; //GST Add
+
+    TitlePrinter("CONFIRM BOOKING");
+    cout << "\tPickup from: " << pickup << "\n\tDropoff at: " << dropoff << "\n\tDistance to Travel: " << info.dis << "\n\tTotal Cost: $" << info.cost << "\n\tConfirm: (Yes/No) ";
+    bool yn = yesno();
+
+    if (yn == 0)
+    {
+        cout << "\n\tBOOKING CANCELED";
+        main();
+    }
+    else if (yn == 1)
+    {
+        // GET RANDOM DRIVER FROM DB --
+        TitlePrinter("SEARCHING AVAILABLE DRIVERS...");
+        PrintLine();
+
+        string line;
+        int lncnt = 0;
+
+        ifstream drivls("driverDB/driverls");
+        if (drivls.is_open())
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                getline(drivls, drivers[i], '\n');
+            }
+
+        }
+
+        srand(time(0));
+        int drivln = rand() % 14;
+
+        info.driver = drivers[drivln];
+        cls();
+
+        return info;
+    }
+}
+void cusdrivscreen(rideinfo info) {
+    for (int i = info.drivdis; i > 1; i--) {
+        cls();
+        cout << "Your driver, " << info.driver << ", is " << i << " KM away";
+        this_thread::sleep_for(chrono::milliseconds(3000));
+    }
+sq:
+    cout << "Your driver, " << info.driver << ", is " << "1 KM away\nStart Trip? (Yes/No)\t";
+    bool start = yesno();
+
+    if (start == 0) {
+        goto sq;
+    }
+
+    for (int j = info.dis; j > 1; j--) {
+        cls();
+        cout << "You are " << j << " KM from " << info.drop;
+        this_thread::sleep_for(chrono::milliseconds(3000));
+    }
+eq:
+    cls();
+    cout << "You are 1 KM from " << info.drop << "\nEnd Trip? (Yes/No)\t";
+
+    bool end = yesno();
+
+    if (end == 0) {
+        goto eq;
+    }
+    srand((unsigned)time(0));
+    int i;
+    i = (rand() % 100) + 1;
+    cout << "Your Trip Reference Number is: " << i << "\n";
+    cout << "Thanks for using Taxi Faang!!";
+    this_thread::sleep_for(chrono::milliseconds(5000));
+}
+
+
+
+
+
+
+
+drivpickup requestdriv() {
+    drivpickup info;
+
+    srand(time(0));
+    info.dis = rand() % 25;
+
+    if (info.dis > 0 && info.dis < 6)
+    {
+        info.tripay = 5;
+    }
+    else if (info.dis > 5 && info.dis < 16)
+    {
+        info.tripay = info.dis * 1;
+    }
+    else if (info.dis > 15 && info.dis < 25)
+    {
+        info.tripay = info.dis * .8;
+    }
+
+    info.pick = "144 Columbo Street";
+
+    info.drop = "22 Madras Street";
+
+    info.cus = "Steve";
+
+    return info;
+
+}
+
+void drivscreen(drivpickup info) {
+tp:
+    srand((unsigned)time(0));
+    int i;
+    i = (rand() % 100) + 1;
+    cout << "Your Trip Reference Number is: " << i << "\n";
+    cout << "Have you arrived at " << info.pick << " ? (Yes/No)\t";
+
+    bool gotem = yesno();
+
+    if (gotem == 0) {
+        goto tp;
+    }
+
+    for (int i = info.dis; i > 1; i--) {
+        cls();
+        cout << "You are " << i << " KM from reaching " << info.drop;
+        this_thread::sleep_for(chrono::milliseconds(10000));
+    }
+
+hasit:
+    cout << "You are 1 KM from reaching " << info.drop << "\nEnd Trip? (Yes/No)\t";
+
+    bool end = yesno();
+
+    if (end == 0) {
+        goto hasit;
+    }
+
+    cout << "Trip Complete, total pay from trip is: $" << info.tripay;
+    this_thread::sleep_for(chrono::milliseconds(5000));
+
+}
+
+// FAKE DISTANCE COUNT
+/*
+for (int i = info.drivdis; i > 0 ; i--)
+{
+     // replace with wait 1 min (enter to trigger)
+}
+*/
+
 /*UNUSED FUNCTIONS
 /*SIGN IN*/
 //void SignIn() // add funcction in which if username and password == admin login admin menu will open up
@@ -2241,211 +2447,6 @@ int main()
 //    drivls.close();
 //    drivinfo.close();
 //}
-
-void TaxiFare()
-{
-    cls();
-    int dist;
-    cout << endl;
-    cout << endl;
-    cout << "________________________________________________________________________________________________" << endl;
-    cout << endl;
-    cout << "\t\t\tWhat distance will you travel? (KM): ";
-    cin >> dist;
-    if (dist <= 5)
-        cout << "Fare is: $ " << 10;
-    else if (dist > 5 && dist < 10)
-        cout << "Fare is: $ " << 20;
-    else if (dist >= 10 && dist < 30)
-        cout << "Fare is: $ " << 50;
-    else if (dist >= 30 && dist < 50)
-        cout << "Fare is: $ " << 100;
-    else if (dist >= 50 && dist < 80)
-        cout << "Fare is: $ " << 150;
-    else if (dist >= 80 && dist <= 100)
-        cout << "Fare is: $ " << 250;
-    else
-        cout << "Your ride is cancelled. ";
-}
-
-/*UNKNOWN*/
-rideinfo request(string pickup, string dropoff)
-{
-    rideinfo info;
-    info.pick = pickup;
-    info.drop = dropoff;
-    srand(time(0));
-    info.dis = rand() % 25;
-    string drivers[15];
-
-    float cost;
-
-    if (info.dis > 0 && info.dis < 6)
-    {
-        cost = 10;
-    }
-    else if (info.dis > 5 && info.dis < 16)
-    {
-        cost = info.dis * 1.8;
-    }
-    else if (info.dis > 15 && info.dis < 25)
-    {
-        cost = info.dis * 1.5;
-    }
-
-    info.cost = (cost / 100) * 15 + cost; //GST Add
-
-    TitlePrinter("CONFIRM BOOKING");
-    cout << "\tPickup from: " << pickup << "\n\tDropoff at: " << dropoff << "\n\tDistance to Travel: " << info.dis << "\n\tTotal Cost: $" << info.cost << "\n\tConfirm: (Yes/No) ";
-    bool yn = yesno();
-
-    if (yn == 0)
-    {
-        cout << "\n\tBOOKING CANCELED";
-        main();
-    }
-    else if (yn == 1)
-    {
-        // GET RANDOM DRIVER FROM DB --
-        TitlePrinter("SEARCHING AVAILABLE DRIVERS...");
-        PrintLine();
-
-        string line;
-        int lncnt = 0;
-
-        ifstream drivls("driverDB/driverls");
-        if (drivls.is_open())
-        {
-            for (int i = 0; i < 15; i++)
-            {
-                getline(drivls, drivers[i], '\n');
-            }
-
-        }
-
-        srand(time(0));
-        int drivln = rand() % 14;
-
-        info.driver = drivers[drivln];
-        cls();
-
-        return info;
-    }
-}
-void cusdrivscreen(rideinfo info) {
-    for (int i = info.drivdis; i > 1; i--) {
-        cls();
-        cout << "Your driver, " << info.driver << ", is " << i << " KM away";
-        this_thread::sleep_for(chrono::milliseconds(3000));
-    }
-sq:
-    cout << "Your driver, " << info.driver << ", is " << "1 KM away\nStart Trip? (Yes/No)\t";
-    bool start = yesno();
-
-    if (start == 0) {
-        goto sq;
-    }
-
-    for (int j = info.dis; j > 1; j--) {
-        cls();
-        cout << "You are " << j << " KM from " << info.drop;
-        this_thread::sleep_for(chrono::milliseconds(3000));
-    }
-eq:
-    cls();
-    cout << "You are 1 KM from " << info.drop << "\nEnd Trip? (Yes/No)\t";
-
-    bool end = yesno();
-
-    if (end == 0) {
-        goto eq;
-    }
-    srand((unsigned)time(0));
-    int i;
-    i = (rand() % 100) + 1;
-    cout << "Your Trip Reference Number is: " << i << "\n";
-    cout << "Thanks for using Taxi Faang!!";
-    this_thread::sleep_for(chrono::milliseconds(5000));
-}
-
-
-
-
-
-
-
-drivpickup requestdriv() {
-    drivpickup info;
-
-    srand(time(0));
-    info.dis = rand() % 25;
-
-    if (info.dis > 0 && info.dis < 6)
-    {
-        info.tripay = 5;
-    }
-    else if (info.dis > 5 && info.dis < 16)
-    {
-        info.tripay = info.dis * 1;
-    }
-    else if (info.dis > 15 && info.dis < 25)
-    {
-        info.tripay = info.dis * .8;
-    }
-
-    info.pick = "144 Columbo Street";
-
-    info.drop = "22 Madras Street";
-
-    info.cus = "Steve";
-
-    return info;
-
-}
-
-void drivscreen(drivpickup info) {
-tp:
-    srand((unsigned)time(0));
-    int i;
-    i = (rand() % 100) + 1;
-    cout << "Your Trip Reference Number is: " << i << "\n";
-    cout << "Have you arrived at " << info.pick << " ? (Yes/No)\t";
-
-    bool gotem = yesno();
-
-    if (gotem == 0) {
-        goto tp;
-    }
-
-    for (int i = info.dis; i > 1; i--) {
-        cls();
-        cout << "You are " << i << " KM from reaching " << info.drop;
-        this_thread::sleep_for(chrono::milliseconds(10000));
-    }
-
-hasit:
-    cout << "You are 1 KM from reaching " << info.drop << "\nEnd Trip? (Yes/No)\t";
-
-    bool end = yesno();
-
-    if (end == 0) {
-        goto hasit;
-    }
-
-    cout << "Trip Complete, total pay from trip is: $" << info.tripay;
-    this_thread::sleep_for(chrono::milliseconds(5000));
-
-}
-
-// FAKE DISTANCE COUNT
-/*
-for (int i = info.drivdis; i > 0 ; i--)
-{
-     // replace with wait 1 min (enter to trigger)
-}
-*/
-
-
 
 
 
