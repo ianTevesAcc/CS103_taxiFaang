@@ -544,44 +544,39 @@ void CusRegoLogin()
                     << "Enter Username: ";
                 getline(cin, inName);
                 cout << "\nEnter Password: ";
-                //char c;
-                //// loop condition: get a character, while it isn't a newline (end of password), then...
-                //while ((c = _getch()) != '\n')
-                //{
-                //    // put it onto the back of the password
-                //    inPassword.push_back(c);
-                //    // output a '*' character
-                //    _putch('*');
-                //}
+                
 
-                //char c = ' ';
+                const char BACKSPACE = 8;
+                const char RETURN = 13;
 
-                //while (c != 13) //Loop until 'Enter' is pressed
-                //{
-                //    c = _getch();
-                //    if (c == 13)
-                //        break;
+                string password;
+                unsigned char ch = 0;
 
-                //    if (c == 8)
-                //    {
-                //        if (inPassword.size() != 0)   //delete only if there is input 
-                //        {
-                //            cout << "\b \b";
-                //            inPassword.erase(inPassword.size() - 1);
-                //        }
-                //    }
+                
 
-                //    if ((c > 47 && c < 58) || (c > 64 && c < 91) || (c > 96 && c < 123))  //ASCii code for integer and alphabet
-                //    {
-                //        inPassword += c;
-                //        cout << "*";
-                //    }
-                //}
+                while ((ch = getch()) != RETURN)
+                {
+                    if (ch == BACKSPACE)
+                    {
+                        if (password.length() != 0)
+                        {
+                            
+                                cout << "\b \b";
+                            password.resize(password.length() - 1);
+                        }
+                    }
+                    else
+                    {
+                        password += ch;
+                        
+                            cout << '*';
+                    }
+                }
 
                 getline(cin, inPassword);
 
 
-                if (inName == CusName && inPassword == CusPassword)
+                if (inName == CusName && password == CusPassword)
                 {
                     cout << "\nLogin Successful\n"
 
@@ -1242,10 +1237,35 @@ void DriverRegoLogin()
                     << "Enter Username: ";
                 getline(cin, inName);
                 cout << "\nEnter Password: ";
-                getline(cin, inPassword);
+                const char BACKSPACE = 8;
+                const char RETURN = 13;
 
-                cout << inName << '\t' << drivName << '\t' << inPassword << '\t' << drivPassword;
-                if (inName == drivName && inPassword == drivPassword)
+                string password;
+                unsigned char ch = 0;
+
+
+
+                while ((ch = getch()) != RETURN)
+                {
+                    if (ch == BACKSPACE)
+                    {
+                        if (password.length() != 0)
+                        {
+
+                            cout << "\b \b";
+                            password.resize(password.length() - 1);
+                        }
+                    }
+                    else
+                    {
+                        password += ch;
+
+                        cout << '*';
+                    }
+                }
+
+                
+                if (inName == drivName && password == drivPassword)
                 {
                     cout << "\nLogin Successful\n"
 
@@ -1743,10 +1763,36 @@ void AdminMenu() {
     string codeNo;
     string codeInput;
 code:
-    cin >> codeInput;
+    const char BACKSPACE = 8;
+    const char RETURN = 13;
+
+    string password;
+    unsigned char ch = 0;
+
+
+
+    while ((ch = getch()) != RETURN)
+    {
+        if (ch == BACKSPACE)
+        {
+            if (password.length() != 0)
+            {
+
+                cout << "\b \b";
+                password.resize(password.length() - 1);
+            }
+        }
+        else
+        {
+            password += ch;
+
+            cout << '*';
+        }
+    }
+
     for (int i = 0; i < 6; i++)
     {
-        if (codeInput == codeYes)
+        if (password == codeYes)
         {
             admin.AdminMenu1();
             break;
