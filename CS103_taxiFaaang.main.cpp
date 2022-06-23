@@ -28,7 +28,7 @@ struct rideinfo
 };
 struct drivpickup {
     string pick, drop, cus;
-    float tripay;
+    float pay, totpay;
     int dis;
 };
 class driverfiles
@@ -2242,31 +2242,31 @@ int main()
 //    drivinfo.close();
 //}
 
-void TaxiFare()
-{
-    cls();
-    int dist;
-    cout << endl;
-    cout << endl;
-    cout << "________________________________________________________________________________________________" << endl;
-    cout << endl;
-    cout << "\t\t\tWhat distance will you travel? (KM): ";
-    cin >> dist;
-    if (dist <= 5)
-        cout << "Fare is: $ " << 10;
-    else if (dist > 5 && dist < 10)
-        cout << "Fare is: $ " << 20;
-    else if (dist >= 10 && dist < 30)
-        cout << "Fare is: $ " << 50;
-    else if (dist >= 30 && dist < 50)
-        cout << "Fare is: $ " << 100;
-    else if (dist >= 50 && dist < 80)
-        cout << "Fare is: $ " << 150;
-    else if (dist >= 80 && dist <= 100)
-        cout << "Fare is: $ " << 250;
-    else
-        cout << "Your ride is cancelled. ";
-}
+//void TaxiFare()
+//{
+//    cls();
+//    int dist;
+//    cout << endl;
+//    cout << endl;
+//    cout << "________________________________________________________________________________________________" << endl;
+//    cout << endl;
+//    cout << "\t\t\tWhat distance will you travel? (KM): ";
+//    cin >> dist;
+//    if (dist <= 5)
+//        cout << "Fare is: $ " << 10;
+//    else if (dist > 5 && dist < 10)
+//        cout << "Fare is: $ " << 20;
+//    else if (dist >= 10 && dist < 30)
+//        cout << "Fare is: $ " << 50;
+//    else if (dist >= 30 && dist < 50)
+//        cout << "Fare is: $ " << 100;
+//    else if (dist >= 50 && dist < 80)
+//        cout << "Fare is: $ " << 150;
+//    else if (dist >= 80 && dist <= 100)
+//        cout << "Fare is: $ " << 250;
+//    else
+//        cout << "Your ride is cancelled. ";
+//}
 
 /*UNKNOWN*/
 rideinfo request(string pickup, string dropoff)
@@ -2296,7 +2296,7 @@ rideinfo request(string pickup, string dropoff)
     info.cost = (cost / 100) * 15 + cost; //GST Add
 
     TitlePrinter("CONFIRM BOOKING");
-    cout << "\tPickup from: " << pickup << "\n\tDropoff at: " << dropoff << "\n\tDistance to Travel: " << info.dis << "\n\tTotal Cost: $" << info.cost << "\n\tConfirm: (Yes/No) ";
+    cout << "\tPickup from: " << pickup << "\n\tDropoff at: " << dropoff << "\n\tDistance to Travel: " << info.dis << "Cost minus GST: $" << cost << "\n\tTotal Cost: $" << info.cost << "\n\tConfirm: (Yes/No) ";
     bool yn = yesno();
 
     if (yn == 0)
@@ -2408,28 +2408,33 @@ eq:
 
 drivpickup requestdriv() {
     drivpickup info;
+    float pay;
 
     srand(time(0));
     info.dis = rand() % 25;
 
     if (info.dis > 0 && info.dis < 6)
     {
-        info.tripay = 5;
+        info.pay = 5;
     }
     else if (info.dis > 5 && info.dis < 16)
     {
-        info.tripay = info.dis * 1;
+        info.pay = info.dis * 1;
     }
     else if (info.dis > 15 && info.dis < 25)
     {
-        info.tripay = info.dis * .8;
+        info.pay = info.dis * .8;
     }
+
+    info.totpay = (info.pay / 100) * 15 + info.pay;
 
     info.pick = "144 Columbo Street";
 
     info.drop = "22 Madras Street";
 
     info.cus = "Steve";
+
+    
 
     return info;
 
@@ -2464,7 +2469,7 @@ hasit:
         goto hasit;
     }
 
-    cout << "Trip Complete, total pay from trip is: $" << info.tripay;
+    cout << "Trip Complete, total pay before tax: $" << info.pay << "\nTotal pay after tax: $" << info.totpay;
     this_thread::sleep_for(chrono::milliseconds(5000));
 
 }
