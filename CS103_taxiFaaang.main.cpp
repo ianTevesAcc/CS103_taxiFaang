@@ -1580,10 +1580,10 @@ void DaccInfo() {
                 getline(cin, regquesf);
                 cout << "Enter Password: ";
                 cout << "________________________________________________________________________________________" << endl;
-
+                cin.ignore();
                 cout << "Enter Vehicle Registration Number: ";
                 getline(cin, drivRego);
-                cout << endl;
+                
                 cout << "Enter Car Make and Model: ";
                 getline(cin, drivCar);
                 cout << "Enter NZ Drivers License Number: ";
